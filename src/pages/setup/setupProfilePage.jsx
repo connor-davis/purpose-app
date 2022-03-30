@@ -13,10 +13,7 @@ let SetupProfilePage = () => {
   let [stage, setStage] = createSignal(0);
   let navigate = useNavigate();
 
-  let [details, setDetails] = createStore(
-    { userType: 'individual' },
-    { name: 'details' }
-  );
+  let [details, setDetails] = createStore({}, { name: 'details' });
 
   let [userGender, setUserGender] = createSignal('Select');
   let [userEthnicity, setUserEthnicity] = createSignal('Select');
@@ -28,7 +25,7 @@ let SetupProfilePage = () => {
 
   let completeProfile = () => {
     axios
-      .post(apiUrl + '/user/edit', details, {
+      .put(apiUrl + '/users', details, {
         headers: {
           authorization: 'Bearer ' + authState.authenticationToken,
         },
@@ -91,7 +88,7 @@ let SetupProfilePage = () => {
                     onChange={(event) => {
                       setDetails({
                         ...details,
-                        userDisplayName: event.target.value,
+                        displayName: event.target.value,
                       });
                     }}
                   />
@@ -107,7 +104,7 @@ let SetupProfilePage = () => {
                     onBlur={(event) => {
                       setDetails({
                         ...details,
-                        userDescription: event.target.innerText,
+                        description: event.target.innerText,
                       });
                     }}
                   />
@@ -125,7 +122,7 @@ let SetupProfilePage = () => {
                         extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
                         onClick={() => {
                           setUserType('Sewing');
-                          setDetails({ ...details, userType: 'sewing' });
+                          setDetails({ ...details, type: 'sewing' });
                         }}
                       />
 
@@ -134,7 +131,7 @@ let SetupProfilePage = () => {
                         extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
                         onClick={() => {
                           setUserType('Bakery');
-                          setDetails({ ...details, userType: 'bakery' });
+                          setDetails({ ...details, type: 'bakery' });
                         }}
                       />
 
@@ -143,7 +140,7 @@ let SetupProfilePage = () => {
                         extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
                         onClick={() => {
                           setUserType('Wood Work');
-                          setDetails({ ...details, userType: 'woodWork' });
+                          setDetails({ ...details, type: 'woodWork' });
                         }}
                       />
 
@@ -152,7 +149,7 @@ let SetupProfilePage = () => {
                         extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
                         onClick={() => {
                           setUserType('Garden Service');
-                          setDetails({ ...details, userType: 'gardenService' });
+                          setDetails({ ...details, type: 'gardenService' });
                         }}
                       />
 
@@ -163,7 +160,7 @@ let SetupProfilePage = () => {
                           setUserType('Food and Beverage');
                           setDetails({
                             ...details,
-                            userType: 'foodAndBeverage',
+                            type: 'foodAndBeverage',
                           });
                         }}
                       />
@@ -173,7 +170,7 @@ let SetupProfilePage = () => {
                         extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
                         onClick={() => {
                           setUserType('Gardening');
-                          setDetails({ ...details, userType: 'gardening' });
+                          setDetails({ ...details, type: 'gardening' });
                         }}
                       />
 
@@ -182,7 +179,7 @@ let SetupProfilePage = () => {
                         extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
                         onClick={() => {
                           setUserType('Nails');
-                          setDetails({ ...details, userType: 'nails' });
+                          setDetails({ ...details, type: 'nails' });
                         }}
                       />
 
@@ -191,7 +188,7 @@ let SetupProfilePage = () => {
                         extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
                         onClick={() => {
                           setUserType('Salon');
-                          setDetails({ ...details, userType: 'salon' });
+                          setDetails({ ...details, type: 'salon' });
                         }}
                       />
 
@@ -200,7 +197,7 @@ let SetupProfilePage = () => {
                         extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
                         onClick={() => {
                           setUserType('Consulting');
-                          setDetails({ ...details, userType: 'consulting' });
+                          setDetails({ ...details, type: 'consulting' });
                         }}
                       />
 
@@ -209,7 +206,7 @@ let SetupProfilePage = () => {
                         extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
                         onClick={() => {
                           setUserType('Construction');
-                          setDetails({ ...details, userType: 'construction' });
+                          setDetails({ ...details, type: 'construction' });
                         }}
                       />
 
@@ -218,14 +215,14 @@ let SetupProfilePage = () => {
                         extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
                         onClick={() => {
                           setUserType('Other');
-                          setDetails({ ...details, userType: 'other' });
+                          setDetails({ ...details, type: 'other' });
                         }}
                       />
                     </DropDown>
                   </div>
                 </div>
 
-                {details.userType === 'other' && (
+                {details.type === 'other' && (
                   <div class="flex flex-col space-y-2">
                     <div class="text-sm text-lime-500">Tell us more?</div>
                     <input
@@ -235,7 +232,7 @@ let SetupProfilePage = () => {
                       onChange={(event) => {
                         setDetails({
                           ...details,
-                          userTypeDescription: event.target.value,
+                          typeDescription: event.target.value,
                         });
                       }}
                     />
@@ -251,7 +248,7 @@ let SetupProfilePage = () => {
                     onChange={(event) => {
                       setDetails({
                         ...details,
-                        userPhoneNumber: event.target.value,
+                        phoneNumber: event.target.value,
                       });
                     }}
                   />
@@ -320,7 +317,7 @@ let SetupProfilePage = () => {
                     onChange={(event) => {
                       setDetails({
                         ...details,
-                        userStreetAddress: event.target.value,
+                        streetAddress: event.target.value,
                       });
                     }}
                   />
@@ -335,7 +332,7 @@ let SetupProfilePage = () => {
                     onChange={(event) => {
                       setDetails({
                         ...details,
-                        userSuburb: event.target.value,
+                        suburb: event.target.value,
                       });
                     }}
                   />
@@ -350,7 +347,7 @@ let SetupProfilePage = () => {
                     onChange={(event) => {
                       setDetails({
                         ...details,
-                        userWard: event.target.value,
+                        ward: event.target.value,
                       });
                     }}
                   />
@@ -365,7 +362,7 @@ let SetupProfilePage = () => {
                     onChange={(event) => {
                       setDetails({
                         ...details,
-                        userCity: event.target.value,
+                        city: event.target.value,
                       });
                     }}
                   />
@@ -380,7 +377,7 @@ let SetupProfilePage = () => {
                     onChange={(event) => {
                       setDetails({
                         ...details,
-                        userAreaCode: event.target.value,
+                        areaCode: event.target.value,
                       });
                     }}
                   />
@@ -395,7 +392,7 @@ let SetupProfilePage = () => {
                     onChange={(event) => {
                       setDetails({
                         ...details,
-                        userProvince: event.target.value,
+                        province: event.target.value,
                       });
                     }}
                   />
@@ -410,7 +407,7 @@ let SetupProfilePage = () => {
                     onChange={(event) => {
                       setDetails({
                         ...details,
-                        userCountry: event.target.value,
+                        country: event.target.value,
                       });
                     }}
                   />

@@ -17,7 +17,7 @@ function App() {
     <div class={themeState.theme}>
       <div class="w-screen h-screen bg-white dark:bg-gray-900 overflow-hidden select-none">
         <AuthenticationGuard>
-          {userState.userType === 'individual' && (
+          {userState.type !== 'admin' && (
             <RootPage>
               <Routes>
                 <Route path="/" exact element={<DashboardPage />} />
@@ -25,7 +25,7 @@ function App() {
             </RootPage>
           )}
 
-          {!userState.userType && (
+          {!userState.type && (
             <Routes>
               <Route path="/" exact element={<NoType />} />
 
