@@ -11,6 +11,8 @@ function App() {
   let [userState, updateUserState] = useState('userState');
   // let navigate = useNavigate();
 
+  console.log(userState);
+
   return (
     <div class={themeState.theme}>
       <div class="w-screen h-screen bg-white dark:bg-gray-900 overflow-hidden select-none">

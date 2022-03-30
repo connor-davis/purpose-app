@@ -10,3 +10,24 @@ div[placeholder]:empty:before {
   content: attr(placeholder);
   color: #a3a3a3;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(189, 189, 189); 
+  border-radius: 1em;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(141, 141, 141); 
+}

@@ -62,20 +62,12 @@ let SetupProfilePage = () => {
       {stage() === 2 && (
         <div class="flex flex-col w-full h-full justify-center items-center text-white">
           <div class="animate-fade-in text-center">
-            Let's get your contact details.
-          </div>
-        </div>
-      )}
-
-      {stage() === 4 && (
-        <div class="flex flex-col w-full h-full justify-center items-center text-white">
-          <div class="animate-fade-in text-center">
             Let's get your location details.
           </div>
         </div>
       )}
 
-      {stage() === 6 && (
+      {stage() === 4 && (
         <div class="flex flex-col w-full h-full justify-center items-center text-white">
           <div class="animate-fade-in text-center">
             Thank you for setting up your profile, we look forward to working
@@ -91,10 +83,10 @@ let SetupProfilePage = () => {
               {/* <div class="self-end">Back</div> */}
               <div class="flex flex-col space-y-5 p-5 bg-white dark:bg-gray-900 rounded shadow">
                 <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">Full Name</div>
+                  <div class="text-sm text-lime-500">Name</div>
                   <input
                     type="text"
-                    placeholder="Full Name"
+                    placeholder="Name"
                     class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
                     onChange={(event) => {
                       setDetails({
@@ -106,10 +98,10 @@ let SetupProfilePage = () => {
                 </div>
 
                 <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">About You</div>
+                  <div class="text-sm text-lime-500">Description</div>
                   <div
                     type="text"
-                    placeholder="About You"
+                    placeholder="Describe yourself"
                     class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none w-64"
                     contentEditable={true}
                     onBlur={(event) => {
@@ -122,86 +114,21 @@ let SetupProfilePage = () => {
                 </div>
 
                 <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">Gender</div>
-                  <div class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded outline-none w-64">
-                    <DropDown
-                      text={userGender}
-                      extraClasses="bg-gray-200 dark:bg-gray-800 dark:text-white rounded p-3"
-                    >
-                      <DropDownItem
-                        text={'Male'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserGender('Male');
-                          setDetails({ ...details, userGender: 'Male' });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Female'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserGender('Female');
-                          setDetails({ ...details, userGender: 'Female' });
-                        }}
-                      />
-                    </DropDown>
-                  </div>
-                </div>
-
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">Ethnicity</div>
-                  <div class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded outline-none w-64">
-                    <DropDown
-                      text={userEthnicity}
-                      extraClasses="bg-gray-200 dark:bg-gray-800 dark:text-white rounded p-3"
-                    >
-                      <DropDownItem
-                        text={'White'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserEthnicity('White');
-                          setDetails({ ...details, userEthnicity: 'White' });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Coloured'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserEthnicity('Coloured');
-                          setDetails({ ...details, userEthnicity: 'Coloured' });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Indian'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserEthnicity('Indian');
-                          setDetails({ ...details, userEthnicity: 'Indian' });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Black'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserEthnicity('Black');
-                          setDetails({ ...details, userEthnicity: 'Black' });
-                        }}
-                      />
-                    </DropDown>
-                  </div>
-                </div>
-
-                <div class="flex flex-col space-y-2">
                   <div class="text-sm text-lime-500">Type</div>
                   <div class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded outline-none w-64">
                     <DropDown
                       text={userType}
-                      extraClasses="bg-gray-200 dark:bg-gray-800 dark:text-white rounded p-3 shadow-sm"
+                      extraClasses="bg-gray-200 dark:bg-gray-800 dark:text-white rounded p-3 shadow-md"
                     >
+                      <DropDownItem
+                        text={'Sewing'}
+                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
+                        onClick={() => {
+                          setUserType('Sewing');
+                          setDetails({ ...details, userType: 'sewing' });
+                        }}
+                      />
+
                       <DropDownItem
                         text={'Bakery'}
                         extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
@@ -210,20 +137,121 @@ let SetupProfilePage = () => {
                           setDetails({ ...details, userType: 'bakery' });
                         }}
                       />
+
+                      <DropDownItem
+                        text={'Wood Work'}
+                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
+                        onClick={() => {
+                          setUserType('Wood Work');
+                          setDetails({ ...details, userType: 'woodWork' });
+                        }}
+                      />
+
+                      <DropDownItem
+                        text={'Garden Service'}
+                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
+                        onClick={() => {
+                          setUserType('Garden Service');
+                          setDetails({ ...details, userType: 'gardenService' });
+                        }}
+                      />
+
+                      <DropDownItem
+                        text={'Food and Beverage'}
+                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
+                        onClick={() => {
+                          setUserType('Food and Beverage');
+                          setDetails({
+                            ...details,
+                            userType: 'foodAndBeverage',
+                          });
+                        }}
+                      />
+
+                      <DropDownItem
+                        text={'Gardening'}
+                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
+                        onClick={() => {
+                          setUserType('Gardening');
+                          setDetails({ ...details, userType: 'gardening' });
+                        }}
+                      />
+
+                      <DropDownItem
+                        text={'Nails'}
+                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
+                        onClick={() => {
+                          setUserType('Nails');
+                          setDetails({ ...details, userType: 'nails' });
+                        }}
+                      />
+
+                      <DropDownItem
+                        text={'Salon'}
+                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
+                        onClick={() => {
+                          setUserType('Salon');
+                          setDetails({ ...details, userType: 'salon' });
+                        }}
+                      />
+
+                      <DropDownItem
+                        text={'Consulting'}
+                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
+                        onClick={() => {
+                          setUserType('Consulting');
+                          setDetails({ ...details, userType: 'consulting' });
+                        }}
+                      />
+
+                      <DropDownItem
+                        text={'Construction'}
+                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
+                        onClick={() => {
+                          setUserType('Construction');
+                          setDetails({ ...details, userType: 'construction' });
+                        }}
+                      />
+
+                      <DropDownItem
+                        text={'Other'}
+                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
+                        onClick={() => {
+                          setUserType('Other');
+                          setDetails({ ...details, userType: 'other' });
+                        }}
+                      />
                     </DropDown>
                   </div>
                 </div>
 
+                {details.userType === 'other' && (
+                  <div class="flex flex-col space-y-2">
+                    <div class="text-sm text-lime-500">Tell us more?</div>
+                    <input
+                      type="text"
+                      placeholder="Tell us more?"
+                      class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          userTypeDescription: event.target.value,
+                        });
+                      }}
+                    />
+                  </div>
+                )}
+
                 <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">Age</div>
+                  <div class="text-sm text-lime-500">Phone Number</div>
                   <input
-                    type="text"
-                    placeholder="Age"
+                    type="tel"
+                    placeholder="Phone Number"
                     class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
                     onChange={(event) => {
                       setDetails({
                         ...details,
-                        userAge: event.target.value,
+                        userPhoneNumber: event.target.value,
                       });
                     }}
                   />
@@ -260,90 +288,6 @@ let SetupProfilePage = () => {
       )}
 
       {stage() === 3 && (
-        <div class="flex flex-col w-full h-full justify-center items-center dark:text-white">
-          <div class="animate-fade-in">
-            <div class="flex space-x-2">
-              <button
-                class="self-end rounded-full p-2 bg-white dark:bg-gray-900 w-10 h-10 shadow"
-                onClick={() => setStage(stage() - 2)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-              </button>
-              <div class="flex flex-col space-y-5 p-5 bg-white dark:bg-gray-900 rounded shadow">
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">Phone Number</div>
-                  <input
-                    type="tel"
-                    placeholder="Phone Number"
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-                    onChange={(event) => {
-                      setDetails({
-                        ...details,
-                        userPhoneNumber: event.target.value,
-                      });
-                    }}
-                  />
-                </div>
-
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">Email Address</div>
-                  <input
-                    type="email"
-                    placeholder="Email Address"
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-                    onChange={(event) => {
-                      setDetails({
-                        ...details,
-                        userEmail: event.target.value,
-                      });
-                    }}
-                  />
-                </div>
-              </div>
-              <button
-                class="self-end rounded-full p-2 bg-white dark:bg-gray-900 w-10 h-10 shadow"
-                onClick={() => {
-                  setStage(stage() + 1);
-
-                  setTimeout(() => {
-                    setStage(stage() + 1);
-                  }, 3000);
-                }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {stage() === 5 && (
         <div class="flex flex-col w-full h-full justify-center items-center dark:text-white">
           <div class="animate-fade-in">
             <div class="flex space-x-2">
