@@ -4,8 +4,7 @@ import AuthenticationGuard from './guards/authenticationGuard';
 import useState from './hooks/state';
 import DashboardPage from './pages/dashboard/dashboardPage';
 import RootPage from './pages/root/rootPage';
-import SetupCompanyProfilePage from './pages/setup/setupCompanyProfilePage';
-import SetupIndividualProfilePage from './pages/setup/setupIndividualProfilePage';
+import SetupProfilePage from './pages/setup/setupProfilePage';
 
 function App() {
   let [themeState, toggle] = useState('theme');
@@ -28,15 +27,7 @@ function App() {
             <Routes>
               <Route path="/" exact element={<NoType />} />
 
-              <Route
-                path="/setupCompanyProfile"
-                element={<SetupCompanyProfilePage />}
-              />
-
-              <Route
-                path="/setupIndividualProfile"
-                element={<SetupIndividualProfilePage />}
-              />
+              <Route path="/setupProfile" element={<SetupProfilePage />} />
             </Routes>
           )}
         </AuthenticationGuard>

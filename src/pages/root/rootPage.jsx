@@ -1,6 +1,6 @@
 import { useNavigate } from 'solid-app-router';
 import { createSignal } from 'solid-js';
-import SidebarItem from '../../../../../ecomart-bubble/threereco-app/src/components/sidebar/SidebarItem';
+import SidebarItem from '../../components/sidebar/SidebarItem';
 import Sidebar from '../../components/sidebar/Sidebar';
 import useState from '../../hooks/state';
 

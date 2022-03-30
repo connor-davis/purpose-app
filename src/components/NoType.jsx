@@ -10,20 +10,14 @@ let NoType = ({ className }) => {
         <PurposeLogo />
 
         <div class="text-gray-800 text-center">
-          Welcome to Purpose, please select what type of user you are.
+          Welcome to Purpose, lets get your profile setup.
         </div>
         <div class="flex flex-col justify-center items-center w-full space-y-3">
           <button
             class="px-3 py-2 bg-lime-300 text-black w-full text-center rounded shadow select-none"
-            onClick={() => navigate('/setupCompanyProfile')}
+            onClick={() => navigate('/setupProfile')}
           >
-            Company
-          </button>
-          <button
-            class="px-3 py-2 bg-lime-300 text-black w-full text-center rounded shadow select-none"
-            onClick={() => navigate('/setupIndividualProfile')}
-          >
-            Individual
+            Setup Profile
           </button>
         </div>
       </div>

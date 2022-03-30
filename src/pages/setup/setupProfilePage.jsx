@@ -7,7 +7,7 @@ import DropDown from '../../components/dropdown/DropDown';
 import DropDownItem from '../../components/dropdown/DropDownItem';
 import useState from '../../hooks/state';
 
-let SetupIndividualProfilePage = () => {
+let SetupProfilePage = () => {
   let [authState, updateAuthState] = useState('authenticationGuard');
   let [userState, updateUserState] = useState('userState');
   let [stage, setStage] = createSignal(0);
@@ -20,14 +20,11 @@ let SetupIndividualProfilePage = () => {
 
   let [userGender, setUserGender] = createSignal('Select');
   let [userEthnicity, setUserEthnicity] = createSignal('Select');
+  let [userType, setUserType] = createSignal('Select');
 
   setTimeout(() => {
     setStage(stage() + 1);
   }, 3000);
-
-  setTimeout(() => {
-    setStage(stage() + 1);
-  }, 6000);
 
   let completeProfile = () => {
     axios
@@ -57,20 +54,12 @@ let SetupIndividualProfilePage = () => {
       {stage() === 0 && (
         <div class="flex flex-col w-full h-full justify-center items-center text-white">
           <div class="animate-fade-in text-center">
-            Welcome to Purpose, lets begin creating your profile.
-          </div>
-        </div>
-      )}
-
-      {stage() === 1 && (
-        <div class="flex flex-col w-full h-full justify-center items-center text-white">
-          <div class="animate-fade-in text-center">
             Let's begin with your basic details.
           </div>
         </div>
       )}
 
-      {stage() === 3 && (
+      {stage() === 2 && (
         <div class="flex flex-col w-full h-full justify-center items-center text-white">
           <div class="animate-fade-in text-center">
             Let's get your contact details.
@@ -78,7 +67,7 @@ let SetupIndividualProfilePage = () => {
         </div>
       )}
 
-      {stage() === 5 && (
+      {stage() === 4 && (
         <div class="flex flex-col w-full h-full justify-center items-center text-white">
           <div class="animate-fade-in text-center">
             Let's get your location details.
@@ -86,7 +75,7 @@ let SetupIndividualProfilePage = () => {
         </div>
       )}
 
-      {stage() === 7 && (
+      {stage() === 6 && (
         <div class="flex flex-col w-full h-full justify-center items-center text-white">
           <div class="animate-fade-in text-center">
             Thank you for setting up your profile, we look forward to working
@@ -95,7 +84,7 @@ let SetupIndividualProfilePage = () => {
         </div>
       )}
 
-      {stage() === 2 && (
+      {stage() === 1 && (
         <div class="flex flex-col w-full h-full justify-center items-center dark:text-white">
           <div class="animate-fade-in">
             <div class="flex space-x-2">
@@ -134,10 +123,14 @@ let SetupIndividualProfilePage = () => {
 
                 <div class="flex flex-col space-y-2">
                   <div class="text-sm text-lime-500">Gender</div>
-                  <div class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none w-64">
-                    <DropDown text={userGender}>
+                  <div class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded outline-none w-64">
+                    <DropDown
+                      text={userGender}
+                      extraClasses="bg-gray-200 dark:bg-gray-800 dark:text-white rounded p-3"
+                    >
                       <DropDownItem
                         text={'Male'}
+                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
                         onClick={() => {
                           setUserGender('Male');
                           setDetails({ ...details, userGender: 'Male' });
@@ -146,6 +139,7 @@ let SetupIndividualProfilePage = () => {
 
                       <DropDownItem
                         text={'Female'}
+                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
                         onClick={() => {
                           setUserGender('Female');
                           setDetails({ ...details, userGender: 'Female' });
@@ -157,10 +151,14 @@ let SetupIndividualProfilePage = () => {
 
                 <div class="flex flex-col space-y-2">
                   <div class="text-sm text-lime-500">Ethnicity</div>
-                  <div class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none w-64">
-                    <DropDown text={userEthnicity}>
+                  <div class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded outline-none w-64">
+                    <DropDown
+                      text={userEthnicity}
+                      extraClasses="bg-gray-200 dark:bg-gray-800 dark:text-white rounded p-3"
+                    >
                       <DropDownItem
                         text={'White'}
+                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
                         onClick={() => {
                           setUserEthnicity('White');
                           setDetails({ ...details, userEthnicity: 'White' });
@@ -169,6 +167,7 @@ let SetupIndividualProfilePage = () => {
 
                       <DropDownItem
                         text={'Coloured'}
+                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
                         onClick={() => {
                           setUserEthnicity('Coloured');
                           setDetails({ ...details, userEthnicity: 'Coloured' });
@@ -177,6 +176,7 @@ let SetupIndividualProfilePage = () => {
 
                       <DropDownItem
                         text={'Indian'}
+                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
                         onClick={() => {
                           setUserEthnicity('Indian');
                           setDetails({ ...details, userEthnicity: 'Indian' });
@@ -185,9 +185,29 @@ let SetupIndividualProfilePage = () => {
 
                       <DropDownItem
                         text={'Black'}
+                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
                         onClick={() => {
                           setUserEthnicity('Black');
                           setDetails({ ...details, userEthnicity: 'Black' });
+                        }}
+                      />
+                    </DropDown>
+                  </div>
+                </div>
+
+                <div class="flex flex-col space-y-2">
+                  <div class="text-sm text-lime-500">Type</div>
+                  <div class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded outline-none w-64">
+                    <DropDown
+                      text={userType}
+                      extraClasses="bg-gray-200 dark:bg-gray-800 dark:text-white rounded p-3 shadow-sm"
+                    >
+                      <DropDownItem
+                        text={'Bakery'}
+                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
+                        onClick={() => {
+                          setUserType('Bakery');
+                          setDetails({ ...details, userType: 'bakery' });
                         }}
                       />
                     </DropDown>
@@ -239,7 +259,7 @@ let SetupIndividualProfilePage = () => {
         </div>
       )}
 
-      {stage() === 4 && (
+      {stage() === 3 && (
         <div class="flex flex-col w-full h-full justify-center items-center dark:text-white">
           <div class="animate-fade-in">
             <div class="flex space-x-2">
@@ -323,7 +343,7 @@ let SetupIndividualProfilePage = () => {
         </div>
       )}
 
-      {stage() === 6 && (
+      {stage() === 5 && (
         <div class="flex flex-col w-full h-full justify-center items-center dark:text-white">
           <div class="animate-fade-in">
             <div class="flex space-x-2">
@@ -481,4 +501,4 @@ let SetupIndividualProfilePage = () => {
   );
 };
 
-export default SetupIndividualProfilePage;
+export default SetupProfilePage;
