@@ -1,8 +1,8 @@
+import AuthenticationPage from '../pages/authentication';
+import apiUrl from '../apiUrl';
 import axios from 'axios';
 import { onMount } from 'solid-js';
-import apiUrl from '../apiUrl';
 import useState from '../hooks/state';
-import AuthenticationPage from '../pages/authentication';
 
 let AuthenticationGuard = ({ children }) => {
   let [state, update] = useState('authenticationGuard');
@@ -23,7 +23,7 @@ let AuthenticationGuard = ({ children }) => {
   });
 
   return (
-    <div class="w-full h-full">
+    <div class="w-screen h-screen outline-none select-none">
       {state.authenticationToken ? children : <AuthenticationPage />}
     </div>
   );

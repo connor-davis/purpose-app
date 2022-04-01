@@ -1,27 +1,45 @@
-import { useNavigate } from 'solid-app-router';
+import { Box, Button, Center, VStack } from '@hope-ui/solid';
+
 import PurposeLogo from './PurposeLogo';
+import { useNavigate } from 'solid-app-router';
 
-let NoType = ({ className }) => {
+let NoType = () => {
   let navigate = useNavigate();
-  
-  return (
-    <div class="flex flex-col w-full h-full justify-center items-center bg-gray-800">
-      <div class="flex flex-col items-center space-y-10 w-72 bg-white dark:bg-gray-900 rounded-md shadow p-5">
-        <PurposeLogo />
 
-        <div class="text-gray-800 text-center">
-          Welcome to Purpose, lets get your profile setup.
-        </div>
-        <div class="flex flex-col justify-center items-center w-full space-y-3">
-          <button
-            class="px-3 py-2 bg-lime-300 text-black w-full text-center rounded shadow select-none"
-            onClick={() => navigate('/setupProfile')}
-          >
-            Setup Profile
-          </button>
-        </div>
-      </div>
-    </div>
+  return (
+    <Center w="100%" h="100%" bg="white">
+      <VStack
+        spacing="$10"
+        bg="white"
+        shadow="$2xl"
+        borderRadius="$2xl"
+        borderWidth="1px"
+        borderColor="#e5e5e5"
+        p="$5"
+        rounded="$2xl"
+        w={{ '@initial': '300px', '@sm': '300px', '@md': '400px' }}
+      >
+        <VStack spacing="$5">
+          <PurposeLogo />
+
+          <Center>
+            <Box color="black">Welcome to Purpose, lets get your profile setup.</Box>
+          </Center>
+        </VStack>
+
+        <Button
+          color="black"
+          rounded="$md"
+          class="bg-lime-300 shadow-lg shadow-lime-200 select-none outline-none"
+          w="100%"
+          variant="solid"
+          colorScheme="$lime4"
+          onClick={() => navigate('/setupProfile')}
+        >
+          Setup Profile
+        </Button>
+      </VStack>
+    </Center>
   );
 };
 

@@ -1,10 +1,32 @@
-import axios from 'axios';
-import { useNavigate } from 'solid-app-router';
-import { createSignal, onMount } from 'solid-js';
-import { createStore } from 'solid-js/store';
+import {
+  Box,
+  Center,
+  FormControl,
+  FormLabel,
+  HStack,
+  IconButton,
+  Input,
+  Select,
+  SelectContent,
+  SelectIcon,
+  SelectListbox,
+  SelectOption,
+  SelectOptionIndicator,
+  SelectOptionText,
+  SelectPlaceholder,
+  SelectTrigger,
+  SelectValue,
+  VStack
+} from '@hope-ui/solid';
+import { For, createSignal, onMount } from 'solid-js';
+
+import IconArrowLeft from '../../icons/IconArrowLeft';
+import IconArrowRight from '../../icons/IconArrowRight';
+import IconCheck from '../../icons/IconCheck';
 import apiUrl from '../../apiUrl';
-import DropDown from '../../components/dropdown/DropDown';
-import DropDownItem from '../../components/dropdown/DropDownItem';
+import axios from 'axios';
+import { createStore } from 'solid-js/store';
+import { useNavigate } from 'solid-app-router';
 import useState from '../../hooks/state';
 
 let SetupProfilePage = () => {
@@ -69,757 +91,858 @@ let SetupProfilePage = () => {
   };
 
   return (
-    <div class="flex flex-col items-center w-full h-full bg-gray-800 p-2">
-      {stage() === 0 && (
-        <div class="flex flex-col w-full h-full justify-center items-center text-white">
-          <div class="animate-fade-in text-center">
+    <Center w="100%" h="100%" bg="white">
+      <VStack>
+        {stage() === 0 && (
+          <Box class="animate-fade-in" color="black">
             Let's begin with your basic details.
-          </div>
-        </div>
-      )}
+          </Box>
+        )}
 
-      {stage() === 2 && (
-        <div class="flex flex-col w-full h-full justify-center items-center text-white">
-          <div class="animate-fade-in text-center">
+        {stage() === 2 && (
+          <Box class="animate-fade-in" color="black">
             Let's get your business details.
-          </div>
-        </div>
-      )}
+          </Box>
+        )}
 
-      {stage() === 4 && (
-        <div class="flex flex-col w-full h-full justify-center items-center text-white">
-          <div class="animate-fade-in text-center">
+        {stage() === 4 && (
+          <Box class="animate-fade-in" color="black">
             Let's get your bank details.
-          </div>
-        </div>
-      )}
+          </Box>
+        )}
 
-      {stage() === 6 && (
-        <div class="flex flex-col w-full h-full justify-center items-center text-white">
-          <div class="animate-fade-in text-center">
+        {stage() === 6 && (
+          <Box class="animate-fade-in" color="black">
             Let's get your location details.
-          </div>
-        </div>
-      )}
+          </Box>
+        )}
 
-      {stage() === 8 && (
-        <div class="flex flex-col w-full h-full justify-center items-center text-white">
-          <div class="animate-fade-in text-center">
+        {stage() === 8 && (
+          <Box class="animate-fade-in" color="black">
             Thank you for setting up your profile, we look forward to working
             with you.
-          </div>
-        </div>
-      )}
+          </Box>
+        )}
 
-      {stage() === 1 && (
-        <div class="flex flex-col w-full h-full md:justify-center md:items-center dark:text-white">
-          <div class="animate-fade-in">
-            <div class="flex space-x-2 w-full">
-              {/* <div class="self-end">Back</div> */}
-              <div class="flex flex-col space-y-5 p-5 bg-white dark:bg-gray-900 rounded shadow w-full h-auto md:w-80">
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">
-                    First Name <span class="text-lime-500">*</span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="First Name"
-                    value={details.firstName}
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-                    onChange={(event) => {
-                      setDetails({
-                        ...details,
-                        firstName: event.target.value,
-                      });
-                    }}
-                  />
-                </div>
-
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">
-                    Last Name <span class="text-lime-500">*</span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Last Name"
-                    value={details.lastName}
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-                    onChange={(event) => {
-                      setDetails({
-                        ...details,
-                        lastName: event.target.value,
-                      });
-                    }}
-                  />
-                </div>
-
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">
-                    ID Number <span class="text-lime-500">*</span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="ID Number"
-                    value={details.idNumber}
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-                    onChange={(event) => {
-                      setDetails({
-                        ...details,
-                        idNumber: event.target.value,
-                      });
-                    }}
-                  />
-                </div>
-
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">
-                    Age <span class="text-lime-500">*</span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Age"
-                    value={details.age}
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-                    onChange={(event) => {
-                      setDetails({
-                        ...details,
-                        age: event.target.value,
-                      });
-                    }}
-                  />
-                </div>
-
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">
-                    Gender <span class="text-lime-500">*</span>
-                  </div>
-                  <div class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded">
-                    <DropDown
-                      text={userGender}
-                      extraClasses="bg-gray-200 dark:bg-gray-800 dark:text-white rounded p-3 shadow-md"
-                    >
-                      <DropDownItem
-                        text={'Male'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserGender('Male');
-                          setDetails({ ...details, gender: 'male' });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Female'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserGender('Female');
-                          setDetails({ ...details, gender: 'female' });
-                        }}
-                      />
-                    </DropDown>
-                  </div>
-                </div>
-
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">
-                    Ethnicity <span class="text-lime-500">*</span>
-                  </div>
-                  <div class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded">
-                    <DropDown
-                      text={userEthnicity}
-                      extraClasses="bg-gray-200 dark:bg-gray-800 dark:text-white rounded p-3 shadow-md"
-                    >
-                      <DropDownItem
-                        text={'White'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserEthnicity('White');
-                          setDetails({ ...details, ethnicity: 'white' });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Coloured'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserEthnicity('Coloured');
-                          setDetails({ ...details, ethnicity: 'coloured' });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Indian'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserEthnicity('Indian');
-                          setDetails({ ...details, ethnicity: 'indian' });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Black'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserEthnicity('Black');
-                          setDetails({ ...details, ethnicity: 'black' });
-                        }}
-                      />
-                    </DropDown>
-                  </div>
-                </div>
-              </div>
-              <button
-                class="self-end rounded-full p-2 bg-white dark:bg-gray-900 w-10 h-10 shadow"
-                onClick={() => {
-                  setStage(stage() + 1);
-
-                  setTimeout(() => {
-                    setStage(stage() + 1);
-                  }, 3000);
-                }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+        {stage() === 1 && (
+          <form id="personalForm">
+            <Box class="animate-fade-in">
+              <HStack spacing="$5">
+                {/* <div class="self-end">Back</div> */}
+                <VStack
+                  bg="white"
+                  shadow="$2xl"
+                  borderRadius="$2xl"
+                  borderWidth="1px"
+                  borderColor="#e5e5e5"
+                  p="$5"
+                  rounded="$2xl"
+                  spacing="$3"
+                  w={{ '@initial': '300px', '@sm': '300px', '@md': '400px' }}
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {stage() === 3 && (
-        <div class="flex flex-col w-full h-full justify-center items-center dark:text-white">
-          <div class="animate-fade-in">
-            <div class="flex space-x-2">
-              <button
-                class="self-end rounded-full p-2 bg-white dark:bg-gray-900 w-10 h-10 shadow"
-                onClick={() => setStage(stage() - 2)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-              </button>
-              <div class="flex flex-col space-y-5 p-5 bg-white dark:bg-gray-900 rounded shadow">
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">
-                    Business Name <span class="text-lime-500">*</span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Business Name"
-                    value={details.displayName}
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-                    onChange={(event) => {
-                      setDetails({
-                        ...details,
-                        displayName: event.target.value,
-                      });
-                    }}
-                  />
-                </div>
-
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">
-                    Business Type <span class="text-lime-500">*</span>
-                  </div>
-                  <div class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded outline-none w-64">
-                    <DropDown
-                      text={userType}
-                      extraClasses="bg-gray-200 dark:bg-gray-800 dark:text-white rounded p-3 shadow-md"
-                    >
-                      <DropDownItem
-                        text={'Sewing'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserType('Sewing');
-                          setDetails({ ...details, type: 'sewing' });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Bakery'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserType('Bakery');
-                          setDetails({ ...details, type: 'bakery' });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Wood Work'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserType('Wood Work');
-                          setDetails({ ...details, type: 'woodWork' });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Garden Service'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserType('Garden Service');
-                          setDetails({ ...details, type: 'gardenService' });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Food and Beverage'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserType('Food and Beverage');
-                          setDetails({
-                            ...details,
-                            type: 'foodAndBeverage',
-                          });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Gardening'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserType('Gardening');
-                          setDetails({ ...details, type: 'gardening' });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Nails'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserType('Nails');
-                          setDetails({ ...details, type: 'nails' });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Salon'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserType('Salon');
-                          setDetails({ ...details, type: 'salon' });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Consulting'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserType('Consulting');
-                          setDetails({ ...details, type: 'consulting' });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Construction'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserType('Construction');
-                          setDetails({ ...details, type: 'construction' });
-                        }}
-                      />
-
-                      <DropDownItem
-                        text={'Other'}
-                        extraClasses="p-3 bg-white dark:bg-gray-900 dark:text-white rounded cursor-pointer"
-                        onClick={() => {
-                          setUserType('Other');
-                          setDetails({ ...details, type: 'other' });
-                        }}
-                      />
-                    </DropDown>
-                  </div>
-                </div>
-
-                {details.type === 'other' && (
-                  <div class="flex flex-col space-y-2">
-                    <div class="text-sm text-lime-500">
-                      Tell us more? <span class="text-lime-500">*</span>
-                    </div>
-                    <input
+                  <FormControl required>
+                    <FormLabel for="firstName" color="black">
+                      First Name
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="First Name"
+                      size="sm"
+                      color="black"
+                      id="firstName"
                       type="text"
-                      placeholder="Tell us more?"
-                      value={details.typeDescription}
-                      class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
+                      value={details.firstName || ''}
                       onChange={(event) => {
                         setDetails({
                           ...details,
-                          typeDescription: event.target.value,
+                          firstName: event.target.value,
                         });
                       }}
                     />
-                  </div>
-                )}
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
 
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">Registration Number</div>
-                  <div
-                    type="text"
-                    placeholder="Registration Number"
-                    value={details.registrationNumber}
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none w-64"
-                    contentEditable={true}
-                    onBlur={(event) => {
-                      setDetails({
-                        ...details,
-                        registrationNumber: event.target.innerText,
-                      });
-                    }}
-                  />
-                </div>
-              </div>
-              <button
-                class="self-end rounded-full p-2 bg-white dark:bg-gray-900 w-10 h-10 shadow"
-                disabled={
-                  !details.displayName ||
-                  !details.type ||
-                  (details.type === 'other' && !details.typeDescription)
-                }
-                onClick={() => {
-                  setStage(stage() + 1);
+                  <FormControl required>
+                    <FormLabel for="lastName" color="black">
+                      Last Name
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Last Name"
+                      size="sm"
+                      color="black"
+                      id="lastName"
+                      type="text"
+                      value={details.lastName || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          lastName: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
 
-                  setTimeout(() => {
-                    setStage(stage() + 1);
-                  }, 3000);
-                }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+                  <FormControl required>
+                    <FormLabel for="idNumber" color="black">
+                      ID Number
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="ID Number"
+                      size="sm"
+                      color="black"
+                      id="idNumber"
+                      type="text"
+                      value={details.idNumber || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          idNumber: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
+
+                  <FormControl required>
+                    <FormLabel for="age" color="black">
+                      Age
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Age"
+                      size="sm"
+                      color="black"
+                      id="age"
+                      type="text"
+                      value={details.age || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          age: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
+
+                  <FormControl required>
+                    <FormLabel for="gender" color="black">
+                      Gender
+                    </FormLabel>
+                    <Select
+                      id="gender"
+                      variant="unstyled"
+                      value={
+                        details.gender && details.gender.split('')[0].toUpperCase() +
+                          details.gender.substring(1, details.gender.length) ||
+                        ''
+                      }
+                      onChange={(gender) => setDetails({ ...details, gender })}
+                    >
+                      <SelectTrigger
+                        border="none"
+                        outline="none"
+                        bg="#e5e5e5"
+                        p="$3"
+                        class="outline-none"
+                        color="black"
+                      >
+                        <SelectPlaceholder>Choose Gender</SelectPlaceholder>
+                        <SelectValue />
+                        <SelectIcon />
+                      </SelectTrigger>
+                      <SelectContent bg="#e5e5e5" border="none" color="black">
+                        <SelectListbox as={VStack} spacing="$1">
+                          <For each={['Male', 'Female']}>
+                            {(item) => (
+                              <SelectOption
+                                value={item}
+                                w="100%"
+                                bg="white"
+                                _active={{ bg: 'white' }}
+                                color="black"
+                              >
+                                <SelectOptionText>{item}</SelectOptionText>
+                                <SelectOptionIndicator color="$lime4" />
+                              </SelectOption>
+                            )}
+                          </For>
+                        </SelectListbox>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+
+                  <FormControl required>
+                    <FormLabel for="ethnicity" color="black">
+                      Ethnicity
+                    </FormLabel>
+                    <Select
+                      id="ethnicity"
+                      variant="unstyled"
+                      value={
+                        details.ethnicity && details.ethnicity.split('')[0].toUpperCase() +
+                          details.ethnicity.substring(
+                            1,
+                            details.ethnicity.length
+                          ) || ''
+                      }
+                      onChange={(ethnicity) =>
+                        setDetails({ ...details, ethnicity })
+                      }
+                    >
+                      <SelectTrigger
+                        border="none"
+                        outline="none"
+                        bg="#e5e5e5"
+                        p="$3"
+                        class="outline-none"
+                        color="black"
+                      >
+                        <SelectPlaceholder>Choose Ethnicity</SelectPlaceholder>
+                        <SelectValue />
+                        <SelectIcon />
+                      </SelectTrigger>
+                      <SelectContent bg="#e5e5e5" border="none" color="black">
+                        <SelectListbox as={VStack} spacing="$1">
+                          <For each={['White', 'Coloured', 'Indian', 'Black']}>
+                            {(item) => (
+                              <SelectOption
+                                value={item}
+                                w="100%"
+                                bg="white"
+                                _active={{ bg: 'white' }}
+                                color="black"
+                              >
+                                <SelectOptionText>{item}</SelectOptionText>
+                                <SelectOptionIndicator color="$lime4" />
+                              </SelectOption>
+                            )}
+                          </For>
+                        </SelectListbox>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                </VStack>
+
+                <IconButton
+                  type="submit"
+                  variant="ghost"
+                  colorScheme="white"
+                  rounded="$full"
+                  size="lg"
+                  class="self-end shadow-2xl shadow-neutral-900"
+                  color="black"
+                  bg="white"
+                  _hover={{ bg: 'white' }}
+                  aria-label="Search"
+                  icon={<IconArrowRight />}
+                  onClick={() => {
+                    let form = document.getElementById('personalForm');
+
+                    if (form instanceof HTMLFormElement) {
+                      if (form.checkValidity()) {
+                        setStage(stage() + 1);
+
+                        setTimeout(() => {
+                          setStage(stage() + 1);
+                        }, 3000);
+                      } else {
+                        form.reportValidity();
+                      }
+                    }
+                  }}
+                />
+              </HStack>
+            </Box>
+          </form>
+        )}
+
+        {stage() === 3 && (
+          <form id="businessForm">
+            <Box class="animate-fade-in">
+              <HStack spacing="$5">
+                <IconButton
+                  variant="ghost"
+                  colorScheme="white"
+                  rounded="$full"
+                  size="lg"
+                  class="self-end shadow-2xl shadow-neutral-900"
+                  color="black"
+                  bg="white"
+                  _hover={{ bg: 'white' }}
+                  aria-label="Search"
+                  icon={<IconArrowLeft />}
+                  onClick={() => {
+                    setStage(stage() - 2);
+                  }}
+                />
+
+                <VStack
+                  bg="white"
+                  shadow="$2xl"
+                  borderRadius="$2xl"
+                  borderWidth="1px"
+                  borderColor="#e5e5e5"
+                  p="$5"
+                  rounded="$2xl"
+                  spacing="$3"
+                  w={{ '@initial': '300px', '@sm': '300px', '@md': '400px' }}
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+                  <FormControl required>
+                    <FormLabel for="displayName" color="black">
+                      Business Name
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Business Name"
+                      size="sm"
+                      color="black"
+                      id="displayName"
+                      type="text"
+                      value={details.displayName || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          displayName: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
 
-      {stage() === 5 && (
-        <div class="flex flex-col w-full h-full justify-center items-center dark:text-white">
-          <div class="animate-fade-in">
-            <div class="flex space-x-2">
-              <button
-                class="self-end rounded-full p-2 bg-white dark:bg-gray-900 w-10 h-10 shadow"
-                onClick={() => setStage(stage() - 2)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+                  <FormControl required>
+                    <FormLabel for="type" color="black">
+                      Business Type
+                    </FormLabel>
+                    <Select
+                      id="type"
+                      variant="unstyled"
+                      value={details.type || ''}
+                      onChange={(type) => {
+                        let typeSplit = type.toString().split(' ');
+                        let typeJoin = typeSplit.join('');
+                        let typeFormatted =
+                          typeJoin.split('')[0].toLowerCase() +
+                          typeJoin.substring(1, typeJoin.length);
+
+                        console.log(typeFormatted);
+
+                        setDetails({
+                          ...details,
+                          type: typeFormatted,
+                        });
+                      }}
+                    >
+                      <SelectTrigger
+                        border="none"
+                        outline="none"
+                        bg="#e5e5e5"
+                        p="$3"
+                        class="outline-none"
+                        color="black"
+                      >
+                        <SelectPlaceholder>
+                          Choose Business Type
+                        </SelectPlaceholder>
+                        <SelectValue />
+                        <SelectIcon />
+                      </SelectTrigger>
+                      <SelectContent bg="#e5e5e5" border="none" color="black">
+                        <SelectListbox as={VStack} spacing="$1">
+                          <For
+                            each={[
+                              'Sewing',
+                              'Bakery',
+                              'Wood Work',
+                              'Garden Service',
+                              'Food And Beverage',
+                              'Gardening',
+                              'Nails',
+                              'Salon',
+                              'Consulting',
+                              'Construction',
+                              'Other',
+                            ]}
+                          >
+                            {(item) => (
+                              <SelectOption
+                                value={item}
+                                w="100%"
+                                bg="white"
+                                _active={{ bg: 'white' }}
+                                color="black"
+                              >
+                                <SelectOptionText>{item}</SelectOptionText>
+                                <SelectOptionIndicator color="$lime4" />
+                              </SelectOption>
+                            )}
+                          </For>
+                        </SelectListbox>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+
+                  {details.type === 'other' && (
+                    <FormControl required>
+                      <FormLabel for="typeDescription" color="black">
+                        Tell us more?
+                      </FormLabel>
+                      <Input
+                        variant="unstyled"
+                        bg="#e5e5e5"
+                        p="$3"
+                        placeholder="Tell us more?"
+                        size="sm"
+                        color="black"
+                        id="typeDescription"
+                        type="text"
+                        value={details.typeDescription || ''}
+                        onChange={(event) => {
+                          setDetails({
+                            ...details,
+                            typeDescription: event.target.value,
+                          });
+                        }}
+                      />
+                      {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                    </FormControl>
+                  )}
+
+                  <FormControl>
+                    <FormLabel for="registrationNumber" color="black">
+                      Registration Number
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Registration Number"
+                      size="sm"
+                      color="black"
+                      id="registrationNumber"
+                      type="text"
+                      value={details.registrationNumber || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          registrationNumber: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
+                </VStack>
+
+                <IconButton
+                  variant="ghost"
+                  colorScheme="white"
+                  rounded="$full"
+                  size="lg"
+                  class="self-end shadow-2xl shadow-neutral-900"
+                  color="black"
+                  bg="white"
+                  _hover={{ bg: 'white' }}
+                  aria-label="Search"
+                  icon={<IconArrowRight />}
+                  onClick={() => {
+                    let form = document.getElementById('businessForm');
+
+                    if (form instanceof HTMLFormElement) {
+                      form.reportValidity();
+
+                      if (form.checkValidity()) {
+                        setStage(stage() + 1);
+
+                        setTimeout(() => {
+                          setStage(stage() + 1);
+                        }, 3000);
+                      }
+                    }
+                  }}
+                />
+              </HStack>
+            </Box>
+          </form>
+        )}
+
+        {stage() === 5 && (
+          <form id="businessForm">
+            <Box class="animate-fade-in">
+              <HStack spacing="$5">
+                <IconButton
+                  variant="ghost"
+                  colorScheme="white"
+                  rounded="$full"
+                  size="lg"
+                  class="self-end shadow-2xl shadow-neutral-900"
+                  color="black"
+                  bg="white"
+                  _hover={{ bg: 'white' }}
+                  aria-label="Search"
+                  icon={<IconArrowLeft />}
+                  onClick={() => {
+                    setStage(stage() - 2);
+                  }}
+                />
+
+                <VStack
+                  bg="white"
+                  shadow="$2xl"
+                  borderRadius="$2xl"
+                  borderWidth="1px"
+                  borderColor="#e5e5e5"
+                  p="$5"
+                  rounded="$2xl"
+                  spacing="$3"
+                  w={{ '@initial': '300px', '@sm': '300px', '@md': '400px' }}
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-              </button>
-              <div class="flex flex-col space-y-5 p-5 bg-white dark:bg-gray-900 rounded shadow">
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">
-                    Account Number <span class="text-lime-500">*</span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Account Number"
-                    value={details.bankAccountNumber}
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-                    onChange={(event) => {
-                      setDetails({
-                        ...details,
-                        bankAccountNumber: event.target.value,
-                      });
-                    }}
-                  />
-                </div>
+                  <FormControl required>
+                    <FormLabel for="accountNumber" color="black">
+                      Account Number
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Account Number"
+                      size="sm"
+                      color="black"
+                      id="accountNumber"
+                      type="text"
+                      value={details.accountNumber || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          accountNumber: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
 
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">
-                    Bank Name <span class="text-lime-500">*</span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Bank Name"
-                    value={details.bankName}
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none w-64"
-                    onChange={(event) => {
-                      setDetails({
-                        ...details,
-                        bankName: event.target.value,
-                      });
-                    }}
-                  />
-                </div>
+                  <FormControl required>
+                    <FormLabel for="bankName" color="black">
+                      Bank Name
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Bank Name"
+                      size="sm"
+                      color="black"
+                      id="bankName"
+                      type="text"
+                      value={details.bankName || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          bankName: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
 
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">
-                    Bank Branch <span class="text-lime-500">*</span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Bank Branch"
-                    value={details.bankBranch}
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none w-64"
-                    onChange={(event) => {
-                      setDetails({
-                        ...details,
-                        bankBranch: event.target.value,
-                      });
-                    }}
-                  />
-                </div>
-              </div>
-              <button
-                class="self-end rounded-full p-2 bg-white dark:bg-gray-900 w-10 h-10 shadow"
-                disabled={
-                  !details.bankAccountNumber ||
-                  !details.bankName ||
-                  !details.bankBranch
-                }
-                onClick={() => {
-                  setStage(stage() + 1);
+                  <FormControl required>
+                    <FormLabel for="bankBranch" color="black">
+                      Bank Branch
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Bank Branch"
+                      size="sm"
+                      color="black"
+                      id="bankBranch"
+                      type="text"
+                      value={details.bankBranch || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          bankBranch: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
+                </VStack>
 
-                  setTimeout(() => {
-                    setStage(stage() + 1);
-                  }, 3000);
-                }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+                <IconButton
+                  variant="ghost"
+                  colorScheme="white"
+                  rounded="$full"
+                  size="lg"
+                  class="self-end shadow-2xl shadow-neutral-900"
+                  color="black"
+                  bg="white"
+                  _hover={{ bg: 'white' }}
+                  aria-label="Search"
+                  icon={<IconArrowRight />}
+                  onClick={() => {
+                    let form = document.getElementById('businessForm');
+
+                    if (form instanceof HTMLFormElement) {
+                      form.reportValidity();
+
+                      if (form.checkValidity()) {
+                        setStage(stage() + 1);
+
+                        setTimeout(() => {
+                          setStage(stage() + 1);
+                        }, 3000);
+                      }
+                    }
+                  }}
+                />
+              </HStack>
+            </Box>
+          </form>
+        )}
+
+        {stage() === 7 && (
+          <form id="businessForm">
+            <Box class="animate-fade-in">
+              <HStack spacing="$5">
+                <IconButton
+                  variant="ghost"
+                  colorScheme="white"
+                  rounded="$full"
+                  size="lg"
+                  class="self-end shadow-2xl shadow-neutral-900"
+                  color="black"
+                  bg="white"
+                  _hover={{ bg: 'white' }}
+                  aria-label="Search"
+                  icon={<IconArrowLeft />}
+                  onClick={() => {
+                    setStage(stage() - 2);
+                  }}
+                />
+
+                <VStack
+                  bg="white"
+                  shadow="$2xl"
+                  borderRadius="$2xl"
+                  borderWidth="1px"
+                  borderColor="#e5e5e5"
+                  p="$5"
+                  rounded="$2xl"
+                  spacing="$3"
+                  w={{ '@initial': '300px', '@sm': '300px', '@md': '400px' }}
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+                  <FormControl required>
+                    <FormLabel for="streetAddress" color="black">
+                      Street Address
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Street Address"
+                      size="sm"
+                      color="black"
+                      id="streetAddress"
+                      type="text"
+                      value={details.streetAddress || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          streetAddress: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
 
-      {stage() === 7 && (
-        <div class="flex flex-col w-full h-full justify-center items-center dark:text-white">
-          <div class="animate-fade-in">
-            <div class="flex space-x-2">
-              <button
-                class="self-end rounded-full p-2 bg-white dark:bg-gray-900 w-10 h-10 shadow"
-                onClick={() => setStage(stage() - 2)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-              </button>
-              <div class="flex flex-col space-y-5 p-5 bg-white dark:bg-gray-900 rounded shadow">
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">
-                    Street Address <span class="text-lime-500">*</span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Street Address"
-                    value={details.streetAddress}
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-                    onChange={(event) => {
-                      setDetails({
-                        ...details,
-                        streetAddress: event.target.value,
-                      });
-                    }}
-                  />
-                </div>
+                  <FormControl required>
+                    <FormLabel for="suburb" color="black">
+                      Suburb
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Suburb"
+                      size="sm"
+                      color="black"
+                      id="suburb"
+                      type="text"
+                      value={details.suburb || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          suburb: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
 
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">
-                    Suburb <span class="text-lime-500">*</span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Suburb"
-                    value={details.suburb}
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-                    onChange={(event) => {
-                      setDetails({
-                        ...details,
-                        suburb: event.target.value,
-                      });
-                    }}
-                  />
-                </div>
+                  <FormControl>
+                    <FormLabel for="ward" color="black">
+                      Ward
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Ward"
+                      size="sm"
+                      color="black"
+                      id="ward"
+                      type="text"
+                      value={details.ward || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          ward: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
 
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">Ward</div>
-                  <input
-                    type="text"
-                    placeholder="Ward"
-                    value={details.ward}
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-                    onChange={(event) => {
-                      setDetails({
-                        ...details,
-                        ward: event.target.value,
-                      });
-                    }}
-                  />
-                </div>
+                  <FormControl required>
+                    <FormLabel for="city" color="black">
+                      City
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="City"
+                      size="sm"
+                      color="black"
+                      id="city"
+                      type="text"
+                      value={details.city || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          city: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
 
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">
-                    City <span class="text-lime-500">*</span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="City"
-                    value={details.city}
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-                    onChange={(event) => {
-                      setDetails({
-                        ...details,
-                        city: event.target.value,
-                      });
-                    }}
-                  />
-                </div>
+                  <FormControl required>
+                    <FormLabel for="areaCode" color="black">
+                      Area Code
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Area Code"
+                      size="sm"
+                      color="black"
+                      id="areaCode"
+                      type="text"
+                      value={details.areaCode || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          areaCode: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
 
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">
-                    Area Code <span class="text-lime-500">*</span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Area Code"
-                    value={details.areaCode}
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-                    onChange={(event) => {
-                      setDetails({
-                        ...details,
-                        areaCode: event.target.value,
-                      });
-                    }}
-                  />
-                </div>
+                  <FormControl required>
+                    <FormLabel for="province" color="black">
+                      Province
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Province"
+                      size="sm"
+                      color="black"
+                      id="province"
+                      type="text"
+                      value={details.province || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          province: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
 
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">
-                    Province <span class="text-lime-500">*</span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Province"
-                    value={details.province}
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-                    onChange={(event) => {
-                      setDetails({
-                        ...details,
-                        province: event.target.value,
-                      });
-                    }}
-                  />
-                </div>
+                  <FormControl required>
+                    <FormLabel for="country" color="black">
+                      Country
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Country"
+                      size="sm"
+                      color="black"
+                      id="country"
+                      type="text"
+                      value={details.country || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          country: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
+                </VStack>
 
-                <div class="flex flex-col space-y-2">
-                  <div class="text-sm text-lime-500">
-                    Country <span class="text-lime-500">*</span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Country"
-                    value={details.country}
-                    class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-                    onChange={(event) => {
-                      setDetails({
-                        ...details,
-                        country: event.target.value,
-                      });
-                    }}
-                  />
-                </div>
-              </div>
-              <button
-                class="self-end rounded-full p-2 bg-white dark:bg-gray-900 w-10 h-10 shadow"
-                disabled={
-                  !details.streetAddress ||
-                  !details.suburb ||
-                  !details.city ||
-                  !details.areaCode ||
-                  !details.province ||
-                  !details.country
-                }
-                onClick={() => {
-                  completeProfile();
-                }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+                <IconButton
+                  variant="ghost"
+                  colorScheme="white"
+                  rounded="$full"
+                  size="lg"
+                  class="self-end shadow-2xl shadow-neutral-900"
+                  color="black"
+                  bg="white"
+                  _hover={{ bg: 'white' }}
+                  aria-label="Search"
+                  icon={<IconCheck />}
+                  onClick={() => {
+                    let form = document.getElementById('businessForm');
+
+                    if (form instanceof HTMLFormElement) {
+                      form.reportValidity();
+
+                      if (form.checkValidity()) {
+                        completeProfile();
+                      }
+                    }
+                  }}
+                />
+              </HStack>
+            </Box>
+          </form>
+        )}
+      </VStack>
+    </Center>
   );
 };
 

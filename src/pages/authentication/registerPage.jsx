@@ -1,15 +1,23 @@
+import {
+  Box,
+  Button,
+  Center,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Input,
+  VStack
+} from '@hope-ui/solid';
+
+import PurposeLogo from '../../components/PurposeLogo';
+import TermsAndConditionsModal from '../../components/modals/tsandcsModal';
+import apiUrl from '../../apiUrl';
 import axios from 'axios';
-import { useNavigate } from 'solid-app-router';
 import { createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import apiUrl from '../../apiUrl';
-import TermsAndConditionsModal from '../../components/modals/tsandcsModal';
-import PurposeLogo from '../../components/PurposeLogo';
 import useState from '../../hooks/state';
 
 let RegisterPage = ({ toggleLogin = () => {} }) => {
-  let navigate = useNavigate();
-
   let [user, updateUser] = useState('userState');
   let [authenticationGuard, updateAuthenticationGuard] = useState(
     'authenticationGuard'
@@ -69,7 +77,16 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
   };
 
   return (
-    <div class="flex flex-col w-full h-full justify-center items-center bg-gray-800">
+    <Box class="relative w-full h-full">
+      <div class="absolute top-5 right-5 bg-blue-100">
+        {message.type && (
+          <Alert status={message.type} variant="left-accent">
+            <AlertIcon />
+            {message.value}
+          </Alert>
+        )}
+      </div>
+
       {showTermsAndConditionsModal() && (
         <TermsAndConditionsModal
           onAgree={() => {
@@ -86,86 +103,142 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
         />
       )}
 
-      <div class="flex flex-col space-y-10 w-72 bg-white dark:bg-gray-900 rounded-md shadow p-5">
-        <div class="flex justify-center items-center w-full h-full text-3xl text-emeral-800 dark:text-white">
-          <PurposeLogo />
-        </div>
+      <Center bg="white" class="w-full h-full">
+        <VStack spacing="$10">
+          <VStack spacing="$5">
+            <Box class="flex justify-center items-center w-full h-full">
+              <PurposeLogo />
+            </Box>
 
-        {message.type && (
-          <div
-            class={`${message.type === 'error' && 'text-red-500'} ${
-              message.type === 'success' && 'text-emeral-800'
-            } w-full text-center`}
-          >
-            {message.value}
-          </div>
-        )}
+            <Box color="#a3a3a3">
+              Already have an account?{' '}
+              <span
+                class="text-lime-300 cursor-pointer"
+                onClick={() => toggleLogin()}
+              >
+                Authenticate
+              </span>
+            </Box>
+          </VStack>
 
-        <div class="flex flex-col space-y-3">
-          <input
-            type="text"
-            placeholder="Your email"
-            class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-            onChange={(event) => {
-              setEmail(event.target.value);
-            }}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Your Password"
-            class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-            onChange={(event) => {
-              setConfirmPassword(event.target.value);
-            }}
-            required
-          />
-        </div>
-
-        <div class="flex flex-col items-center space-y-3">
-          <div class="flex justify-center items-center w-full space-x-2">
-            <div
-              class={`flex flex-col justify-center items-center w-5 h-5 rounded-full cursor-pointer ${
-                agreedToTermsAndConditions() ? 'bg-lime-300' : 'bg-gray-400'
-              }`}
-              onClick={() =>
-                setAgreedToTermsAndConditions(!agreedToTermsAndConditions())
-              }
-            ></div>
-            <div
-              class="text-sm cursor-pointer hover:text-lime-500"
-              onClick={() => setShowTermsAndConditionsModal(true)}
+          <form>
+            <VStack
+              bg="white"
+              shadow="$2xl"
+              borderRadius="$2xl"
+              borderWidth="1px"
+              borderColor="#e5e5e5"
+              p="$5"
+              rounded="$2xl"
+              spacing="$8"
+              w={{ '@initial': '300px', '@sm': '300px', '@md': '400px' }}
             >
-              Terms and Conditions
-            </div>
-          </div>
-          <button
-            class="px-3 py-2 bg-lime-300 text-black rounded shadow select-none"
-            onClick={() => authenticate()}
-          >
-            Register
-          </button>
-          <div class="dark:text-white select-none">
-            Already have an account?{' '}
-            <span
-              class="text-gray-400 cursor-pointer"
-              onClick={() => toggleLogin()}
-            >
-              Login
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
+              <VStack spacing="$3">
+                <FormControl required>
+                  <FormLabel for="email" color="black">
+                    Email
+                  </FormLabel>
+                  <Input
+                    variant="unstyled"
+                    bg="#e5e5e5"
+                    p="$3"
+                    placeholder="Your email"
+                    size="md"
+                    color="black"
+                    id="email"
+                    type="email"
+                    onChange={(event) => {
+                      setEmail(event.target.value);
+                    }}
+                  />
+                  <FormHelperText>We'll never share your email.</FormHelperText>
+                </FormControl>
+
+                <VStack w="100%" spacing="$2">
+                  <FormControl required>
+                    <FormLabel for="password" color="black">
+                      Password
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Your password"
+                      size="md"
+                      color="black"
+                      id="password"
+                      type="password"
+                      onChange={(event) => {
+                        setPassword(event.target.value);
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
+
+                  <FormControl required>
+                    <FormLabel for="password" color="black">
+                      Confirm Password
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Confirm password"
+                      size="md"
+                      color="black"
+                      id="password"
+                      type="password"
+                      _valid={password() !== confirmPassword()}
+                      onChange={(event) => {
+                        setConfirmPassword(event.target.value);
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
+                </VStack>
+              </VStack>
+
+              <VStack w="100%" spacing="$2">
+                <Center w="100%" class="space-x-2">
+                  <Box
+                    class={`flex flex-col justify-center items-center w-5 h-5 rounded-full cursor-pointer ${
+                      agreedToTermsAndConditions()
+                        ? 'bg-lime-400'
+                        : 'bg-gray-400'
+                    }`}
+                    onClick={() =>
+                      setAgreedToTermsAndConditions(
+                        !agreedToTermsAndConditions()
+                      )
+                    }
+                  ></Box>
+                  <Box
+                    class="text-sm cursor-pointer text-gray-400 hover:text-lime-400"
+                    onClick={() => setShowTermsAndConditionsModal(true)}
+                  >
+                    Terms and Conditions
+                  </Box>
+                </Center>
+
+                <Box w="100%">
+                  <Button
+                    color="black"
+                    rounded="$md"
+                    class="bg-lime-300 shadow-lg shadow-lime-200 select-none outline-none"
+                    w="100%"
+                    variant="solid"
+                    colorScheme="$lime4"
+                    onClick={() => authenticate()}
+                  >
+                    Register
+                  </Button>
+                </Box>
+              </VStack>
+            </VStack>
+          </form>
+        </VStack>
+      </Center>
+    </Box>
   );
 };
 

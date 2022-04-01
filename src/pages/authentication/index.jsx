@@ -1,6 +1,6 @@
-import { createSignal } from 'solid-js';
 import LoginPage from './loginPage';
 import RegisterPage from './registerPage';
+import { createSignal } from 'solid-js';
 
 let AuthenticationPage = () => {
   let [login, toggleLogin] = createSignal(false);

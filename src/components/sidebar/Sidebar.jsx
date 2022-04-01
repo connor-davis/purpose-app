@@ -1,8 +1,8 @@
-import { createSignal } from 'solid-js';
-import useState from '../../hooks/state';
-import ArrowLeft from '../../icons/arrowLeft';
+import IconArrowLeft from '../../icons/IconArrowLeft';
 import PurposeLogoSmall from '../PurposeLogoSmall';
 import SidebarHeader from './SidebarHeader';
+import { createSignal } from 'solid-js';
+import useState from '../../hooks/state';
 
 let Sidebar = ({
   children,
@@ -44,7 +44,7 @@ let Sidebar = ({
                 setSidebarActive(false);
               }}
             >
-              <ArrowLeft className="text-white fill-white" />
+              <IconArrowLeft className="text-white fill-white" />
             </div>
           ) : (
             <div

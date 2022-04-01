@@ -1,8 +1,21 @@
+import {
+  Alert,
+  AlertIcon,
+  Box,
+  Button,
+  Center,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Input,
+  VStack
+} from '@hope-ui/solid';
+
+import PurposeLogo from '../../components/PurposeLogo';
+import apiUrl from '../../apiUrl';
 import axios from 'axios';
 import { createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import apiUrl from '../../apiUrl';
-import PurposeLogo from '../../components/PurposeLogo';
 import useState from '../../hooks/state';
 
 let LoginPage = ({ toggleLogin = () => {} }) => {
@@ -40,65 +53,113 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
         });
       })
       .catch(() => {
-        setMessage({ type: 'error', value: 'Authentication error.' });
+        setMessage({ type: 'danger', value: 'Authentication error.' });
       });
   };
 
   return (
-    <div class="flex flex-col w-full h-full justify-center items-center bg-gray-800">
-      <div class="flex flex-col space-y-10 w-72 bg-white dark:bg-gray-900 rounded-md shadow p-5">
-        <div class="flex justify-center items-center w-full h-full text-3xl text-emeral-800 dark:text-white">
-          <PurposeLogo />
-        </div>
-
+    <Box class="relative w-full h-full">
+      <div class="absolute top-5 right-5 bg-blue-100">
         {message.type && (
-          <div
-            class={`${message.type === 'error' && 'text-red-500'} ${
-              message.type === 'success' && 'text-emeral-800'
-            }`}
-          >
+          <Alert status={message.type} variant="left-accent">
+            <AlertIcon />
             {message.value}
-          </div>
+          </Alert>
         )}
-
-        <div class="flex flex-col space-y-3">
-          <input
-            type="text"
-            placeholder="Your email"
-            class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-            onChange={(event) => {
-              setEmail(event.target.value);
-            }}
-          />
-          <input
-            type="password"
-            placeholder="Your Password"
-            class="bg-gray-200 dark:bg-gray-800 dark:text-white rounded px-3 py-2 outline-none"
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
-          />
-        </div>
-
-        <div class="flex flex-col items-center space-y-3">
-          <button
-            class="px-3 py-2 bg-lime-300 text-black rounded shadow select-none"
-            onClick={() => authenticate()}
-          >
-            Login
-          </button>
-          <div class="dark:text-white select-none">
-            Don't have an account?{' '}
-            <span
-              class="text-gray-400 cursor-pointer"
-              onClick={() => toggleLogin()}
-            >
-              Register
-            </span>
-          </div>
-        </div>
       </div>
-    </div>
+
+      <Center bg="white" class="w-full h-full">
+        <VStack spacing="$10">
+          <VStack spacing="$5">
+            <Box class="flex justify-center items-center w-full h-full">
+              <PurposeLogo />
+            </Box>
+
+            <Box color="#a3a3a3">
+              Do not have an account yet?{' '}
+              <span
+                class="text-lime-300 cursor-pointer"
+                onClick={() => toggleLogin()}
+              >
+                Create account
+              </span>
+            </Box>
+          </VStack>
+
+          <form>
+            <VStack
+              bg="white"
+              shadow="$2xl"
+              borderRadius="$2xl"
+              borderWidth="1px"
+              borderColor="#e5e5e5"
+              p="$5"
+              rounded="$2xl"
+              spacing="$8"
+              w={{ '@initial': '300px', '@sm': '300px', '@md': '400px' }}
+            >
+              <VStack spacing="$5" w="100%">
+                <FormControl required>
+                  <FormLabel for="email" color="black">
+                    Email
+                  </FormLabel>
+                  <Input
+                    variant="unstyled"
+                    bg="#e5e5e5"
+                    p="$3"
+                    placeholder="Your email"
+                    size="md"
+                    color="black"
+                    id="email"
+                    type="email"
+                    onChange={(event) => {
+                      setEmail(event.target.value);
+                    }}
+                  />
+                  <FormHelperText>We'll never share your email.</FormHelperText>
+                </FormControl>
+
+                <VStack w="100%">
+                  <FormControl required>
+                    <FormLabel for="email" color="black">
+                      Password
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Your email"
+                      size="md"
+                      color="black"
+                      id="password"
+                      type="password"
+                      onChange={(event) => {
+                        setPassword(event.target.value);
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
+                </VStack>
+              </VStack>
+
+              <Box w="100%">
+                <Button
+                  color="black"
+                  rounded="$md"
+                  class="bg-lime-300 shadow-lg shadow-lime-200 select-none outline-none"
+                  w="100%"
+                  variant="solid"
+                  colorScheme="$lime4"
+                  onClick={() => authenticate()}
+                >
+                  Login
+                </Button>
+              </Box>
+            </VStack>
+          </form>
+        </VStack>
+      </Center>
+    </Box>
   );
 };
 
