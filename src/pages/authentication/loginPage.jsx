@@ -78,7 +78,7 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
             <Box color="#a3a3a3">
               Do not have an account yet?{' '}
               <span
-                class="text-lime-300 cursor-pointer"
+                class="text-lime-400 cursor-pointer"
                 onClick={() => toggleLogin()}
               >
                 Create account
@@ -146,7 +146,7 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
                 <Button
                   color="black"
                   rounded="$md"
-                  class="bg-lime-300 shadow-lg shadow-lime-200 select-none outline-none"
+                  class="bg-lime-400 shadow-lg shadow-lime-200 select-none outline-none"
                   w="100%"
                   variant="solid"
                   colorScheme="$lime4"

@@ -7,6 +7,7 @@ import RootPage from './pages/root/rootPage';
 import SetupProfilePage from './pages/setup/setupProfilePage';
 import useState from './hooks/state';
 import ProductsPage from "./pages/products/ProductsPage";
+import ProfilePage from "./pages/profile/profilePage";
 
 let PurposeApp = () => {
     let [userState, updateUserState] = useState('userState');
@@ -78,6 +79,7 @@ let PurposeApp = () => {
                                 <Route path="/" element={<RootPage/>}>
                                     <Route path="/" element={<DashboardPage/>}/>
                                     <Route path="/products" element={<ProductsPage/>}/>
+                                    <Route path="/profile" element={<ProfilePage/>}/>
                                 </Route>
                             </Routes>
                         )

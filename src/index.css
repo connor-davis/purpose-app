@@ -3,31 +3,47 @@
 @tailwind utilities;
 
 * {
-  font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+*:focus {
+    outline: none !important;
+    outline-color: transparent;
+    outline-width: 0;
+}
+
+button:focus, button:active {
+    outline: none !important;
+    outline-color: transparent;
+    outline-width: 0;
+}
+
+input:focus, textarea:focus, select:focus{
+    outline: none;
 }
 
 div[placeholder]:empty:before {
-  content: attr(placeholder);
-  color: #a3a3a3;
+    content: attr(placeholder);
+    color: #a3a3a3;
 }
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+    width: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: transparent; 
+    background: transparent;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgb(189, 189, 189); 
-  border-radius: 1em;
+    background: rgb(189, 189, 189);
+    border-radius: 1em;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(141, 141, 141); 
+    background: rgb(141, 141, 141);
 }

@@ -293,10 +293,10 @@
   dependencies:
     "@floating-ui/core" "^0.6.0"
 
-"@hope-ui/solid@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@hope-ui/solid/-/solid-0.2.1.tgz#3eeaffe1adfccee2a783b2cc29120afd8fde4fac"
-  integrity sha512-HoI1S4VUWF8NZYvKJ+kuCWqtO+hLJ05bceCtvo+m09viMviuz822dhv1oWGYSGG5ZGKnz3mlj48U0Sa1wlK+AA==
+"@hope-ui/solid@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@hope-ui/solid/-/solid-0.3.1.tgz#3946d47136a26e7ff30aaf683ed23f4fde56071f"
+  integrity sha512-C26AolLZf5OfL5ZN5Ye+Da0G3yJfLODpJp7YipdIW5absnuRYNue3QtXsEiaovqFQ6U2VUIAgOBXJKftxC4rlg==
   dependencies:
     "@floating-ui/dom" "0.4.0"
     csstype "3.0.10"
