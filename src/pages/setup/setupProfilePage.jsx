@@ -438,8 +438,6 @@ let SetupProfilePage = () => {
                           typeJoin.split('')[0].toLowerCase() +
                           typeJoin.substring(1, typeJoin.length);
 
-                        console.log(typeFormatted);
-
                         setDetails({
                           ...details,
                           type: typeFormatted,
