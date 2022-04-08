@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "name": "purpose-app",
+      "cwd": "./w",
+      "script": "npm",
+      "args" : "run \"start:prod\""
+    }
+  ]
+}

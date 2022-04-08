@@ -6,7 +6,7 @@
     "start": "vite",
     "dev": "vite --host",
     "build": "vite build",
-    "serve": "serve dist -p 3000 -c ./serve.json"
+    "start:prod": "nodemon --watch ./dist/ --exec \"serve ./dist/ -p 3000\""
   },
   "license": "MIT",
   "devDependencies": {
