@@ -8,7 +8,7 @@ import {
   FormHelperText,
   FormLabel,
   Input,
-  VStack
+  VStack,
 } from '@hope-ui/solid';
 
 import PurposeLogo from '../../components/PurposeLogo';
@@ -128,7 +128,7 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
                       variant="unstyled"
                       bg="#e5e5e5"
                       p="$3"
-                      placeholder="Your email"
+                      placeholder="Your password"
                       size="md"
                       color="black"
                       id="password"

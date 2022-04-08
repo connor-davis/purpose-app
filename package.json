@@ -6,7 +6,7 @@
     "start": "vite",
     "dev": "vite --host",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "serve dist -p 3000 -c ./serve.json"
   },
   "license": "MIT",
   "devDependencies": {
