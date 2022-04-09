@@ -1,4 +1,6 @@
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
   Center,
@@ -6,7 +8,7 @@ import {
   FormHelperText,
   FormLabel,
   Input,
-  VStack
+  VStack,
 } from '@hope-ui/solid';
 
 import PurposeLogo from '../../components/PurposeLogo';
