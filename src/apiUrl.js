@@ -1,1 +1,1 @@
-export default "http://localhost:3000/api/v1";
+export default 'https://purposeapi.lone-wolf.software/api/v1';

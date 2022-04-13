@@ -281,25 +281,25 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
-"@floating-ui/core@^0.6.0":
+"@floating-ui/core@^0.6.1":
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-0.6.1.tgz#aed861a1b6dbebadf14a9dd829ba67f4f3ae795c"
   integrity sha512-Y30eVMcZva8o84c0HcXAtDO4BEzPJMvF6+B7x7urL2xbAqVsGJhojOyHLaoQHQYjb6OkqRq5kO+zeySycQwKqg==
 
-"@floating-ui/dom@0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-0.4.0.tgz#9f81632b7c0cc7ae3a12b2b9990de14752083a36"
-  integrity sha512-sfbZCY30r2u9f6h2wBtFtvhlSLP2nUuwsj7feTvZLtxhbrVd+/43jrW1d2OHWfeqx8oUTbCQdO5Z7td9DffOkg==
+"@floating-ui/dom@0.4.4":
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-0.4.4.tgz#e0919d23e40bcc84ce2ebe1b9701b211f2d84b3c"
+  integrity sha512-0Ulu3B/dqQplUUSqnTx0foSrlYuMN+GTtlJWvNJwt6Fr7/PqmlR/Y08o6/+bxDWr6p3roBJRaQ51MDZsNmEhhw==
   dependencies:
-    "@floating-ui/core" "^0.6.0"
+    "@floating-ui/core" "^0.6.1"
 
-"@hope-ui/solid@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@hope-ui/solid/-/solid-0.3.1.tgz#3946d47136a26e7ff30aaf683ed23f4fde56071f"
-  integrity sha512-C26AolLZf5OfL5ZN5Ye+Da0G3yJfLODpJp7YipdIW5absnuRYNue3QtXsEiaovqFQ6U2VUIAgOBXJKftxC4rlg==
+"@hope-ui/solid@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@hope-ui/solid/-/solid-0.4.2.tgz#1047069dd836b08811c48dec0be7b90ae118746e"
+  integrity sha512-851ZbQDckF6T8m8GfB1ggDau12iZdDq5p3iESnlupM8oY81Pk5yd7FmxQEKlSxnCRybBU7Eb3N9kfa8TGpVagQ==
   dependencies:
-    "@floating-ui/dom" "0.4.0"
-    csstype "3.0.10"
+    "@floating-ui/dom" "0.4.4"
+    csstype "3.0.11"
     focus-trap "6.7.3"
     lodash.merge "4.6.2"
     scroll-lock "2.1.5"
@@ -581,10 +581,10 @@ cssesc@^3.0.0:
   resolved "https://registry.yarnpkg.com/cssesc/-/cssesc-3.0.0.tgz#37741919903b868565e1c09ea747445cd18983ee"
   integrity sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==
 
-csstype@3.0.10:
-  version "3.0.10"
-  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.10.tgz#2ad3a7bed70f35b965707c092e5f30b327c290e5"
-  integrity sha512-2u44ZG2OcNUO9HDp/Jl8C07x6pU/eTR3ncV91SiK3dhG9TWvRVsCoJw14Ckx5DgWkzGA3waZWO3d7pgqpUI/XA==
+csstype@3.0.11:
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.11.tgz#d66700c5eacfac1940deb4e3ee5642792d85cd33"
+  integrity sha512-sa6P2wJ+CAbgyy4KFssIb/JNMLxFvKF1pCYCSXS8ZMuqZnMsrxqI2E5sPyoTpxoPU/gVZMzr2zjOfg8GIZOMsw==
 
 debug@^4.1.0, debug@~4.3.1, debug@~4.3.2:
   version "4.3.3"

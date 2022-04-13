@@ -9,6 +9,7 @@ import {
   Box,
   Button,
   HStack,
+  Skeleton,
   Text,
   VStack,
 } from '@hope-ui/solid';
@@ -229,114 +230,78 @@ let ProfilePage = () => {
                     />
                     <VStack w={'100%'} spacing={'$2'}>
                       <HStack w={'100%'} spacing={'$2'}>
-                        <VStack w={'100%'} spacing={'$1'}>
+                        <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                           <Box w={'100%'}>First Name</Box>
-                          <Box
-                            w="100%"
-                            p="$3"
-                            bg="#e5e5e5"
-                            rounded="$sm"
-                            class={`${
-                              pageSettings.loadingDetails ? 'animate-pulse' : ''
-                            }`}
+                          <Skeleton
+                            startColor={'#d4d4d4'}
+                            endColor={'#f5f5f5'}
+                            loaded={!pageSettings.loadingDetails}
                           >
-                            {!pageSettings.loadingDetails ? (
-                              personalDetails.firstName || 'Unspecified'
-                            ) : (
-                              <>&#160;</>
-                            )}
-                          </Box>
+                            <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                              {personalDetails.firstName || 'Unspecified'}
+                            </Box>
+                          </Skeleton>
                         </VStack>
-                        <VStack w={'100%'} spacing={'$1'}>
+                        <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                           <Box w={'100%'}>Last Name</Box>
-                          <Box
-                            w="100%"
-                            p="$3"
-                            bg="#e5e5e5"
-                            rounded="$sm"
-                            class={`${
-                              pageSettings.loadingDetails ? 'animate-pulse' : ''
-                            }`}
+                          <Skeleton
+                            startColor={'#d4d4d4'}
+                            endColor={'#f5f5f5'}
+                            loaded={!pageSettings.loadingDetails}
                           >
-                            {!pageSettings.loadingDetails ? (
-                              personalDetails.lastName || 'Unspecified'
-                            ) : (
-                              <>&#160;</>
-                            )}
-                          </Box>
+                            <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                              {personalDetails.lastName || 'Unspecified'}
+                            </Box>
+                          </Skeleton>
                         </VStack>
                       </HStack>
-                      <VStack w={'100%'} spacing={'$1'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                         <Box w={'100%'}>ID Number</Box>
-                        <Box
-                          w="100%"
-                          p="$3"
-                          bg="#e5e5e5"
-                          rounded="$sm"
-                          class={`${
-                            pageSettings.loadingDetails ? 'animate-pulse' : ''
-                          }`}
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
                         >
-                          {!pageSettings.loadingDetails ? (
-                            personalDetails.idNumber || 'Unspecified'
-                          ) : (
-                            <>&#160;</>
-                          )}
-                        </Box>
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {personalDetails.idNumber || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
                       </VStack>
-                      <VStack w={'100%'} spacing={'$1'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                         <Box w={'100%'}>Age</Box>
-                        <Box
-                          w="100%"
-                          p="$3"
-                          bg="#e5e5e5"
-                          rounded="$sm"
-                          class={`${
-                            pageSettings.loadingDetails ? 'animate-pulse' : ''
-                          }`}
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
                         >
-                          {!pageSettings.loadingDetails ? (
-                            personalDetails.age || 'Unspecified'
-                          ) : (
-                            <>&#160;</>
-                          )}
-                        </Box>
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {personalDetails.age || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
                       </VStack>
-                      <VStack w={'100%'} spacing={'$1'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                         <Box w={'100%'}>Gender</Box>
-                        <Box
-                          w="100%"
-                          p="$3"
-                          bg="#e5e5e5"
-                          rounded="$sm"
-                          class={`${
-                            pageSettings.loadingDetails ? 'animate-pulse' : ''
-                          }`}
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
                         >
-                          {!pageSettings.loadingDetails ? (
-                            personalDetails.gender || 'Unspecified'
-                          ) : (
-                            <>&#160;</>
-                          )}
-                        </Box>
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {personalDetails.gender || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
                       </VStack>
-                      <VStack w={'100%'} spacing={'$1'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                         <Box w={'100%'}>Ethnicity</Box>
-                        <Box
-                          w="100%"
-                          p="$3"
-                          bg="#e5e5e5"
-                          rounded="$sm"
-                          class={`${
-                            pageSettings.loadingDetails ? 'animate-pulse' : ''
-                          }`}
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
                         >
-                          {!pageSettings.loadingDetails ? (
-                            personalDetails.ethnicity || 'Unspecified'
-                          ) : (
-                            <>&#160;</>
-                          )}
-                        </Box>
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {personalDetails.ethnicity || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
                       </VStack>
                     </VStack>
                     <Box w="100%">
@@ -390,87 +355,63 @@ let ProfilePage = () => {
                 <Box w="100%" h="100%">
                   <VStack spacing="$3">
                     <VStack w={'100%'} spacing={'$2'}>
-                      <VStack w={'100%'} spacing={'$1'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                         <Box w={'100%'}>Business Name</Box>
-                        <Box
-                          w="100%"
-                          p="$3"
-                          bg="#e5e5e5"
-                          rounded="$sm"
-                          class={`${
-                            pageSettings.loadingDetails ? 'animate-pulse' : ''
-                          }`}
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
                         >
-                          {!pageSettings.loadingDetails ? (
-                            businessDetails.displayName || 'Unspecified'
-                          ) : (
-                            <>&#160;</>
-                          )}
-                        </Box>
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {businessDetails.displayName || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
                       </VStack>
-                      <VStack w={'100%'} spacing={'$1'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                         <Box w={'100%'}>Business Type</Box>
-                        <Box
-                          w="100%"
-                          p="$3"
-                          bg="#e5e5e5"
-                          rounded="$sm"
-                          class={`${
-                            pageSettings.loadingDetails ? 'animate-pulse' : ''
-                          }`}
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
                         >
-                          {!pageSettings.loadingDetails ? (
-                            businessDetails.type ? (
-                              businessDetails.type.split('')[0].toUpperCase() +
-                              businessDetails.type.substring(
-                                1,
-                                businessDetails.type.length
-                              )
-                            ) : (
-                              'Unspecified'
-                            )
-                          ) : (
-                            <>&#160;</>
-                          )}
-                        </Box>
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {businessDetails.type
+                              ? businessDetails.type
+                                  .split('')[0]
+                                  .toUpperCase() +
+                                businessDetails.type.substring(
+                                  1,
+                                  businessDetails.type.length
+                                )
+                              : 'Unspecified'}
+                          </Box>
+                        </Skeleton>
                       </VStack>
                       {businessDetails.type === 'other' && (
-                        <VStack w={'100%'} spacing={'$1'}>
+                        <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                           <Box w={'100%'}>More</Box>
-                          <Box
-                            w="100%"
-                            p="$3"
-                            bg="#e5e5e5"
-                            rounded="$sm"
-                            class={`${
-                              pageSettings.loadingDetails ? 'animate-pulse' : ''
-                            }`}
+                          <Skeleton
+                            startColor={'#d4d4d4'}
+                            endColor={'#f5f5f5'}
+                            loaded={!pageSettings.loadingDetails}
                           >
-                            {!pageSettings.loadingDetails ? (
-                              businessDetails.typeDescription || 'Unspecified'
-                            ) : (
-                              <>&#160;</>
-                            )}
-                          </Box>
+                            <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                              {businessDetails.typeDescription || 'Unspecified'}
+                            </Box>
+                          </Skeleton>
                         </VStack>
                       )}
-                      <VStack w={'100%'} spacing={'$1'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                         <Box w={'100%'}>Registration Number</Box>
-                        <Box
-                          w="100%"
-                          p="$3"
-                          bg="#e5e5e5"
-                          rounded="$sm"
-                          class={`${
-                            pageSettings.loadingDetails ? 'animate-pulse' : ''
-                          }`}
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
                         >
-                          {!pageSettings.loadingDetails ? (
-                            businessDetails.registrationNumer || 'Unspecified'
-                          ) : (
-                            <>&#160;</>
-                          )}
-                        </Box>
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {businessDetails.registrationNumer || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
                       </VStack>
                     </VStack>
                     <Box w="100%">
@@ -524,59 +465,41 @@ let ProfilePage = () => {
                 <Box w="100%" h="100%">
                   <VStack spacing="$3">
                     <VStack w={'100%'} spacing={'$2'}>
-                      <VStack w={'100%'} spacing={'$1'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                         <Box w={'100%'}>Account Number</Box>
-                        <Box
-                          w="100%"
-                          p="$3"
-                          bg="#e5e5e5"
-                          rounded="$sm"
-                          class={`${
-                            pageSettings.loadingDetails ? 'animate-pulse' : ''
-                          }`}
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
                         >
-                          {!pageSettings.loadingDetails ? (
-                            bankDetails.accountNumber || 'Unspecified'
-                          ) : (
-                            <>&#160;</>
-                          )}
-                        </Box>
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {bankDetails.accountNumber || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
                       </VStack>
-                      <VStack w={'100%'} spacing={'$1'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                         <Box w={'100%'}>Bank Name</Box>
-                        <Box
-                          w="100%"
-                          p="$3"
-                          bg="#e5e5e5"
-                          rounded="$sm"
-                          class={`${
-                            pageSettings.loadingDetails ? 'animate-pulse' : ''
-                          }`}
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
                         >
-                          {!pageSettings.loadingDetails ? (
-                            bankDetails.bankName || 'Unspecified'
-                          ) : (
-                            <>&#160;</>
-                          )}
-                        </Box>
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {bankDetails.bankName || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
                       </VStack>
-                      <VStack w={'100%'} spacing={'$1'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                         <Box w={'100%'}>Branch Code</Box>
-                        <Box
-                          w="100%"
-                          p="$3"
-                          bg="#e5e5e5"
-                          rounded="$sm"
-                          class={`${
-                            pageSettings.loadingDetails ? 'animate-pulse' : ''
-                          }`}
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
                         >
-                          {!pageSettings.loadingDetails ? (
-                            bankDetails.bankBranch || 'Unspecified'
-                          ) : (
-                            <>&#160;</>
-                          )}
-                        </Box>
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {bankDetails.bankBranch || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
                       </VStack>
                     </VStack>
                     <Box w="100%">
@@ -630,131 +553,89 @@ let ProfilePage = () => {
                 <Box w="100%" h="100%">
                   <VStack spacing="$3">
                     <VStack w={'100%'} spacing={'$2'}>
-                      <VStack w={'100%'} spacing={'$1'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                         <Box w={'100%'}>Street Address</Box>
-                        <Box
-                          w="100%"
-                          p="$3"
-                          bg="#e5e5e5"
-                          rounded="$sm"
-                          class={`${
-                            pageSettings.loadingDetails ? 'animate-pulse' : ''
-                          }`}
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
                         >
-                          {!pageSettings.loadingDetails ? (
-                            locationDetails.streetAddress || 'Unspecified'
-                          ) : (
-                            <>&#160;</>
-                          )}
-                        </Box>
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {locationDetails.streetAddress || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
                       </VStack>
-                      <VStack w={'100%'} spacing={'$1'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                         <Box w={'100%'}>Suburb</Box>
-                        <Box
-                          w="100%"
-                          p="$3"
-                          bg="#e5e5e5"
-                          rounded="$sm"
-                          class={`${
-                            pageSettings.loadingDetails ? 'animate-pulse' : ''
-                          }`}
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
                         >
-                          {!pageSettings.loadingDetails ? (
-                            locationDetails.suburb || 'Unspecified'
-                          ) : (
-                            <>&#160;</>
-                          )}
-                        </Box>
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {locationDetails.suburb || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
                       </VStack>
-                      <VStack w={'100%'} spacing={'$1'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                         <Box w={'100%'}>Ward</Box>
-                        <Box
-                          w="100%"
-                          p="$3"
-                          bg="#e5e5e5"
-                          rounded="$sm"
-                          class={`${
-                            pageSettings.loadingDetails ? 'animate-pulse' : ''
-                          }`}
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
                         >
-                          {!pageSettings.loadingDetails ? (
-                            locationDetails.ward || 'Unspecified'
-                          ) : (
-                            <>&#160;</>
-                          )}
-                        </Box>
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {locationDetails.ward || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
                       </VStack>
-                      <VStack w={'100%'} spacing={'$1'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                         <Box w={'100%'}>City</Box>
-                        <Box
-                          w="100%"
-                          p="$3"
-                          bg="#e5e5e5"
-                          rounded="$sm"
-                          class={`${
-                            pageSettings.loadingDetails ? 'animate-pulse' : ''
-                          }`}
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
                         >
-                          {!pageSettings.loadingDetails ? (
-                            locationDetails.city || 'Unspecified'
-                          ) : (
-                            <>&#160;</>
-                          )}
-                        </Box>
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {locationDetails.city || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
                       </VStack>
-                      <VStack w={'100%'} spacing={'$1'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                         <Box w={'100%'}>Area Code</Box>
-                        <Box
-                          w="100%"
-                          p="$3"
-                          bg="#e5e5e5"
-                          rounded="$sm"
-                          class={`${
-                            pageSettings.loadingDetails ? 'animate-pulse' : ''
-                          }`}
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
                         >
-                          {!pageSettings.loadingDetails ? (
-                            locationDetails.areaCode || 'Unspecified'
-                          ) : (
-                            <>&#160;</>
-                          )}
-                        </Box>
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {locationDetails.areaCode || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
                       </VStack>
-                      <VStack w={'100%'} spacing={'$1'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                         <Box w={'100%'}>Province</Box>
-                        <Box
-                          w="100%"
-                          p="$3"
-                          bg="#e5e5e5"
-                          rounded="$sm"
-                          class={`${
-                            pageSettings.loadingDetails ? 'animate-pulse' : ''
-                          }`}
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
                         >
-                          {!pageSettings.loadingDetails ? (
-                            locationDetails.province || 'Unspecified'
-                          ) : (
-                            <>&#160;</>
-                          )}
-                        </Box>
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {locationDetails.province || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
                       </VStack>
-                      <VStack w={'100%'} spacing={'$1'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                         <Box w={'100%'}>Country</Box>
-                        <Box
-                          w="100%"
-                          p="$3"
-                          bg="#e5e5e5"
-                          rounded="$sm"
-                          class={`${
-                            pageSettings.loadingDetails ? 'animate-pulse' : ''
-                          }`}
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
                         >
-                          {!pageSettings.loadingDetails ? (
-                            locationDetails.country || 'Unspecified'
-                          ) : (
-                            <>&#160;</>
-                          )}
-                        </Box>
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {locationDetails.country || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
                       </VStack>
                     </VStack>
                     <Box w="100%">
