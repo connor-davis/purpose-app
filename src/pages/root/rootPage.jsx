@@ -23,6 +23,8 @@ import PurposeLogoSmall from '../../components/PurposeLogoSmall';
 import useState from '../../hooks/state';
 import IconProfile from '../../icons/IconProfile';
 import IconLogout from '../../icons/IconLogout';
+import IconCash from '../../icons/IconCash';
+import IconDocumentsIn from '../../icons/IconDocumentsIn';
 
 let RootPage = ({ children }) => {
   const { isOpen, onOpen, onClose } = createDisclosure();
@@ -100,6 +102,50 @@ let RootPage = ({ children }) => {
                       onClick={() => navigate('/products')}
                     >
                       <IconCube />
+                    </Box>
+                  </Tooltip>
+                  <Tooltip
+                    label="Sales"
+                    placement="right"
+                    color="white"
+                    bg="$blackAlpha11"
+                  >
+                    <Box
+                      cursor="pointer"
+                      rounded="$md"
+                      shadow="$2xl"
+                      bg={path() === '/' ? '$limeAlpha4' : '$whiteAlpha6'}
+                      color={path() === '/' ? '$lime4' : '$white'}
+                      borderColor="none"
+                      px="$4"
+                      py="$3"
+                      w="$full"
+                      outline="none"
+                      onClick={() => navigate('/')}
+                    >
+                      <IconCash />
+                    </Box>
+                  </Tooltip>
+                  <Tooltip
+                    label="Expenses"
+                    placement="right"
+                    color="white"
+                    bg="$blackAlpha11"
+                  >
+                    <Box
+                      cursor="pointer"
+                      rounded="$md"
+                      shadow="$2xl"
+                      bg={path() === '/' ? '$limeAlpha4' : '$whiteAlpha6'}
+                      color={path() === '/' ? '$lime4' : '$white'}
+                      borderColor="none"
+                      px="$4"
+                      py="$3"
+                      w="$full"
+                      outline="none"
+                      onClick={() => navigate('/')}
+                    >
+                      <IconDocumentsIn />
                     </Box>
                   </Tooltip>
                 </VStack>
@@ -217,7 +263,10 @@ let RootPage = ({ children }) => {
                             py="$3"
                             w="$full"
                             outline="none"
-                            onClick={() => navigate('/')}
+                            onClick={() => {
+                              navigate('/');
+                              onClose();
+                            }}
                           >
                             <RadioLabel>
                               <HStack spacing="$5">
@@ -250,12 +299,75 @@ let RootPage = ({ children }) => {
                             py="$3"
                             w="$full"
                             outline="none"
-                            onClick={() => navigate('/products')}
+                            onClick={() => {
+                              navigate('/products');
+                              onClose();
+                            }}
                           >
                             <HStack spacing="$5">
                               <IconCube />
                               <Box as="div" class="select-none">
                                 Products
+                              </Box>
+                            </HStack>
+                          </Box>
+                        </Tooltip>
+                        <Tooltip
+                          label="Sales"
+                          placement="right"
+                          color="white"
+                          bg="$blackAlpha11"
+                        >
+                          <Box
+                            cursor="pointer"
+                            rounded="$md"
+                            shadow="$2xl"
+                            bg={path() === '/' ? '$limeAlpha4' : '$whiteAlpha6'}
+                            color={path() === '/' ? '$lime4' : '$white'}
+                            borderColor="none"
+                            px="$4"
+                            py="$3"
+                            w="$full"
+                            outline="none"
+                            onClick={() => {
+                              navigate('/');
+                              onClose();
+                            }}
+                          >
+                            <HStack spacing="$5">
+                              <IconCash />
+                              <Box as="div" class="select-none">
+                                Sales
+                              </Box>
+                            </HStack>
+                          </Box>
+                        </Tooltip>
+                        <Tooltip
+                          label="Expenses"
+                          placement="right"
+                          color="white"
+                          bg="$blackAlpha11"
+                        >
+                          <Box
+                            cursor="pointer"
+                            rounded="$md"
+                            shadow="$2xl"
+                            bg={path() === '/' ? '$limeAlpha4' : '$whiteAlpha6'}
+                            color={path() === '/' ? '$lime4' : '$white'}
+                            borderColor="none"
+                            px="$4"
+                            py="$3"
+                            w="$full"
+                            outline="none"
+                            onClick={() => {
+                              navigate('/');
+                              onClose();
+                            }}
+                          >
+                            <HStack spacing="$5">
+                              <IconDocumentsIn />
+                              <Box as="div" class="select-none">
+                                Expenses
                               </Box>
                             </HStack>
                           </Box>
@@ -292,7 +404,10 @@ let RootPage = ({ children }) => {
                               py="$3"
                               w="100%"
                               outline="none"
-                              onClick={() => navigate('/profile')}
+                              onClick={() => {
+                                navigate('/profile');
+                                onClose();
+                              }}
                             >
                               <RadioLabel>
                                 <HStack spacing="$5">
@@ -327,6 +442,8 @@ let RootPage = ({ children }) => {
                                 clearAuthState();
 
                                 window.location = window.location;
+
+                                onClose();
                               }}
                             >
                               <HStack spacing="$5">
