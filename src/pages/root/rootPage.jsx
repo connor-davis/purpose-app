@@ -210,7 +210,13 @@ let RootPage = ({ children }) => {
           </VStack>
         </Box>
 
-        <Box w="100%" h="100%" class={'px-0 md:px-5'} overflow="hidden">
+        <Box
+          w="100%"
+          h="100%"
+          class={'px-0 md:px-5'}
+          overflow="hidde"
+          color={'white'}
+        >
           <HStack class={'px-5 pt-5'}>
             <div class="md:hidden">
               <Box as={'button'} mb="$5" onClick={onOpen}>
@@ -231,7 +237,7 @@ let RootPage = ({ children }) => {
               </Box>
               <Drawer opened={isOpen()} placement="left" onClose={onClose}>
                 <DrawerOverlay />
-                <DrawerContent bg="#111212">
+                <DrawerContent bg={'$gray900'} color={'white'}>
                   <DrawerCloseButton />
                   <HStack alignItems="center" w="100%" h="auto" p="$3">
                     <Box w="100%" h="auto">

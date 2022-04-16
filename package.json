@@ -31,6 +31,7 @@
     "vite-plugin-pwa": "^0.11.13",
     "workbox-core": "^6.5.1",
     "workbox-precaching": "^6.5.1",
-    "workbox-routing": "^6.5.1"
+    "workbox-routing": "^6.5.1",
+    "workbox-window": "^6.5.3"
   }
 }

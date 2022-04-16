@@ -21,6 +21,7 @@ specifiers:
   workbox-core: ^6.5.1
   workbox-precaching: ^6.5.1
   workbox-routing: ^6.5.1
+  workbox-window: ^6.5.3
 
 dependencies:
   '@hope-ui/solid': 0.4.2_c2c01f4250183259bc30b27f5155ae23
@@ -37,6 +38,7 @@ dependencies:
   workbox-core: 6.5.3
   workbox-precaching: 6.5.3
   workbox-routing: 6.5.3
+  workbox-window: 6.5.3
 
 devDependencies:
   '@tailwindcss/typography': 0.5.2_tailwindcss@3.0.23
