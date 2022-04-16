@@ -1,13 +1,21 @@
-import { createIcon } from '@hope-ui/solid';
+import { Icon } from '@hope-ui/solid';
 
-let IconArrowLeft = createIcon({
-  viewBox: '0 0 24 24',
-  stroke: 'currentColor',
-  strokeWidth: '2',
-  fill: 'none',
-  path: () => (
-    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-  ),
-});
+let IconArrowLeft = (props) => (
+  <Icon
+    {...props}
+    class="h-6 w-6"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth="1"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-width="2"
+      stroke-linejoin="round"
+      d="M15 19l-7-7 7-7"
+    />
+  </Icon>
+);
 
 export default IconArrowLeft;

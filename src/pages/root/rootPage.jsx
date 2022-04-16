@@ -46,10 +46,10 @@ let RootPage = ({ children }) => {
   );
 
   return (
-    <Box w="100%" h="100%" bg="$loContrast" class="select-none">
-      <HStack h="100%" bg="$whiteAlpha6">
+    <Box w="100%" h="100%" bg="$gray800" color={'white'}>
+      <HStack h="100%" bg="$gray800">
         <Box class="hidden md:block" h="100%">
-          <VStack h="100%" class="justify-between" bg="$loContrast">
+          <VStack h="100%" class="justify-between" bg="$gray900">
             <VStack spacing="$10" py="$5" px="$5">
               <Box>
                 <PurposeLogoSmall className={'w-10 h-10 p-0 m-0'} />
@@ -66,8 +66,8 @@ let RootPage = ({ children }) => {
                       name="dashboard"
                       rounded="$md"
                       shadow="$2xl"
-                      bg={path() === '/' ? '$limeAlpha4' : '$whiteAlpha6'}
-                      color={path() === '/' ? '$lime4' : '$white'}
+                      bg={path() === '/' ? '$limeAlpha4' : '$gray800'}
+                      color={path() === '/' ? '$lime4' : 'white'}
                       borderColor="none"
                       px="$4"
                       py="$3"
@@ -90,10 +90,8 @@ let RootPage = ({ children }) => {
                       cursor="pointer"
                       rounded="$md"
                       shadow="$2xl"
-                      bg={
-                        path() === '/products' ? '$limeAlpha4' : '$whiteAlpha6'
-                      }
-                      color={path() === '/products' ? '$lime4' : '$white'}
+                      bg={path() === '/products' ? '$limeAlpha4' : '$gray800'}
+                      color={path() === '/products' ? '$lime4' : 'white'}
                       borderColor="none"
                       px="$4"
                       py="$3"
@@ -114,14 +112,14 @@ let RootPage = ({ children }) => {
                       cursor="pointer"
                       rounded="$md"
                       shadow="$2xl"
-                      bg={path() === '/' ? '$limeAlpha4' : '$whiteAlpha6'}
-                      color={path() === '/' ? '$lime4' : '$white'}
+                      bg={path() === '/sales' ? '$limeAlpha4' : '$gray800'}
+                      color={path() === '/sales' ? '$lime4' : 'white'}
                       borderColor="none"
                       px="$4"
                       py="$3"
                       w="$full"
                       outline="none"
-                      onClick={() => navigate('/')}
+                      onClick={() => navigate('/sales')}
                     >
                       <IconCash />
                     </Box>
@@ -136,14 +134,14 @@ let RootPage = ({ children }) => {
                       cursor="pointer"
                       rounded="$md"
                       shadow="$2xl"
-                      bg={path() === '/' ? '$limeAlpha4' : '$whiteAlpha6'}
-                      color={path() === '/' ? '$lime4' : '$white'}
+                      bg={path() === '/expenses' ? '$limeAlpha4' : '$gray800'}
+                      color={path() === '/expenses' ? '$lime4' : 'white'}
                       borderColor="none"
                       px="$4"
                       py="$3"
                       w="$full"
                       outline="none"
-                      onClick={() => navigate('/')}
+                      onClick={() => navigate('/expenses')}
                     >
                       <IconDocumentsIn />
                     </Box>
@@ -164,10 +162,8 @@ let RootPage = ({ children }) => {
                       name="profile"
                       rounded="$md"
                       shadow="$2xl"
-                      bg={
-                        path() === '/profile' ? '$limeAlpha4' : '$whiteAlpha6'
-                      }
-                      color={path() === '/profile' ? '$lime4' : '$white'}
+                      bg={path() === '/profile' ? '$limeAlpha4' : '$gray800'}
+                      color={path() === '/profile' ? '$lime4' : 'white'}
                       borderColor="none"
                       px="$4"
                       py="$3"
@@ -190,7 +186,7 @@ let RootPage = ({ children }) => {
                       cursor="pointer"
                       rounded="$md"
                       shadow="$2xl"
-                      bg="$whiteAlpha6"
+                      bg="$gray800"
                       color="white"
                       class="hover:bg-red-400 hover:bg-opacity-50 hover:text-red-500"
                       borderColor="none"
@@ -256,8 +252,8 @@ let RootPage = ({ children }) => {
                             name="dashboard"
                             rounded="$md"
                             shadow="$2xl"
-                            bg={path() === '/' ? '$limeAlpha4' : '$whiteAlpha6'}
-                            color={path() === '/' ? '$lime4' : '$white'}
+                            bg={path() === '/' ? '$limeAlpha4' : '$gray800'}
+                            color={path() === '/' ? '$lime4' : 'white'}
                             borderColor="none"
                             px="$4"
                             py="$3"
@@ -291,9 +287,9 @@ let RootPage = ({ children }) => {
                             bg={
                               path() === '/products'
                                 ? '$limeAlpha4'
-                                : '$whiteAlpha6'
+                                : '$gray800'
                             }
-                            color={path() === '/products' ? '$lime4' : '$white'}
+                            color={path() === '/products' ? '$lime4' : 'white'}
                             borderColor="none"
                             px="$4"
                             py="$3"
@@ -322,15 +318,17 @@ let RootPage = ({ children }) => {
                             cursor="pointer"
                             rounded="$md"
                             shadow="$2xl"
-                            bg={path() === '/' ? '$limeAlpha4' : '$whiteAlpha6'}
-                            color={path() === '/' ? '$lime4' : '$white'}
+                            bg={
+                              path() === '/sales' ? '$limeAlpha4' : '$gray800'
+                            }
+                            color={path() === '/sales' ? '$lime4' : 'white'}
                             borderColor="none"
                             px="$4"
                             py="$3"
                             w="$full"
                             outline="none"
                             onClick={() => {
-                              navigate('/');
+                              navigate('/sales');
                               onClose();
                             }}
                           >
@@ -352,15 +350,19 @@ let RootPage = ({ children }) => {
                             cursor="pointer"
                             rounded="$md"
                             shadow="$2xl"
-                            bg={path() === '/' ? '$limeAlpha4' : '$whiteAlpha6'}
-                            color={path() === '/' ? '$lime4' : '$white'}
+                            bg={
+                              path() === '/expenses'
+                                ? '$limeAlpha4'
+                                : '$gray800'
+                            }
+                            color={path() === '/expenses' ? '$lime4' : 'white'}
                             borderColor="none"
                             px="$4"
                             py="$3"
                             w="$full"
                             outline="none"
                             onClick={() => {
-                              navigate('/');
+                              navigate('/expenses');
                               onClose();
                             }}
                           >
@@ -394,11 +396,9 @@ let RootPage = ({ children }) => {
                               bg={
                                 path() === '/profile'
                                   ? '$limeAlpha4'
-                                  : '$whiteAlpha6'
+                                  : '$gray800'
                               }
-                              color={
-                                path() === '/profile' ? '$lime4' : '$white'
-                              }
+                              color={path() === '/profile' ? '$lime4' : 'white'}
                               borderColor="none"
                               px="$4"
                               py="$3"
@@ -429,7 +429,7 @@ let RootPage = ({ children }) => {
                               cursor="pointer"
                               rounded="$md"
                               shadow="$2xl"
-                              bg="$whiteAlpha6"
+                              bg="$gray800"
                               color="white"
                               class="hover:bg-red-400 hover:bg-opacity-50 hover:text-red-500"
                               borderColor="none"

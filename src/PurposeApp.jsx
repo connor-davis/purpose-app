@@ -78,6 +78,8 @@ let PurposeApp = () => {
               <Route path="/" element={<RootPage />}>
                 <Route path="/" element={<DashboardPage />} />
                 <Route path="/products" element={<ProductsPage />} />
+                <Route path="/sales" element={<DashboardPage />} />
+                <Route path="/expenses" element={<DashboardPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
               </Route>
             </Routes>
