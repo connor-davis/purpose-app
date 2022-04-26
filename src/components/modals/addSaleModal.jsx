@@ -84,8 +84,6 @@ let AddSaleModal = ({ onAdd = () => {} }) => {
       })
       .then((response) => {
         if (response.data.error) {
-          console.log(response.data);
-
           return notificationService.show({
             status: 'danger' /* or success, warning, danger */,
             title: 'Error',

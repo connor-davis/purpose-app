@@ -9,14 +9,14 @@ import {
   Skeleton,
   VStack,
 } from '@hope-ui/solid';
-import AddProductModal from '../../components/modals/addProductModal';
-import EditProductModal from '../../components/modals/editProductModal';
 import useState from '../../hooks/state';
 import { createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import axios from 'axios';
 import apiUrl from '../../apiUrl';
 import AddSaleModal from '../../components/modals/addSaleModal';
+import moment from 'moment';
+import EditSaleModal from '../../components/modals/editSaleModal';
 
 let SalesPage = () => {
   let [authState, updateAuthState] = useState('authenticationGuard');
@@ -29,7 +29,7 @@ let SalesPage = () => {
 
   onMount(() => {
     setTimeout(() => {
-      // loadSales();
+      loadSales();
     }, 300);
   });
 
@@ -45,11 +45,20 @@ let SalesPage = () => {
         else {
           setSales([
             ...sales,
-            ...response.data.data.sort((a, b) => {
-              if (a.name > b.name) return 1;
-              if (a.name < b.name) return -1;
-              return 0;
-            }),
+            ...response.data.data
+              .map((sale) => {
+                if (typeof sale.date === 'string')
+                  sale.date = parseInt(sale.date);
+                if (typeof sale.numberSold === 'string')
+                  sale.numberSold = parseInt(sale.numberSold);
+
+                return sale;
+              })
+              .sort((a, b) => {
+                if (a.date < b.date) return 1;
+                if (a.date > b.date) return -1;
+                return 0;
+              }),
           ]);
 
           return setLoading(false);
@@ -80,8 +89,8 @@ let SalesPage = () => {
                 if (sale.id !== id) return sale;
               }),
             ].sort((a, b) => {
-              if (a.name > b.name) return 1;
-              if (a.name < b.name) return -1;
+              if (a.date < b.date) return 1;
+              if (a.date > b.date) return -1;
 
               return 0;
             })
@@ -101,15 +110,19 @@ let SalesPage = () => {
       <HStack w="100%" class="justify-between">
         <Box>Your Sales</Box>
         <AddSaleModal
-          onAdd={(data) =>
+          onAdd={(data) => {
+            if (typeof data.date === 'string') data.date = parseInt(data.date);
+            if (typeof data.numberSold === 'string')
+              data.numberSold = parseInt(data.numberSold);
+
             setSales(
               [...sales, data].sort((a, b) => {
-                if (a.name > b.name) return 1;
-                if (a.name < b.name) return -1;
+                if (a.date < b.date) return 1;
+                if (a.date > b.date) return -1;
                 return 0;
               })
-            )
-          }
+            );
+          }}
         />
       </HStack>
 
@@ -126,9 +139,12 @@ let SalesPage = () => {
         <table class="table-auto w-full">
           <thead class={'h-10'}>
             <tr>
+              <th class={'text-left px-3'}>Date</th>
               <th class={'text-left px-3'}>Name</th>
               <th class={'text-right px-3'}>Price</th>
               <th class={'text-right px-3'}>Cost</th>
+              <th class={'text-right px-3'}>Quantity</th>
+              <th class={'text-right px-3'}>Product</th>
             </tr>
           </thead>
           <tbody>
@@ -136,9 +152,14 @@ let SalesPage = () => {
               sales.filter((sale) => sale !== undefined).length > 0 &&
               sales.map((sale) => (
                 <tr>
-                  <td class={'text-left px-3'}>{sale.name}</td>
-                  <td class={'text-right px-3'}>R {sale.cost}</td>
-                  <td class={'text-right px-3'}>R {sale.price}</td>
+                  <td class={'text-left px-3'}>
+                    {moment(sale.date).format('DD/MM/YYYY')}
+                  </td>
+                  <td class={'text-left px-3'}>{sale.product.name}</td>
+                  <td class={'text-right px-3'}>R {sale.product.cost}</td>
+                  <td class={'text-right px-3'}>R {sale.product.price}</td>
+                  <td class={'text-right px-3'}>{sale.numberSold}</td>
+                  <td class={'text-right px-3'}>R {sale.profit}</td>
                   <td class={'w-10 p-0 m-0'}>
                     <Menu color={'black'} as>
                       <MenuTrigger
@@ -178,23 +199,28 @@ let SalesPage = () => {
                           rounded={'$lg'}
                           cursor={'pointer'}
                         >
-                          {/*<EditProductModal*/}
-                          {/*  data={sale}*/}
-                          {/*  onEdit={(data) =>*/}
-                          {/*    setSales(*/}
-                          {/*      [*/}
-                          {/*        ...sales.map((sale) => {*/}
-                          {/*          if (sale.id === data.id) return data;*/}
-                          {/*          else return sale;*/}
-                          {/*        }),*/}
-                          {/*      ].sort((a, b) => {*/}
-                          {/*        if (a.name > b.name) return 1;*/}
-                          {/*        if (a.name < b.name) return -1;*/}
-                          {/*        return 0;*/}
-                          {/*      })*/}
-                          {/*    )*/}
-                          {/*  }*/}
-                          {/*/>*/}
+                          <EditSaleModal
+                            data={sale}
+                            onEdit={(data) => {
+                              if (typeof data.date === 'string')
+                                data.date = parseInt(data.date);
+                              if (typeof data.numberSold === 'string')
+                                data.numberSold = parseInt(data.numberSold);
+
+                              setSales(
+                                [
+                                  ...sales.map((sale) => {
+                                    if (sale.id === data.id) return data;
+                                    else return sale;
+                                  }),
+                                ].sort((a, b) => {
+                                  if (a.date < b.date) return 1;
+                                  if (a.date > b.date) return -1;
+                                  return 0;
+                                })
+                              );
+                            }}
+                          />
                         </MenuItem>
 
                         <MenuItem
@@ -238,7 +264,7 @@ let SalesPage = () => {
           <>
             {sales.filter((product) => product !== undefined).length === 0 && (
               <VStack w={'100%'} justifyContent={'center'} py={'$5'}>
-                You have no products.
+                You have no sales.
               </VStack>
             )}
           </>
