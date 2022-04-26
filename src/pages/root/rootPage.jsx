@@ -124,28 +124,6 @@ let RootPage = ({ children }) => {
                       <IconCash />
                     </Box>
                   </Tooltip>
-                  <Tooltip
-                    label="Expenses"
-                    placement="right"
-                    color="white"
-                    bg="$blackAlpha11"
-                  >
-                    <Box
-                      cursor="pointer"
-                      rounded="$md"
-                      shadow="$2xl"
-                      bg={path() === '/expenses' ? '$limeAlpha4' : '$gray800'}
-                      color={path() === '/expenses' ? '$lime4' : 'white'}
-                      borderColor="none"
-                      px="$4"
-                      py="$3"
-                      w="$full"
-                      outline="none"
-                      onClick={() => navigate('/expenses')}
-                    >
-                      <IconDocumentsIn />
-                    </Box>
-                  </Tooltip>
                 </VStack>
               </RadioGroup>
             </VStack>
@@ -342,40 +320,6 @@ let RootPage = ({ children }) => {
                               <IconCash />
                               <Box as="div" class="select-none">
                                 Sales
-                              </Box>
-                            </HStack>
-                          </Box>
-                        </Tooltip>
-                        <Tooltip
-                          label="Expenses"
-                          placement="right"
-                          color="white"
-                          bg="$blackAlpha11"
-                        >
-                          <Box
-                            cursor="pointer"
-                            rounded="$md"
-                            shadow="$2xl"
-                            bg={
-                              path() === '/expenses'
-                                ? '$limeAlpha4'
-                                : '$gray800'
-                            }
-                            color={path() === '/expenses' ? '$lime4' : 'white'}
-                            borderColor="none"
-                            px="$4"
-                            py="$3"
-                            w="$full"
-                            outline="none"
-                            onClick={() => {
-                              navigate('/expenses');
-                              onClose();
-                            }}
-                          >
-                            <HStack spacing="$5">
-                              <IconDocumentsIn />
-                              <Box as="div" class="select-none">
-                                Expenses
                               </Box>
                             </HStack>
                           </Box>

@@ -8,6 +8,7 @@ import SetupProfilePage from './pages/setup/setupProfilePage';
 import useState from './hooks/state';
 import ProductsPage from './pages/products/productsPage';
 import ProfilePage from './pages/profile/profilePage';
+import SalesPage from './pages/sales/salesPage';
 
 let PurposeApp = () => {
   let [userState, updateUserState] = useState('userState');
@@ -66,7 +67,6 @@ let PurposeApp = () => {
       {showSetupProfileRequest() && (
         <Routes>
           <Route path="/" exact element={<NoType />} />
-
           <Route path="/setupProfile" element={<SetupProfilePage />} />
         </Routes>
       )}
@@ -78,8 +78,7 @@ let PurposeApp = () => {
               <Route path="/" element={<RootPage />}>
                 <Route path="/" element={<DashboardPage />} />
                 <Route path="/products" element={<ProductsPage />} />
-                <Route path="/sales" element={<DashboardPage />} />
-                <Route path="/expenses" element={<DashboardPage />} />
+                <Route path="/sales" element={<SalesPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
               </Route>
             </Routes>

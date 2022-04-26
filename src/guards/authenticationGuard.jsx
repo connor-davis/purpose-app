@@ -23,7 +23,7 @@ let AuthenticationGuard = ({ children }) => {
   });
 
   return (
-    <div class="w-screen h-screen outline-none select-none">
+    <div class="w-screen h-screen outline-none select-none overflow-hidden">
       {state.authenticationToken ? children : <AuthenticationPage />}
     </div>
   );

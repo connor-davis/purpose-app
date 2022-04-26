@@ -3,7 +3,7 @@ import { render } from 'solid-js/web';
 import './index.css';
 import App from './App';
 import { Router } from 'solid-app-router';
-import { registerSW } from 'virtual:pwa-register';
+// import { registerSW } from 'virtual:pwa-register';
 
 let Routed = () => {
   return (
@@ -15,11 +15,11 @@ let Routed = () => {
 
 render(Routed, document.getElementById('root'));
 
-const updateSW = registerSW({
-  onNeedRefresh() {},
-  onOfflineReady() {},
-});
-
-if (typeof window !== 'undefined') {
-  import('./sw');
-}
+// const updateSW = registerSW({
+//   onNeedRefresh() {},
+//   onOfflineReady() {},
+// });
+//
+// if (typeof window !== 'undefined') {
+//   import('./sw');
+// }

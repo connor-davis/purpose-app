@@ -177,7 +177,7 @@ let ProfilePage = () => {
       <HStack w="100%" p="$5" class="justify-between">
         <Box>Your Profile</Box>
       </HStack>
-      <Box w="100%" h="100%" overflowY="auto" px="$5" pb="$16">
+      <Box w="100%" h="100%" overflowY="auto" px="$5" pb="$24">
         <Accordion
           index={pageIndex()}
           onChange={(value) => {
