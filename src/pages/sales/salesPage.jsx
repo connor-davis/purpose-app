@@ -144,7 +144,7 @@ let SalesPage = () => {
               <th class={'text-right px-3'}>Price</th>
               <th class={'text-right px-3'}>Cost</th>
               <th class={'text-right px-3'}>Quantity</th>
-              <th class={'text-right px-3'}>Product</th>
+              <th class={'text-right px-3'}>Profit</th>
             </tr>
           </thead>
           <tbody>
