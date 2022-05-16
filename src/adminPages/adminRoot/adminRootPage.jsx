@@ -8,7 +8,6 @@ import {
   DrawerFooter,
   DrawerOverlay,
   HStack,
-  notificationService,
   Radio,
   RadioGroup,
   RadioLabel,
@@ -17,18 +16,15 @@ import {
 } from '@hope-ui/solid';
 import { createMemo, createSignal } from 'solid-js';
 import { Outlet, useLocation, useNavigate } from 'solid-app-router';
-
-import IconCube from '../../icons/IconCube';
 import IconHome from '../../icons/IconHome';
 import PurposeLogoSmall from '../../components/PurposeLogoSmall';
 import useState from '../../hooks/state';
-import IconProfile from '../../icons/IconProfile';
 import IconLogout from '../../icons/IconLogout';
-import IconCash from '../../icons/IconCash';
-import apiUrl from '../../apiUrl';
-import axios from 'axios';
+import IconUsers from '../../icons/IconUsers';
+import IconDocumentsIn from '../../icons/IconDocumentsIn';
+import AdminAnnouncementModal from '../../components/modals/admin/announcements/adminAnnouncementModal';
 
-let RootPage = ({ children }) => {
+let AdminRootPage = ({ children }) => {
   const { isOpen, onOpen, onClose } = createDisclosure();
   let navigate = useNavigate();
 
@@ -36,10 +32,9 @@ let RootPage = ({ children }) => {
     'authenticationGuard'
   );
   let [userState, setUserState, clearUserState] = useState('userState');
-  let [announcementState, setAnnouncementState, clearAnnouncementState] =
-    useState('announcements');
 
   let [sidebarActive, setSidebarActive] = createSignal(false);
+  let [isShowing, setIsShowing] = createSignal(false);
 
   let location = useLocation();
 
@@ -49,53 +44,8 @@ let RootPage = ({ children }) => {
       : '/'
   );
 
-  setTimeout(() => {
-    socket.on('announcement', () => loadAnnouncements());
-
-    loadAnnouncements();
-  }, 300);
-
-  let loadAnnouncements = () => {
-    axios
-      .get(apiUrl + '/announcements', {
-        headers: { Authorization: 'Bearer ' + authState.authenticationToken },
-      })
-      .then((response) => {
-        if (response.data.error) return console.log(response.data);
-        else {
-          let announcementsData = response.data.data;
-
-          announcementsData = announcementsData.map((a) => {
-            let existing = Object.values(announcementState).filter(
-              (an) => an.id === a.id
-            )[0];
-
-            if (existing) return existing;
-            else return { ...a, seen: false };
-          });
-
-          setTimeout(() => {
-            announcementsData.map((announcement) => {
-              if (!announcement.seen) {
-                notificationService.show({
-                  title: announcement.announcementTitle,
-                  description: announcement.announcementBody,
-                  status: 'info',
-                  closable: true,
-                  persistent: true,
-                  onClose: () => {
-                    setAnnouncementState([
-                      ...announcementsData.map((a) => {
-                        return { ...a, seen: true };
-                      }),
-                    ]);
-                  },
-                });
-              }
-            });
-          }, 1000);
-        }
-      });
+  let showAnnouncementModal = () => {
+    setIsShowing(!isShowing());
   };
 
   return (
@@ -134,48 +84,80 @@ let RootPage = ({ children }) => {
                     </Radio>
                   </Tooltip>
                   <Tooltip
-                    label="Products"
+                    label="Users"
                     placement="right"
                     color="white"
                     bg="$blackAlpha11"
                   >
-                    <Box
-                      cursor="pointer"
+                    <Radio
+                      name="users"
                       rounded="$md"
                       shadow="$2xl"
-                      bg={path() === '/products' ? '$limeAlpha4' : '$gray800'}
-                      color={path() === '/products' ? '$lime4' : 'white'}
+                      bg={path() === '/users' ? '$limeAlpha4' : '$gray800'}
+                      color={path() === '/users' ? '$lime4' : 'white'}
                       borderColor="none"
                       px="$4"
                       py="$3"
                       w="$full"
                       outline="none"
-                      onClick={() => navigate('/products')}
+                      onClick={() => navigate('/users')}
                     >
-                      <IconCube />
-                    </Box>
+                      <RadioLabel>
+                        <IconUsers />
+                      </RadioLabel>
+                    </Radio>
                   </Tooltip>
                   <Tooltip
-                    label="Sales"
+                    label="Documents"
                     placement="right"
                     color="white"
                     bg="$blackAlpha11"
                   >
-                    <Box
-                      cursor="pointer"
+                    <Radio
+                      name="documents"
                       rounded="$md"
                       shadow="$2xl"
-                      bg={path() === '/sales' ? '$limeAlpha4' : '$gray800'}
-                      color={path() === '/sales' ? '$lime4' : 'white'}
+                      bg={path() === '/documents' ? '$limeAlpha4' : '$gray800'}
+                      color={path() === '/documents' ? '$lime4' : 'white'}
                       borderColor="none"
                       px="$4"
                       py="$3"
                       w="$full"
                       outline="none"
-                      onClick={() => navigate('/sales')}
+                      onClick={() => navigate('/documents')}
                     >
-                      <IconCash />
-                    </Box>
+                      <RadioLabel>
+                        <IconDocumentsIn />
+                      </RadioLabel>
+                    </Radio>
+                  </Tooltip>
+                  <Tooltip
+                    label="Announcement"
+                    placement="right"
+                    color="white"
+                    bg="$blackAlpha11"
+                  >
+                    <Radio
+                      name="documents"
+                      rounded="$md"
+                      shadow="$2xl"
+                      borderColor="none"
+                      bg="$gray800"
+                      px="$4"
+                      py="$3"
+                      w="$full"
+                      outline="none"
+                      onClick={() => {
+                        setIsShowing(true);
+                      }}
+                    >
+                      <RadioLabel>
+                        <AdminAnnouncementModal
+                          toggled={isShowing}
+                          closed={() => setIsShowing(false)}
+                        />
+                      </RadioLabel>
+                    </Radio>
                   </Tooltip>
                 </VStack>
               </RadioGroup>
@@ -183,30 +165,6 @@ let RootPage = ({ children }) => {
             <VStack spacing="$10" py="$5" px="$5">
               <RadioGroup w="100%">
                 <VStack spacing="$2">
-                  <Tooltip
-                    label="Profile"
-                    placement="right"
-                    color="white"
-                    bg="$blackAlpha11"
-                  >
-                    <Radio
-                      name="profile"
-                      rounded="$md"
-                      shadow="$2xl"
-                      bg={path() === '/profile' ? '$limeAlpha4' : '$gray800'}
-                      color={path() === '/profile' ? '$lime4' : 'white'}
-                      borderColor="none"
-                      px="$4"
-                      py="$3"
-                      w="$full"
-                      outline="none"
-                      onClick={() => navigate('/profile')}
-                    >
-                      <RadioLabel>
-                        <IconProfile />
-                      </RadioLabel>
-                    </Radio>
-                  </Tooltip>
                   <Tooltip
                     label="Logout"
                     placement="right"
@@ -312,70 +270,109 @@ let RootPage = ({ children }) => {
                           </Radio>
                         </Tooltip>
                         <Tooltip
-                          label="Products"
+                          label="Users"
                           placement="right"
                           color="white"
                           bg="$blackAlpha11"
                         >
-                          <Box
-                            cursor="pointer"
+                          <Radio
+                            name="users"
                             rounded="$md"
                             shadow="$2xl"
                             bg={
-                              path() === '/products'
+                              path() === '/users' ? '$limeAlpha4' : '$gray800'
+                            }
+                            color={path() === '/users' ? '$lime4' : 'white'}
+                            borderColor="none"
+                            px="$4"
+                            py="$3"
+                            w="$full"
+                            outline="none"
+                            onClick={() => {
+                              navigate('/users');
+                              onClose();
+                            }}
+                          >
+                            <RadioLabel>
+                              <HStack spacing="$5">
+                                <IconUsers />
+                                <Box as="div" class="select-none">
+                                  Users
+                                </Box>
+                              </HStack>
+                            </RadioLabel>
+                          </Radio>
+                        </Tooltip>
+                        <Tooltip
+                          label="Documents"
+                          placement="right"
+                          color="white"
+                          bg="$blackAlpha11"
+                        >
+                          <Radio
+                            name="documents"
+                            rounded="$md"
+                            shadow="$2xl"
+                            bg={
+                              path() === '/documents'
                                 ? '$limeAlpha4'
                                 : '$gray800'
                             }
-                            color={path() === '/products' ? '$lime4' : 'white'}
+                            color={path() === '/documents' ? '$lime4' : 'white'}
                             borderColor="none"
                             px="$4"
                             py="$3"
                             w="$full"
                             outline="none"
                             onClick={() => {
-                              navigate('/products');
+                              navigate('/documents');
                               onClose();
                             }}
                           >
-                            <HStack spacing="$5">
-                              <IconCube />
-                              <Box as="div" class="select-none">
-                                Products
-                              </Box>
-                            </HStack>
-                          </Box>
+                            <RadioLabel>
+                              <HStack spacing="$5">
+                                <IconDocumentsIn />
+                                <Box as="div" class="select-none">
+                                  Documents
+                                </Box>
+                              </HStack>
+                            </RadioLabel>
+                          </Radio>
                         </Tooltip>
                         <Tooltip
-                          label="Sales"
+                          label="Announcement"
                           placement="right"
                           color="white"
                           bg="$blackAlpha11"
                         >
-                          <Box
-                            cursor="pointer"
+                          <Radio
+                            name="documents"
                             rounded="$md"
                             shadow="$2xl"
-                            bg={
-                              path() === '/sales' ? '$limeAlpha4' : '$gray800'
-                            }
-                            color={path() === '/sales' ? '$lime4' : 'white'}
                             borderColor="none"
+                            bg="$gray800"
                             px="$4"
                             py="$3"
                             w="$full"
                             outline="none"
                             onClick={() => {
-                              navigate('/sales');
+                              setIsShowing(true);
+
                               onClose();
                             }}
                           >
-                            <HStack spacing="$5">
-                              <IconCash />
-                              <Box as="div" class="select-none">
-                                Sales
-                              </Box>
-                            </HStack>
-                          </Box>
+                            <RadioLabel>
+                              <HStack spacing="$5">
+                                <AdminAnnouncementModal
+                                  toggled={isShowing}
+                                  closed={() => setIsShowing(false)}
+                                />
+                                <Box as="div" class="select-none">
+                                  Announcement
+                                </Box>
+                              </HStack>
+                            </RadioLabel>
+                          </Radio>
                         </Tooltip>
                       </VStack>
                     </RadioGroup>
@@ -385,43 +382,6 @@ let RootPage = ({ children }) => {
                     <VStack w="100%" spacing="$10">
                       <RadioGroup w="100%">
                         <VStack w="100%" spacing="$2">
-                          <Tooltip
-                            label="Profile"
-                            placement="right"
-                            color="white"
-                            bg="$blackAlpha11"
-                            w="100%"
-                          >
-                            <Radio
-                              name="profile"
-                              rounded="$md"
-                              shadow="$2xl"
-                              bg={
-                                path() === '/profile'
-                                  ? '$limeAlpha4'
-                                  : '$gray800'
-                              }
-                              color={path() === '/profile' ? '$lime4' : 'white'}
-                              borderColor="none"
-                              px="$4"
-                              py="$3"
-                              w="100%"
-                              outline="none"
-                              onClick={() => {
-                                navigate('/profile');
-                                onClose();
-                              }}
-                            >
-                              <RadioLabel>
-                                <HStack spacing="$5">
-                                  <IconProfile />
-                                  <Box as="div" class="select-none">
-                                    Profile
-                                  </Box>
-                                </HStack>
-                              </RadioLabel>
-                            </Radio>
-                          </Tooltip>
                           <Tooltip
                             label="Logout"
                             placement="right"
@@ -465,7 +425,7 @@ let RootPage = ({ children }) => {
               </Drawer>
             </div>
             <Box as={'div'} ml="auto" mb="$5">
-              Welcome, {userState.displayName}
+              Welcome, Admin
             </Box>
           </HStack>
           <VStack w="100%" h="100%" bg="white" roundedTop="$xl">
@@ -477,4 +437,4 @@ let RootPage = ({ children }) => {
   );
 };
 
-export default RootPage;
+export default AdminRootPage;

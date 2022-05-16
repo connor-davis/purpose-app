@@ -6,6 +6,8 @@ import {
   HStack,
   IconButton,
   Input,
+  InputRightElement,
+  notificationService,
   Select,
   SelectContent,
   SelectIcon,
@@ -16,9 +18,9 @@ import {
   SelectPlaceholder,
   SelectTrigger,
   SelectValue,
-  VStack
+  VStack,
 } from '@hope-ui/solid';
-import { For, createSignal, onMount } from 'solid-js';
+import { createSignal, For, onMount } from 'solid-js';
 
 import IconArrowLeft from '../../icons/IconArrowLeft';
 import IconArrowRight from '../../icons/IconArrowRight';
@@ -28,6 +30,7 @@ import axios from 'axios';
 import { createStore } from 'solid-js/store';
 import { useNavigate } from 'solid-app-router';
 import useState from '../../hooks/state';
+import IconSearch from '../../icons/IconSearch';
 
 let SetupProfilePage = () => {
   let [authState, updateAuthState] = useState('authenticationGuard');
@@ -40,6 +43,11 @@ let SetupProfilePage = () => {
   let [userGender, setUserGender] = createSignal('Select');
   let [userEthnicity, setUserEthnicity] = createSignal('Select');
   let [userType, setUserType] = createSignal('Select');
+  let [files, setFiles] = createStore([], { name: 'files' });
+  let [searchValue, setSearchValue] = createSignal('');
+  let [searchResults, setSearchResults] = createStore([], {
+    name: 'searchResults',
+  });
 
   onMount(() => {});
 
@@ -244,8 +252,12 @@ let SetupProfilePage = () => {
                       id="gender"
                       variant="unstyled"
                       value={
-                        details.gender && details.gender.split('')[0].toUpperCase() +
-                          details.gender.substring(1, details.gender.length) ||
+                        (details.gender &&
+                          details.gender.split('')[0].toUpperCase() +
+                            details.gender.substring(
+                              1,
+                              details.gender.length
+                            )) ||
                         ''
                       }
                       onChange={(gender) => setDetails({ ...details, gender })}
@@ -291,11 +303,13 @@ let SetupProfilePage = () => {
                       id="ethnicity"
                       variant="unstyled"
                       value={
-                        details.ethnicity && details.ethnicity.split('')[0].toUpperCase() +
-                          details.ethnicity.substring(
-                            1,
-                            details.ethnicity.length
-                          ) || ''
+                        (details.ethnicity &&
+                          details.ethnicity.split('')[0].toUpperCase() +
+                            details.ethnicity.substring(
+                              1,
+                              details.ethnicity.length
+                            )) ||
+                        ''
                       }
                       onChange={(ethnicity) =>
                         setDetails({ ...details, ethnicity })
@@ -542,6 +556,125 @@ let SetupProfilePage = () => {
                     />
                     {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
                   </FormControl>
+
+                  <FormControl>
+                    <FormLabel for="registrationNumber" color="black">
+                      Company Documents
+                    </FormLabel>
+                    <label class="flex flex-col w-full h-auto border-2 rounded-lg border-lime-400 border-dashed hover:bg-gray-100 hover:border-gray-300">
+                      <div class="flex flex-col items-center justify-center p-3">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="w-4 h-4 text-gray-400 group-hover:text-gray-600"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                          />
+                        </svg>
+                        <p class="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
+                          Attach documents.
+                        </p>
+                      </div>
+                      <input
+                        id="documentsInput"
+                        type="file"
+                        class="hidden"
+                        multiple
+                        onChange={(event) => {
+                          let files = [...event.target.files];
+
+                          setFiles(
+                            files.map((file) => {
+                              file.uploaded = false;
+
+                              return { name: file.name, uploaded: false, file };
+                            })
+                          );
+                        }}
+                      />
+                    </label>
+                    <div class="flex flex-col w-full h-auto p-2">
+                      {files.map((file) => (
+                        <div class="flex justify-between items-center text-black space-y-2">
+                          <div>{file.name}</div>
+                          {file.uploaded && (
+                            <div class="text-lime-400">
+                              <IconCheck />
+                            </div>
+                          )}
+                          {!file.uploaded && (
+                            <div
+                              onClick={() => {
+                                let form = new FormData();
+
+                                form.append('file', file.file);
+
+                                axios
+                                  .post(apiUrl + '/documents', form, {
+                                    headers: {
+                                      Authorization:
+                                        'Bearer ' +
+                                        authState.authenticationToken,
+                                      'Content-Type': 'multipart/form-data',
+                                    },
+                                  })
+                                  .then((response) => {
+                                    if (response.data.error)
+                                      return notificationService.show({
+                                        title: 'Error',
+                                        description: response.data.message,
+                                        status: 'danger',
+                                        duration: 5000,
+                                      });
+                                    else {
+                                      setFiles(
+                                        [...files].map((f) => {
+                                          if (f.name === response.data.name) {
+                                            return {
+                                              ...f,
+                                              uploaded: true,
+                                            };
+                                          } else return f;
+                                        })
+                                      );
+
+                                      return notificationService.show({
+                                        title: 'Success',
+                                        description: response.data.success,
+                                        status: 'success',
+                                        duration: 5000,
+                                      });
+                                    }
+                                  });
+                              }}
+                              class="flex px-3 py-2 justify-center items-center rounded-lg bg-lime-400 text-white bg-lime-400 shadow-lg shadow-lime-200 select-none outline-none cursor-pointer"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-3 w-3"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="2"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                                />
+                              </svg>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </FormControl>
                 </VStack>
 
                 <IconButton
@@ -732,185 +865,301 @@ let SetupProfilePage = () => {
                   }}
                 />
 
-                <VStack
-                  bg="white"
-                  shadow="$2xl"
-                  borderRadius="$2xl"
-                  borderWidth="1px"
-                  borderColor="#e5e5e5"
-                  p="$5"
-                  rounded="$2xl"
-                  spacing="$3"
-                  w={{ '@initial': '300px', '@sm': '300px', '@md': '400px' }}
-                >
-                  <FormControl required>
-                    <FormLabel for="streetAddress" color="black">
-                      Street Address
-                    </FormLabel>
-                    <Input
-                      variant="unstyled"
-                      bg="#e5e5e5"
-                      p="$3"
-                      placeholder="Street Address"
-                      size="sm"
-                      color="black"
-                      id="streetAddress"
-                      type="text"
-                      value={details.streetAddress || ''}
-                      onChange={(event) => {
-                        setDetails({
-                          ...details,
-                          streetAddress: event.target.value,
-                        });
-                      }}
-                    />
-                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
-                  </FormControl>
+                {!details.streetAddress && (
+                  <VStack
+                    bg="white"
+                    shadow="$2xl"
+                    borderRadius="$2xl"
+                    borderWidth="1px"
+                    borderColor="#e5e5e5"
+                    p="$5"
+                    rounded="$2xl"
+                    spacing="$3"
+                    w={{ '@initial': '300px', '@sm': '300px', '@md': '400px' }}
+                  >
+                    <FormControl required>
+                      <FormLabel for="streetAddress" color="black">
+                        Street Address
+                      </FormLabel>
+                      <Input
+                        variant="unstyled"
+                        bg="#e5e5e5"
+                        p="$3"
+                        placeholder="Street Address"
+                        size="sm"
+                        color="black"
+                        id="streetAddress"
+                        type="text"
+                        value={searchValue() || ''}
+                        onChange={(event) => {
+                          let value = event.target.value;
 
-                  <FormControl required>
-                    <FormLabel for="suburb" color="black">
-                      Suburb
-                    </FormLabel>
-                    <Input
-                      variant="unstyled"
-                      bg="#e5e5e5"
-                      p="$3"
-                      placeholder="Suburb"
-                      size="sm"
-                      color="black"
-                      id="suburb"
-                      type="text"
-                      value={details.suburb || ''}
-                      onChange={(event) => {
-                        setDetails({
-                          ...details,
-                          suburb: event.target.value,
-                        });
-                      }}
-                    />
-                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
-                  </FormControl>
+                          setSearchValue(value);
 
-                  <FormControl>
-                    <FormLabel for="ward" color="black">
-                      Ward
-                    </FormLabel>
-                    <Input
-                      variant="unstyled"
-                      bg="#e5e5e5"
-                      p="$3"
-                      placeholder="Ward"
-                      size="sm"
-                      color="black"
-                      id="ward"
-                      type="text"
-                      value={details.ward || ''}
-                      onChange={(event) => {
-                        setDetails({
-                          ...details,
-                          ward: event.target.value,
-                        });
-                      }}
-                    />
-                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
-                  </FormControl>
+                          axios
+                            .get(apiUrl + '/findCoords/' + value, {
+                              headers: {
+                                Authorization:
+                                  'Bearer ' + authState.authenticationToken,
+                              },
+                            })
+                            .then((response) => {
+                              if (response.data.error)
+                                return notificationService.show({
+                                  title: 'Error',
+                                  description: 'Failed to find location.',
+                                  status: 'danger',
+                                  duration: 5000,
+                                });
+                              else if (response.data.data) {
+                                let results = response.data.data;
 
-                  <FormControl required>
-                    <FormLabel for="city" color="black">
-                      City
-                    </FormLabel>
-                    <Input
-                      variant="unstyled"
-                      bg="#e5e5e5"
-                      p="$3"
-                      placeholder="City"
-                      size="sm"
-                      color="black"
-                      id="city"
-                      type="text"
-                      value={details.city || ''}
-                      onChange={(event) => {
-                        setDetails({
-                          ...details,
-                          city: event.target.value,
-                        });
-                      }}
-                    />
-                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
-                  </FormControl>
+                                console.log(results);
 
-                  <FormControl required>
-                    <FormLabel for="areaCode" color="black">
-                      Area Code
-                    </FormLabel>
-                    <Input
-                      variant="unstyled"
-                      bg="#e5e5e5"
-                      p="$3"
-                      placeholder="Area Code"
-                      size="sm"
-                      color="black"
-                      id="areaCode"
-                      type="text"
-                      value={details.areaCode || ''}
-                      onChange={(event) => {
-                        setDetails({
-                          ...details,
-                          areaCode: event.target.value,
-                        });
-                      }}
-                    />
-                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
-                  </FormControl>
+                                setSearchResults(results);
+                              } else {
+                                return notificationService.show({
+                                  title: 'Hmm..',
+                                  description: response.data.message,
+                                  status: 'info',
+                                  duration: 5000,
+                                });
+                              }
+                            });
+                        }}
+                      />
+                      {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                      <InputRightElement pointerEvents="none">
+                        <IconButton
+                          variant="ghost"
+                          colorScheme="white"
+                          rounded="$full"
+                          size="lg"
+                          class="self-end shadow-2xl shadow-neutral-900"
+                          color="black"
+                          bg="white"
+                          _hover={{ bg: 'white' }}
+                          aria-label="Search"
+                          icon={<IconSearch />}
+                          onClick={() => {}}
+                        />
+                      </InputRightElement>
+                      <div class="flex flex-col py-2 space-y-2 text-black">
+                        {searchResults.map((result) => (
+                          <HStack w="100%" spacing="$2">
+                            <Box w="100%" p="$3" rounded="$sm" fontSize="$sm">
+                              {result.name +
+                                ', ' +
+                                result.region +
+                                ', ' +
+                                result.country}
+                            </Box>
+                            <Box
+                              p="$3"
+                              class={
+                                'flex flex-col justify-center items-center w-10 h-10 hover:bg-gray-100 active:bg-gray-50 bg-opacity-50 rounded-full'
+                              }
+                              cursor={'pointer'}
+                              onClick={() => {
+                                setDetails({
+                                  streetAddress: result.name,
+                                  country: result.country,
+                                  province: result.region,
+                                  lat: result.latitude,
+                                  lng: result.longitude,
+                                });
+                              }}
+                            >
+                              <IconCheck />
+                            </Box>
+                          </HStack>
+                        ))}
+                      </div>
+                    </FormControl>
+                  </VStack>
+                )}
 
-                  <FormControl required>
-                    <FormLabel for="province" color="black">
-                      Province
-                    </FormLabel>
-                    <Input
-                      variant="unstyled"
-                      bg="#e5e5e5"
-                      p="$3"
-                      placeholder="Province"
-                      size="sm"
-                      color="black"
-                      id="province"
-                      type="text"
-                      value={details.province || ''}
-                      onChange={(event) => {
-                        setDetails({
-                          ...details,
-                          province: event.target.value,
-                        });
-                      }}
-                    />
-                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
-                  </FormControl>
+                {details.streetAddress && (
+                  <VStack
+                    bg="white"
+                    shadow="$2xl"
+                    borderRadius="$2xl"
+                    borderWidth="1px"
+                    borderColor="#e5e5e5"
+                    p="$5"
+                    rounded="$2xl"
+                    spacing="$3"
+                    w={{ '@initial': '300px', '@sm': '300px', '@md': '400px' }}
+                  >
+                    <FormControl required>
+                      <FormLabel for="streetAddress" color="black">
+                        Street Address
+                      </FormLabel>
+                      <Input
+                        variant="unstyled"
+                        bg="#e5e5e5"
+                        p="$3"
+                        placeholder="Street Address"
+                        size="sm"
+                        color="black"
+                        id="streetAddress"
+                        type="text"
+                        value={details.streetAddress || ''}
+                        onChange={(event) => {
+                          setDetails({
+                            ...details,
+                            streetAddress: event.target.value,
+                          });
+                        }}
+                      />
+                      {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                    </FormControl>
 
-                  <FormControl required>
-                    <FormLabel for="country" color="black">
-                      Country
-                    </FormLabel>
-                    <Input
-                      variant="unstyled"
-                      bg="#e5e5e5"
-                      p="$3"
-                      placeholder="Country"
-                      size="sm"
-                      color="black"
-                      id="country"
-                      type="text"
-                      value={details.country || ''}
-                      onChange={(event) => {
-                        setDetails({
-                          ...details,
-                          country: event.target.value,
-                        });
-                      }}
-                    />
-                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
-                  </FormControl>
-                </VStack>
+                    <FormControl required>
+                      <FormLabel for="suburb" color="black">
+                        Suburb
+                      </FormLabel>
+                      <Input
+                        variant="unstyled"
+                        bg="#e5e5e5"
+                        p="$3"
+                        placeholder="Suburb"
+                        size="sm"
+                        color="black"
+                        id="suburb"
+                        type="text"
+                        value={details.suburb || ''}
+                        onChange={(event) => {
+                          setDetails({
+                            ...details,
+                            suburb: event.target.value,
+                          });
+                        }}
+                      />
+                      {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                    </FormControl>
+
+                    <FormControl>
+                      <FormLabel for="ward" color="black">
+                        Ward
+                      </FormLabel>
+                      <Input
+                        variant="unstyled"
+                        bg="#e5e5e5"
+                        p="$3"
+                        placeholder="Ward"
+                        size="sm"
+                        color="black"
+                        id="ward"
+                        type="text"
+                        value={details.ward || ''}
+                        onChange={(event) => {
+                          setDetails({
+                            ...details,
+                            ward: event.target.value,
+                          });
+                        }}
+                      />
+                      {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                    </FormControl>
+
+                    <FormControl required>
+                      <FormLabel for="city" color="black">
+                        City
+                      </FormLabel>
+                      <Input
+                        variant="unstyled"
+                        bg="#e5e5e5"
+                        p="$3"
+                        placeholder="City"
+                        size="sm"
+                        color="black"
+                        id="city"
+                        type="text"
+                        value={details.city || ''}
+                        onChange={(event) => {
+                          setDetails({
+                            ...details,
+                            city: event.target.value,
+                          });
+                        }}
+                      />
+                      {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                    </FormControl>
+
+                    <FormControl required>
+                      <FormLabel for="areaCode" color="black">
+                        Area Code
+                      </FormLabel>
+                      <Input
+                        variant="unstyled"
+                        bg="#e5e5e5"
+                        p="$3"
+                        placeholder="Area Code"
+                        size="sm"
+                        color="black"
+                        id="areaCode"
+                        type="text"
+                        value={details.areaCode || ''}
+                        onChange={(event) => {
+                          setDetails({
+                            ...details,
+                            areaCode: event.target.value,
+                          });
+                        }}
+                      />
+                      {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                    </FormControl>
+
+                    <FormControl required>
+                      <FormLabel for="province" color="black">
+                        Province
+                      </FormLabel>
+                      <Input
+                        variant="unstyled"
+                        bg="#e5e5e5"
+                        p="$3"
+                        placeholder="Province"
+                        size="sm"
+                        color="black"
+                        id="province"
+                        type="text"
+                        value={details.province || ''}
+                        onChange={(event) => {
+                          setDetails({
+                            ...details,
+                            province: event.target.value,
+                          });
+                        }}
+                      />
+                      {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                    </FormControl>
+
+                    <FormControl required>
+                      <FormLabel for="country" color="black">
+                        Country
+                      </FormLabel>
+                      <Input
+                        variant="unstyled"
+                        bg="#e5e5e5"
+                        p="$3"
+                        placeholder="Country"
+                        size="sm"
+                        color="black"
+                        id="country"
+                        type="text"
+                        value={details.country || ''}
+                        onChange={(event) => {
+                          setDetails({
+                            ...details,
+                            country: event.target.value,
+                          });
+                        }}
+                      />
+                      {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                    </FormControl>
+                  </VStack>
+                )}
 
                 <IconButton
                   variant="ghost"

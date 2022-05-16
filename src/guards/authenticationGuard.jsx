@@ -6,6 +6,7 @@ import useState from '../hooks/state';
 
 let AuthenticationGuard = ({ children }) => {
   let [state, update] = useState('authenticationGuard');
+  let [userState, updateUserState] = useState('userState');
 
   onMount(() => {
     setTimeout(() => {

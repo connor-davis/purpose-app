@@ -18,6 +18,8 @@
     "vite-plugin-solid": "^2.2.5"
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@googlemaps/js-api-loader": "^1.14.1",
     "@hope-ui/solid": "^0.4.2",
     "@stitches/core": "^1.2.7",
     "axios": "^0.25.0",

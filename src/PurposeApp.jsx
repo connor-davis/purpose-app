@@ -9,28 +9,44 @@ import useState from './hooks/state';
 import ProductsPage from './pages/products/productsPage';
 import ProfilePage from './pages/profile/profilePage';
 import SalesPage from './pages/sales/salesPage';
+import AdminRootPage from './adminPages/adminRoot/adminRootPage';
+import AdminDashboardPage from './adminPages/adminDashboard/adminDashboardPage';
+import AdminUsersPage from './adminPages/adminUsers/adminUsersPage';
+import AdminUserPage from './adminPages/adminUsers/adminUserPage';
+import AdminFoldersPage from './adminPages/adminDocuments/adminFoldersPage';
+import AdminDocumentsPage from './adminPages/adminDocuments/adminDocumentsPage';
+
+import io from 'socket.io-client';
+
+let socket = io('https://purposeapi.lone-wolf.software');
+
+window.socket = socket;
 
 let PurposeApp = () => {
   let [userState, updateUserState] = useState('userState');
 
   setTimeout(() => {
-    switch (userState.type) {
-      case 'admin':
-        document.title = document.title + ' | Admin';
-        break;
-
-      default:
-        if (userState.displayName) {
-          document.title = `Purpose | ${userState.displayName}`;
+    if (document.title === 'Purpose') {
+      switch (userState.type) {
+        case 'admin':
+          document.title = document.title + ' | Admin';
           break;
-        }
 
-        document.title = 'Purpose | Welcome';
-        break;
+        default:
+          if (userState.displayName) {
+            document.title = `Purpose | ${userState.displayName}`;
+            break;
+          }
+
+          document.title = 'Purpose | Welcome';
+          break;
+      }
     }
-  }, 100);
+  }, 300);
 
   let showSetupProfileRequest = () => {
+    if (userState.type === 'admin') return false;
+
     let requiredFields = [
       'firstName',
       'lastName',
@@ -80,6 +96,18 @@ let PurposeApp = () => {
                 <Route path="/products" element={<ProductsPage />} />
                 <Route path="/sales" element={<SalesPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+              </Route>
+            </Routes>
+          )}
+
+          {userState.type === 'admin' && (
+            <Routes>
+              <Route path="/" element={<AdminRootPage />}>
+                <Route path="/" element={<AdminDashboardPage />} />
+                <Route path="/users" element={<AdminUsersPage />} />
+                <Route path="/users/:id" element={<AdminUserPage />} />
+                <Route path="/documents" element={<AdminFoldersPage />} />
+                <Route path="/documents/:id" element={<AdminDocumentsPage />} />
               </Route>
             </Routes>
           )}
