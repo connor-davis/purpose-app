@@ -153,7 +153,11 @@ let AdminUserMap = () => {
     loadData();
   }, 300);
 
-  return <div id="adminUserMap" class="w-full h-full rounded-lg"></div>;
+  return (
+    <div class="w-full" style={{ 'min-height': '500px' }}>
+      <div id="adminUserMap" class="flex w-full h-full rounded-lg"></div>
+    </div>
+  );
 };
 
 export default AdminUserMap;

@@ -125,6 +125,7 @@ let ProductsPage = () => {
         <table class="table-auto w-full">
           <thead class={'h-10'}>
             <tr>
+              <th class={'text-left px-3'}>Image</th>
               <th class={'text-left px-3'}>Name</th>
               <th class={'text-right px-3'}>Price</th>
               <th class={'text-right px-3'}>Cost</th>
@@ -135,6 +136,9 @@ let ProductsPage = () => {
               products.filter((product) => product !== undefined).length > 0 &&
               products.map((product) => (
                 <tr>
+                  <td class={'text-left px-3'}>
+                    <img src={product.image} class="w-20 h-20 bg-gray-200" />
+                  </td>
                   <td class={'text-left px-3'}>{product.name}</td>
                   <td class={'text-right px-3'}>R {product.cost}</td>
                   <td class={'text-right px-3'}>R {product.price}</td>

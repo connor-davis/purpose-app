@@ -25,9 +25,7 @@ let UserInfoWindow = ({ user }) => {
             </div>
             <div class="flex justify-between items-center">
                 <div>Address:</div>
-                <div class="font-bold">${
-                  user.streetAddress + ', ' + user.city
-                }</div>
+                <div class="font-bold">${user.streetAddress}</div>
             </div>
             <div></div>
             

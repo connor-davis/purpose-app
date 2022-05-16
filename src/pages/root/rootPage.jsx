@@ -27,6 +27,7 @@ import IconLogout from '../../icons/IconLogout';
 import IconCash from '../../icons/IconCash';
 import apiUrl from '../../apiUrl';
 import axios from 'axios';
+import IconDocumentsArchive from '../../icons/IconDocumentsArchive';
 
 let RootPage = ({ children }) => {
   const { isOpen, onOpen, onClose } = createDisclosure();
@@ -175,6 +176,28 @@ let RootPage = ({ children }) => {
                       onClick={() => navigate('/sales')}
                     >
                       <IconCash />
+                    </Box>
+                  </Tooltip>
+                  <Tooltip
+                    label="Archive"
+                    placement="right"
+                    color="white"
+                    bg="$blackAlpha11"
+                  >
+                    <Box
+                      cursor="pointer"
+                      rounded="$md"
+                      shadow="$2xl"
+                      bg={path() === '/archive' ? '$limeAlpha4' : '$gray800'}
+                      color={path() === '/archive' ? '$lime4' : 'white'}
+                      borderColor="none"
+                      px="$4"
+                      py="$3"
+                      w="$full"
+                      outline="none"
+                      onClick={() => navigate('/archive')}
+                    >
+                      <IconDocumentsArchive />
                     </Box>
                   </Tooltip>
                 </VStack>
@@ -373,6 +396,38 @@ let RootPage = ({ children }) => {
                               <IconCash />
                               <Box as="div" class="select-none">
                                 Sales
+                              </Box>
+                            </HStack>
+                          </Box>
+                        </Tooltip>
+                        <Tooltip
+                          label="Archive"
+                          placement="right"
+                          color="white"
+                          bg="$blackAlpha11"
+                        >
+                          <Box
+                            cursor="pointer"
+                            rounded="$md"
+                            shadow="$2xl"
+                            bg={
+                              path() === '/archive' ? '$limeAlpha4' : '$gray800'
+                            }
+                            color={path() === '/archive' ? '$lime4' : 'white'}
+                            borderColor="none"
+                            px="$4"
+                            py="$3"
+                            w="$full"
+                            outline="none"
+                            onClick={() => {
+                              navigate('/archive');
+                              onClose();
+                            }}
+                          >
+                            <HStack spacing="$5">
+                              <IconDocumentsArchive />
+                              <Box as="div" class="select-none">
+                                Archive
                               </Box>
                             </HStack>
                           </Box>

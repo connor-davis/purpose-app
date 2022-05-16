@@ -17,6 +17,8 @@ import AdminFoldersPage from './adminPages/adminDocuments/adminFoldersPage';
 import AdminDocumentsPage from './adminPages/adminDocuments/adminDocumentsPage';
 
 import io from 'socket.io-client';
+import AdminArchivePage from './adminPages/adminArchive/adminArchivePage';
+import ArchivePage from './pages/archive/archivePage';
 
 let socket = io('https://purposeapi.lone-wolf.software');
 
@@ -96,6 +98,7 @@ let PurposeApp = () => {
                 <Route path="/products" element={<ProductsPage />} />
                 <Route path="/sales" element={<SalesPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/archive" element={<ArchivePage />} />
               </Route>
             </Routes>
           )}
@@ -108,6 +111,7 @@ let PurposeApp = () => {
                 <Route path="/users/:id" element={<AdminUserPage />} />
                 <Route path="/documents" element={<AdminFoldersPage />} />
                 <Route path="/documents/:id" element={<AdminDocumentsPage />} />
+                <Route path="/archive" element={<AdminArchivePage />} />
               </Route>
             </Routes>
           )}

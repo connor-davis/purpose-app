@@ -41,13 +41,11 @@ let AdminDocumentsPage = () => {
       .then(async (response) => {
         if (response.data.error) return console.log(response.data);
         else {
-          console.log(response.data.files);
-
           setDocuments([
             ...documents,
             ...response.data.files.sort((a, b) => {
-              if (a > b) return 1;
-              if (a < b) return -1;
+              if (a.name > b.name) return 1;
+              if (a.name < b.name) return -1;
 
               return 0;
             }),
@@ -77,68 +75,68 @@ let AdminDocumentsPage = () => {
         {!loading() &&
           documents.filter((folder) => folder !== undefined).length !== 0 && (
             <div class="flex flex-wrap gap-3 w-full h-full overflow-y-auto">
-              documents.map((document) => (
-              <div class="flex flex-col max-w-1/2 flex-1 space-y-3">
-                <div class="flex justify-between items-center">
-                  <div>{document.name}</div>
-                  <div>
-                    <div
-                      class="flex justify-center text-white items-center px-3 py-2 space-x-2 bg-red-500 rounded-lg shadow-2xl shadow-red-900 cursor-pointer"
-                      onClick={() =>
-                        axios
-                          .delete(
-                            apiUrl +
-                              '/documents/' +
-                              document.owner +
-                              '/' +
-                              document.name,
-                            {
-                              headers: {
-                                Authorization:
-                                  'Bearer ' + authState.authenticationToken,
-                              },
-                            }
-                          )
-                          .then((response) => {
-                            if (response.data.error)
-                              return notificationService.show({
-                                title: 'Error',
-                                description: 'Failed to delete document',
-                                status: 'danger',
-                                duration: 3000,
-                              });
-                            else {
-                              setDocuments(
-                                documents.filter(
-                                  (d) => (d.name = document.name)
-                                )
-                              );
+              {documents.map((document) => (
+                <div class="flex flex-col max-w-1/2 flex-1 space-y-3">
+                  <div class="flex justify-between items-center">
+                    <div>{document.name}</div>
+                    <div>
+                      <div
+                        class="flex justify-center text-white items-center px-3 py-2 space-x-2 bg-red-500 rounded-lg shadow-2xl shadow-red-900 cursor-pointer"
+                        onClick={() =>
+                          axios
+                            .delete(
+                              apiUrl +
+                                '/documents/' +
+                                document.owner +
+                                '/' +
+                                document.name,
+                              {
+                                headers: {
+                                  Authorization:
+                                    'Bearer ' + authState.authenticationToken,
+                                },
+                              }
+                            )
+                            .then((response) => {
+                              if (response.data.error)
+                                return notificationService.show({
+                                  title: 'Error',
+                                  description: 'Failed to delete document',
+                                  status: 'danger',
+                                  duration: 3000,
+                                });
+                              else {
+                                setDocuments(
+                                  documents.filter(
+                                    (d) => (d.name = document.name)
+                                  )
+                                );
 
-                              return notificationService.show({
-                                title: 'Success',
-                                description: 'Deleted document successfully.',
-                                status: 'success',
-                                duration: 3000,
-                              });
-                            }
-                          })
-                      }
-                    >
-                      <IconTrash />
+                                return notificationService.show({
+                                  title: 'Success',
+                                  description: 'Deleted document successfully.',
+                                  status: 'success',
+                                  duration: 3000,
+                                });
+                              }
+                            })
+                        }
+                      >
+                        <IconTrash />
+                      </div>
                     </div>
                   </div>
+                  <img
+                    src={
+                      apiUrl +
+                      '/documents/' +
+                      document.owner +
+                      '/' +
+                      document.name
+                    }
+                  />
                 </div>
-                <img
-                  src={
-                    apiUrl +
-                    '/documents/' +
-                    document.owner +
-                    '/' +
-                    document.name
-                  }
-                />
-              </div>
-              ))
+              ))}
             </div>
           )}
 

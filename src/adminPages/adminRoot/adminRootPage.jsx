@@ -23,6 +23,7 @@ import IconLogout from '../../icons/IconLogout';
 import IconUsers from '../../icons/IconUsers';
 import IconDocumentsIn from '../../icons/IconDocumentsIn';
 import AdminAnnouncementModal from '../../components/modals/admin/announcements/adminAnnouncementModal';
+import IconDocumentsArchive from '../../icons/IconDocumentsArchive';
 
 let AdminRootPage = ({ children }) => {
   const { isOpen, onOpen, onClose } = createDisclosure();
@@ -128,6 +129,30 @@ let AdminRootPage = ({ children }) => {
                     >
                       <RadioLabel>
                         <IconDocumentsIn />
+                      </RadioLabel>
+                    </Radio>
+                  </Tooltip>
+                  <Tooltip
+                    label="Archive"
+                    placement="right"
+                    color="white"
+                    bg="$blackAlpha11"
+                  >
+                    <Radio
+                      name="archive"
+                      rounded="$md"
+                      shadow="$2xl"
+                      bg={path() === '/archive' ? '$limeAlpha4' : '$gray800'}
+                      color={path() === '/archive' ? '$lime4' : 'white'}
+                      borderColor="none"
+                      px="$4"
+                      py="$3"
+                      w="$full"
+                      outline="none"
+                      onClick={() => navigate('/archive')}
+                    >
+                      <RadioLabel>
+                        <IconDocumentsArchive />
                       </RadioLabel>
                     </Radio>
                   </Tooltip>
@@ -334,6 +359,40 @@ let AdminRootPage = ({ children }) => {
                                 <IconDocumentsIn />
                                 <Box as="div" class="select-none">
                                   Documents
+                                </Box>
+                              </HStack>
+                            </RadioLabel>
+                          </Radio>
+                        </Tooltip>
+                        <Tooltip
+                          label="Archive"
+                          placement="right"
+                          color="white"
+                          bg="$blackAlpha11"
+                        >
+                          <Radio
+                            name="archive"
+                            rounded="$md"
+                            shadow="$2xl"
+                            bg={
+                              path() === '/archive' ? '$limeAlpha4' : '$gray800'
+                            }
+                            color={path() === '/archive' ? '$lime4' : 'white'}
+                            borderColor="none"
+                            px="$4"
+                            py="$3"
+                            w="$full"
+                            outline="none"
+                            onClick={() => {
+                              navigate('/archive');
+                              onClose();
+                            }}
+                          >
+                            <RadioLabel>
+                              <HStack spacing="$5">
+                                <IconDocumentsArchive />
+                                <Box as="div" class="select-none">
+                                  Archive
                                 </Box>
                               </HStack>
                             </RadioLabel>

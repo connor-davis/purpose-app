@@ -4,6 +4,7 @@ import { createStore } from 'solid-js/store';
 import axios from 'axios';
 import apiUrl from '../../apiUrl';
 import AdminUserMap from './adminUserMap';
+import { gendersChart, salesChart } from './charts';
 
 let AdminDashboardPage = () => {
   let [authState, updateAuthState] = useState('authenticationGuard');
@@ -12,52 +13,21 @@ let AdminDashboardPage = () => {
   let [users, setUsers] = createStore([], {
     name: 'dashboard-users',
   });
+  let [sales, setSales] = createStore([], {
+    name: 'dashboard-sales',
+  });
 
   setTimeout(() => {
     loadUsers();
-
-    setTimeout(() => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (data) => {
-            axios
-              .put(
-                apiUrl + '/users',
-                {
-                  lat: data.coords.latitude,
-                  lng: data.coords.longitude,
-                },
-                {
-                  headers: {
-                    Authorization: 'Bearer ' + authState.authenticationToken,
-                  },
-                }
-              )
-              .then((response) => {
-                if (response.data.error) return console.log(response.data);
-                else {
-                  let data = response.data.data;
-
-                  updateUserState({
-                    ...userState,
-                    ...data,
-                  });
-                }
-              });
-          },
-          () => {},
-          { enableHighAccuracy: true }
-        );
-      } else {
-        console.log(`Can't update coords, geolocation isn't supported.`);
-      }
-    }, 300);
+    loadSales();
   }, 300);
 
   let loadUsers = async () => {
     await axios
       .get(apiUrl + '/admin/users', {
-        headers: { Authorization: 'Bearer ' + authState.authenticationToken },
+        headers: {
+          Authorization: 'Bearer ' + authState.authenticationToken,
+        },
       })
       .then((response) => {
         if (response.data.error) return console.log(response.data);
@@ -67,20 +37,52 @@ let AdminDashboardPage = () => {
       });
   };
 
+  let loadSales = async () => {
+    await axios
+      .get(apiUrl + '/admin/users/sales/all', {
+        headers: { Authorization: 'Bearer ' + authState.authenticationToken },
+      })
+      .then((response) => {
+        if (response.data.error) return console.log(response.data);
+        else {
+          setSales([...response.data.data]);
+
+          salesChart(sales);
+          gendersChart(users);
+        }
+      });
+  };
+
   return (
-    <div class="flex flex-col w-full h-full text-black rounded-xl">
+    <div class="flex flex-col w-full h-full text-black rounded-xl overflow-y-scroll">
       <div class="flex w-full h-auto justify-between p-5">
         <div>Your Dashboard</div>
       </div>
-      <div class="flex flex-col space-y-5 w-full h-full overflow-y-auto p-5 pt-0 pb-20">
+      <div class="flex flex-col space-y-5 w-full h-full p-5 pt-0 pb-20">
         <div class="w-full font-bold">Analytics</div>
         <div class="flex space-x-5 w-full">
-          <div class="flex flex-col justify-center items-center w-full p-10 space-y-3 bg-lime-400 rounded-lg shadow-2xl shadow-lime-400">
+          <div class="flex flex-col justify-center items-center w-full p-10 space-y-3 bg-lime-400 rounded-lg shadow-xl shadow-lime-200">
             <div class="text-white font-bold">Total Users</div>
             <div class="text-white">{users.length}</div>
           </div>
+          <div class="flex flex-col justify-center items-center w-full p-10 space-y-3 bg-lime-400 rounded-lg shadow-xl shadow-lime-200">
+            <div class="text-white font-bold">Total Sales</div>
+            <div class="text-white">{sales.length}</div>
+          </div>
         </div>
-        <div class="w-full font-bold">Users Map</div>
+
+        <div class="flex flex-wrap space-x-5">
+          <canvas
+            id="salesChart"
+            class="w-96 max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
+          ></canvas>
+        </div>
+        <div class="flex flex-wrap space-x-5">
+          <canvas
+            id="gendersChart"
+            class="w-96 max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
+          ></canvas>
+        </div>
         <AdminUserMap />
         {/*TODO*/}
         {/*<div class="w-full font-bold">Latest Sales</div>*/}

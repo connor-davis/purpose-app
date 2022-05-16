@@ -5,36 +5,34 @@ import {
   MenuContent,
   MenuItem,
   MenuTrigger,
+  notificationService,
   Skeleton,
   VStack,
 } from '@hope-ui/solid';
-import { useNavigate } from 'solid-app-router';
 import useState from '../../hooks/state';
-import { createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
+import { createSignal, onMount } from 'solid-js';
+import AddArchiveModal from '../../components/modals/admin/archive/addArchiveModal';
 import axios from 'axios';
 import apiUrl from '../../apiUrl';
+import { ar } from 'rethinkdb/util';
 
-let AdminFoldersPage = () => {
-  let navigate = useNavigate();
-  let [userState, updateUserState] = useState('userState');
+let ArchivePage = () => {
   let [authState, updateAuthState] = useState('authenticationGuard');
+  let [userState, updateUserState] = useState('userState');
 
+  let [archive, setArchive] = createStore([], { name: 'admin-archive' });
   let [loading, setLoading] = createSignal(true);
-
-  let [folders, setFolders] = createStore([], {
-    name: 'folders-list',
-  });
 
   onMount(() => {
     setTimeout(() => {
-      loadUserFolders();
+      loadArchive();
     }, 300);
   });
 
-  let loadUserFolders = () => {
+  let loadArchive = () => {
     axios
-      .get(apiUrl + '/documents', {
+      .get(apiUrl + '/archive', {
         headers: {
           Authorization: 'Bearer ' + authState.authenticationToken,
         },
@@ -42,14 +40,7 @@ let AdminFoldersPage = () => {
       .then(async (response) => {
         if (response.data.error) return console.log(response.data);
         else {
-          setFolders([
-            ...folders,
-            ...response.data.folders.sort((a, b) => {
-              if (a.name > b.name) return 1;
-              if (a.name < b.name) return -1;
-              return 0;
-            }),
-          ]);
+          setArchive([...response.data.data]);
 
           setLoading(false);
         }
@@ -59,7 +50,7 @@ let AdminFoldersPage = () => {
   return (
     <VStack w="100%" h="100%" color="black" p={'$5'} spacing={'$5'}>
       <HStack w="100%" class="justify-between">
-        <Box>User Folders</Box>
+        <Box>Archive</Box>
       </HStack>
 
       <Box
@@ -75,25 +66,18 @@ let AdminFoldersPage = () => {
         <table class="table-auto w-full">
           <thead class={'h-10'}>
             <tr>
-              <th class={'text-left px-3'}>Owner</th>
-              <th class={'text-left px-3'}>Email</th>
-              <th class={'text-right px-3'}>Files</th>
+              <th class={'text-left px-3'}>Name</th>
+              <th class={'text-left px-3'}>Type</th>
             </tr>
           </thead>
           <tbody>
             {!loading() &&
-              folders.filter((folder) => folder !== undefined).length > 0 &&
-              folders.map((folder) => {
+              archive.filter((piece) => piece !== undefined).length > 0 &&
+              archive.map((piece) => {
                 return (
                   <tr>
-                    <td class={'text-left px-3'}>
-                      {(folder.owner && folder.owner.displayName) ||
-                        JSON.stringify(folder)}
-                    </td>
-                    <td class={'text-left px-3'}>
-                      {(folder.owner && folder.owner.email) || ''}
-                    </td>
-                    <td class={'text-right px-3'}>{folder.fileCount || 0}</td>
+                    <td class={'text-left px-3'}>{piece.name || ''}</td>
+                    <td class={'text-left px-3'}>{piece.type || ''}</td>
                     <td class={'w-10 p-0 m-0'}>
                       <Menu color={'black'} as>
                         <MenuTrigger
@@ -129,14 +113,22 @@ let AdminFoldersPage = () => {
                         >
                           <MenuItem
                             colorScheme={'none'}
-                            class={'hover:bg-gray-100'}
+                            class={'hover:bg-gray-200'}
                             rounded={'$lg'}
                             cursor={'pointer'}
-                            onSelect={() =>
-                              navigate('/documents/' + folder.name)
-                            }
+                            onSelect={() => {
+                              window.open(
+                                'https://purposeapi.lone-wolf.software/archive/' +
+                                  piece.name,
+                                '_blank'
+                              ) ||
+                                window.location.replace(
+                                  'https://purposeapi.lone-wolf.software/archive/' +
+                                    piece.name
+                                );
+                            }}
                           >
-                            View Documents
+                            Download
                           </MenuItem>
                         </MenuContent>
                       </Menu>
@@ -169,9 +161,9 @@ let AdminFoldersPage = () => {
 
         {!loading() && (
           <>
-            {folders.filter((folder) => folder !== undefined).length === 0 && (
+            {archive.filter((piece) => piece !== undefined).length === 0 && (
               <VStack w={'100%'} justifyContent={'center'} py={'$5'}>
-                You have no user folders.
+                You have nothing in archive.
               </VStack>
             )}
           </>
@@ -181,4 +173,4 @@ let AdminFoldersPage = () => {
   );
 };
 
-export default AdminFoldersPage;
+export default ArchivePage;

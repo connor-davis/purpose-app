@@ -74,7 +74,10 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
           });
         })
         .catch(() => {
-          setMessage({ type: 'error', value: 'Authentication error.' });
+          setMessage({
+            type: 'error',
+            value: 'Username or password incorrect.',
+          });
         });
   };
 

@@ -87,6 +87,38 @@ let EditProductModal = ({
               <VStack spacing={'$2'}>
                 <FormControl required>
                   <FormLabel for="name" color="black">
+                    Product Image
+                  </FormLabel>
+                  {details.image && (
+                    <div class="flex justify-center items-center w-full max-h-64">
+                      <img class="max-h-52" src={details.image} />
+                    </div>
+                  )}
+                  <Input
+                    variant="unstyled"
+                    bg="#e5e5e5"
+                    p="$3"
+                    placeholder="Product Image"
+                    size="sm"
+                    color="black"
+                    id="name"
+                    type="file"
+                    accept="image/png, image/jpeg"
+                    onChange={(event) => {
+                      let reader = new FileReader();
+
+                      reader.onload = function () {
+                        setDetails({ ...details, image: reader.result });
+                      };
+
+                      reader.readAsDataURL(event.target.files[0]);
+                    }}
+                  />
+                  <FormHelperText>Give your product an image.</FormHelperText>
+                </FormControl>
+
+                <FormControl required>
+                  <FormLabel for="name" color="black">
                     Product Name
                   </FormLabel>
                   <Input
