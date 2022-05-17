@@ -1,4 +1,12 @@
-import { Box, HStack, VStack } from '@hope-ui/solid';
+import {
+  Box,
+  CircularProgress,
+  CircularProgressIndicator,
+  HStack,
+  notificationService,
+  Text,
+  VStack,
+} from '@hope-ui/solid';
 import { useParams } from 'solid-app-router';
 import { createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
@@ -6,6 +14,7 @@ import axios from 'axios';
 import apiUrl from '../../apiUrl';
 import useState from '../../hooks/state';
 import IconExport from '../../icons/IconExport';
+import { saveAs } from 'file-saver';
 
 let AdminUserPage = () => {
   let params = useParams();
@@ -53,6 +62,7 @@ let AdminUserPage = () => {
 
                 axios
                   .get(apiUrl + '/admin/users/products/' + id, {
+                    responseType: 'json',
                     headers: {
                       Authorization: 'Bearer ' + authState.authenticationToken,
                     },
@@ -73,6 +83,59 @@ let AdminUserPage = () => {
       });
   };
 
+  let exportUser = () => {
+    axios
+      .get(apiUrl + '/admin/exportUser/' + params.id, {
+        responseType: 'blob',
+        onDownloadProgress: (progressEvent) => {
+          let percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+
+          notificationService.show({
+            id: 'download-progress',
+            render: (props) => (
+              <HStack
+                bg="$loContrast"
+                rounded="$md"
+                border="1px solid $neutral7"
+                shadow="$lg"
+                p="$4"
+                w="$full"
+              >
+                <CircularProgress value={percentCompleted}>
+                  <CircularProgressIndicator />
+                </CircularProgress>
+                <VStack alignItems="flex-start">
+                  <Text size="sm" fontWeight="$medium">
+                    Downloading file
+                  </Text>
+                </VStack>
+              </HStack>
+            ),
+          });
+        },
+        headers: { Authorization: 'Bearer ' + authState.authenticationToken },
+      })
+      .then((response) => {
+        if (response.data.error) return console.log(response.data);
+        else {
+          if (response.status === 200) {
+            saveAs(response.data, `${userData.email}-data.xlsx`);
+
+            notificationService.hide('download-progress');
+
+            return notificationService.show({
+              title: 'Success',
+              description: 'The file will be downloaded now.',
+              status: 'success',
+              duration: 3000,
+            });
+          }
+        }
+      });
+  };
+
   return (
     userData && (
       <VStack w="100%" h="100%" color="black" p={'$5'} spacing={'$5'}>
@@ -86,7 +149,7 @@ let AdminUserPage = () => {
           </Box>
           <div
             class="flex justify-center items-center px-3 py-2 space-x-2 bg-lime-400 rounded-lg shadow-2xl shadow-lime-400 cursor-pointer"
-            onClick={() => {}}
+            onClick={() => exportUser()}
           >
             <IconExport />
             <div>User</div>

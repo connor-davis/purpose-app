@@ -252,7 +252,7 @@ let RootPage = ({ children }) => {
                         clearUserState();
                         clearAuthState();
 
-                        window.location = window.location;
+                        window.location.href = '/';
                       }}
                     >
                       <IconLogout />
@@ -499,7 +499,7 @@ let RootPage = ({ children }) => {
                                 clearUserState();
                                 clearAuthState();
 
-                                window.location = window.location;
+                                window.location.href = '/';
 
                                 onClose();
                               }}

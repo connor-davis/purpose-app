@@ -6,6 +6,7 @@ import {
   MenuContent,
   MenuItem,
   MenuTrigger,
+  notificationService,
   Skeleton,
   VStack,
 } from '@hope-ui/solid';
@@ -52,6 +53,35 @@ let AdminUsersPage = () => {
           ]);
 
           return setLoading(false);
+        }
+      });
+  };
+
+  let generateResetPassword = (id) => {
+    axios
+      .get(apiUrl + '/admin/passwordReset/' + id, {
+        headers: { Authorization: 'Bearer ' + authState.authenticationToken },
+      })
+      .then((response) => {
+        if (response.data.error)
+          return notificationService.show({
+            title: 'Error',
+            description: 'Failed to generate reset password link.',
+            status: 'danger',
+            duration: 3000,
+          });
+        else {
+          let { link } = response.data.data;
+
+          navigator.clipboard.writeText(link);
+
+          return notificationService.show({
+            title: 'Success',
+            description:
+              'The password reset link has been copied to your clipboard, send it to the user.',
+            status: 'info',
+            duration: 3000,
+          });
         }
       });
   };
@@ -131,6 +161,16 @@ let AdminUsersPage = () => {
                           onSelect={() => navigate('/users/' + user.id)}
                         >
                           View Profile
+                        </MenuItem>
+
+                        <MenuItem
+                          colorScheme={'none'}
+                          class={'hover:bg-gray-100'}
+                          rounded={'$lg'}
+                          cursor={'pointer'}
+                          onSelect={() => generateResetPassword(user.id)}
+                        >
+                          Reset Password
                         </MenuItem>
                       </MenuContent>
                     </Menu>

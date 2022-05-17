@@ -154,7 +154,7 @@ let AdminUserMap = () => {
   }, 300);
 
   return (
-    <div class="w-full" style={{ 'min-height': '500px' }}>
+    <div class="w-full pb-20" style={{ 'min-height': '500px' }}>
       <div id="adminUserMap" class="flex w-full h-full rounded-lg"></div>
     </div>
   );

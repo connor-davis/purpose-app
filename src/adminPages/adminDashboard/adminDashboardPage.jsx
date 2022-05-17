@@ -71,16 +71,14 @@ let AdminDashboardPage = () => {
           </div>
         </div>
 
-        <div class="flex flex-wrap space-x-5">
+        <div class="flex flex-col w-full h-full space-y-5">
           <canvas
             id="salesChart"
-            class="w-96 max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
+            class="w-full max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
           ></canvas>
-        </div>
-        <div class="flex flex-wrap space-x-5">
           <canvas
             id="gendersChart"
-            class="w-96 max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
+            class="w-full max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
           ></canvas>
         </div>
         <AdminUserMap />

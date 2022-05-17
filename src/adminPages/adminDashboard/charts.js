@@ -72,7 +72,7 @@ export let salesChart = (sales) => {
       plugins: {
         title: {
           display: true,
-          text: '',
+          text: 'Monthly Sales',
         },
       },
       interaction: {
@@ -89,7 +89,7 @@ export let salesChart = (sales) => {
           display: true,
           title: {
             display: true,
-            text: 'Number',
+            text: 'Number of Sales',
           },
         },
       },
@@ -110,10 +110,6 @@ export let gendersChart = (users) => {
     return [getMalesCount(), getFemalesCount()];
   };
 
-  console.log(users);
-
-  console.log(getGenderCounts(users));
-
   let data = {
     labels: ['Males', 'Females'],
     datasets: [
@@ -129,5 +125,14 @@ export let gendersChart = (users) => {
   new Chart(ctx, {
     type: 'pie',
     data: data,
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Gender Dominance',
+        },
+      },
+    },
   });
 };

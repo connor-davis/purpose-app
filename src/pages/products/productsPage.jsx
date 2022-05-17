@@ -120,9 +120,9 @@ let ProductsPage = () => {
         borderColor={'$gray200'}
         mb={'$16'}
         p={'$2'}
-        overflowY={'auto'}
+        overflow={'auto'}
       >
-        <table class="table-auto w-full">
+        <table class="table-auto w-full overflow-x-auto">
           <thead class={'h-10'}>
             <tr>
               <th class={'text-left px-3'}>Image</th>

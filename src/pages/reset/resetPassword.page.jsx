@@ -11,52 +11,72 @@ import {
   notificationService,
   VStack,
 } from '@hope-ui/solid';
-
 import PurposeLogo from '../../components/PurposeLogo';
+import { useNavigate } from 'solid-app-router';
+import { createSignal } from 'solid-js';
+import useState from '../../hooks/state';
+import { createStore } from 'solid-js/store';
 import apiUrl from '../../apiUrl';
 import axios from 'axios';
-import { createSignal } from 'solid-js';
-import { createStore } from 'solid-js/store';
-import useState from '../../hooks/state';
 
-let LoginPage = ({ toggleLogin = () => {} }) => {
-  let [user, updateUser] = useState('userState');
-  let [authenticationGuard, updateAuthenticationGuard] = useState(
+let ResetPasswordPage = () => {
+  let navigate = useNavigate();
+  let href = document.location.href;
+  let hrefSize = href.split('/').length;
+  let token = href.split('/')[hrefSize - 1];
+
+  let [user, updateUser, clearUser] = useState('userState');
+  let [authenticationGuard, updateAuthenticationGuard, clearAuth] = useState(
     'authenticationGuard'
   );
 
   let [message, setMessage] = createStore({});
 
-  let [email, setEmail] = createSignal('');
-  let [password, setPassword] = createSignal('');
+  let [newPassword, setNewPassword] = createSignal('');
+  let [confirmNewPassword, setConfirmNewPassword] = createSignal('');
 
-  let authenticate = () => {
+  let resetPassword = () => {
+    if (newPassword() !== confirmNewPassword())
+      return notificationService.show({
+        title: 'Error',
+        description: 'Passwords do not match.',
+        status: 'danger',
+        duration: 3000,
+      });
+
     axios
-      .post(
-        apiUrl + '/auth/login',
-        {
-          email: email(),
-          password: password(),
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then((response) => {
-        updateUser({
-          ...response.data.data,
-          authenticationToken: undefined,
-        });
-        updateAuthenticationGuard({
-          authenticationToken: response.data.data.authenticationToken,
-        });
+      .post(apiUrl + '/admin/passwordReset', {
+        newPassword: newPassword(),
+        token,
       })
-      .catch(() => {
+      .then((response) => {
+        if (response.data.error)
+          return notificationService.show({
+            title: 'Error',
+            description: 'Failed to reset your password.',
+            status: 'danger',
+            duration: 3000,
+          });
+        else {
+          clearUser();
+          clearAuth();
+
+          setTimeout(() => {
+            navigate('/');
+          }, 1000);
+
+          return notificationService.show({
+            title: 'Success',
+            description: 'Your password has been reset.',
+            status: 'success',
+            duration: 3000,
+          });
+        }
+      })
+      .catch((error) => {
         notificationService.show({
           title: 'Error',
-          description: 'Email or password is incorrect.',
+          description: 'Failed to reset password.',
           status: 'danger',
           duration: 3000,
         });
@@ -80,16 +100,6 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
             <Box class="flex justify-center items-center w-full h-full">
               <PurposeLogo />
             </Box>
-
-            <Box color="#a3a3a3">
-              Do not have an account yet?{' '}
-              <span
-                class="text-lime-400 cursor-pointer"
-                onClick={() => toggleLogin()}
-              >
-                Create account
-              </span>
-            </Box>
           </VStack>
 
           <form>
@@ -107,40 +117,40 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
               <VStack spacing="$5" w="100%">
                 <FormControl required>
                   <FormLabel for="email" color="black">
-                    Email
+                    New Password
                   </FormLabel>
                   <Input
                     variant="unstyled"
                     bg="#e5e5e5"
                     p="$3"
-                    placeholder="Your email"
+                    placeholder="New password"
                     size="md"
                     color="black"
-                    id="email"
-                    type="email"
+                    id="newPassword"
+                    type="password"
                     onChange={(event) => {
-                      setEmail(event.target.value);
+                      setNewPassword(event.target.value);
                     }}
                   />
-                  <FormHelperText>We'll never share your email.</FormHelperText>
+                  <FormHelperText>Your new password.</FormHelperText>
                 </FormControl>
 
                 <VStack w="100%">
                   <FormControl required>
                     <FormLabel for="email" color="black">
-                      Password
+                      Confirm New Password
                     </FormLabel>
                     <Input
                       variant="unstyled"
                       bg="#e5e5e5"
                       p="$3"
-                      placeholder="Your password"
+                      placeholder="Confirm new password"
                       size="md"
                       color="black"
-                      id="password"
+                      id="confirmPassword"
                       type="password"
                       onChange={(event) => {
-                        setPassword(event.target.value);
+                        setConfirmNewPassword(event.target.value);
                       }}
                     />
                     {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
@@ -156,9 +166,9 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
                   w="100%"
                   variant="solid"
                   colorScheme="$lime4"
-                  onClick={() => authenticate()}
+                  onClick={() => resetPassword()}
                 >
-                  Login
+                  Reset Password
                 </Button>
               </Box>
             </VStack>
@@ -169,4 +179,4 @@ let LoginPage = ({ toggleLogin = () => {} }) => {
   );
 };
 
-export default LoginPage;
+export default ResetPasswordPage;
