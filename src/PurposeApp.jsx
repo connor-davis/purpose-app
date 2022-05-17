@@ -20,7 +20,7 @@ import io from 'socket.io-client';
 import AdminArchivePage from './adminPages/adminArchive/adminArchivePage';
 import ArchivePage from './pages/archive/archivePage';
 
-let socket = io('https://purposeapi.lone-wolf.software');
+let socket = io('https://api.purpose360.co.za');
 
 window.socket = socket;
 

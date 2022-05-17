@@ -118,12 +118,12 @@ let ArchivePage = () => {
                             cursor={'pointer'}
                             onSelect={() => {
                               window.open(
-                                'https://purposeapi.lone-wolf.software/archive/' +
+                                'https://api.purpose360.co.za/archive/' +
                                   piece.name,
                                 '_blank'
                               ) ||
                                 window.location.replace(
-                                  'https://purposeapi.lone-wolf.software/archive/' +
+                                  'https://api.purpose360.co.za/archive/' +
                                     piece.name
                                 );
                             }}
