@@ -55,7 +55,7 @@ let AdminDashboardPage = () => {
 
   return (
     <div class="flex flex-col w-full h-full text-black rounded-xl overflow-y-scroll">
-      <div class="flex w-full h-auto justify-between p-5">
+      <div class="flex w-full justify-between p-5">
         <div>Your Dashboard</div>
       </div>
       <div class="flex flex-col space-y-5 w-full h-full p-5 pt-0 pb-20">
@@ -80,8 +80,9 @@ let AdminDashboardPage = () => {
             id="gendersChart"
             class="w-full max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
           ></canvas>
+          <AdminUserMap />
         </div>
-        <AdminUserMap />
+
         {/*TODO*/}
         {/*<div class="w-full font-bold">Latest Sales</div>*/}
         {/*<div class="relative w-full h-32 overflow-hidden border-l border-t border-r border-b border-gray-200 rounded-2xl p-2">*/}

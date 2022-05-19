@@ -189,7 +189,10 @@ let DashboardPage = () => {
           class="w-full max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
         ></canvas>
         <div class="w-full font-bold">Latest Sales</div>
-        <div class="relative w-full h-32 overflow-hidden border-l border-t border-r border-b border-gray-200 rounded-2xl p-2">
+        <div
+          class="relative w-full h-32 overflow-hidden border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
+          style={{ 'min-height': '100px' }}
+        >
           <div class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-white"></div>
           <table class="table-auto w-full">
             <tbody>

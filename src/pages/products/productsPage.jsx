@@ -127,8 +127,8 @@ let ProductsPage = () => {
             <tr>
               <th class={'text-left px-3'}>Image</th>
               <th class={'text-left px-3'}>Name</th>
-              <th class={'text-right px-3'}>Price</th>
               <th class={'text-right px-3'}>Cost</th>
+              <th class={'text-right px-3'}>Price</th>
             </tr>
           </thead>
           <tbody>

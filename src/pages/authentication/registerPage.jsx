@@ -1,6 +1,4 @@
 import {
-  Alert,
-  AlertIcon,
   Box,
   Button,
   Center,
@@ -8,6 +6,7 @@ import {
   FormHelperText,
   FormLabel,
   Input,
+  notificationService,
   VStack,
 } from '@hope-ui/solid';
 
@@ -74,24 +73,17 @@ let RegisterPage = ({ toggleLogin = () => {} }) => {
           });
         })
         .catch(() => {
-          setMessage({
-            type: 'error',
-            value: 'Username or password incorrect.',
+          return notificationService.show({
+            title: 'Error',
+            description: 'Email or password is incorrect.',
+            status: 'danger',
+            duration: 3000,
           });
         });
   };
 
   return (
     <Box class="relative w-full h-full">
-      <div class="absolute top-5 right-5 bg-blue-100">
-        {message.type && (
-          <Alert status={message.type} variant="left-accent">
-            <AlertIcon />
-            {message.value}
-          </Alert>
-        )}
-      </div>
-
       {showTermsAndConditionsModal() && (
         <TermsAndConditionsModal
           onAgree={() => {
