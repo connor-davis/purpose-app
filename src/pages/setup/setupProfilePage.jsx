@@ -115,17 +115,24 @@ let SetupProfilePage = () => {
 
         {stage() === 4 && (
           <Box class="animate-fade-in" color="black">
-            Let's get your bank details.
+            Let's get your handles. You can leave stuff out here if you don't
+            have it.
           </Box>
         )}
 
         {stage() === 6 && (
           <Box class="animate-fade-in" color="black">
-            Let's get your location details.
+            Let's get your bank details.
           </Box>
         )}
 
         {stage() === 8 && (
+          <Box class="animate-fade-in" color="black">
+            Let's get your location details.
+          </Box>
+        )}
+
+        {stage() === 10 && (
           <Box class="animate-fade-in" color="black">
             Thank you for setting up your profile, we look forward to working
             with you.
@@ -557,6 +564,30 @@ let SetupProfilePage = () => {
                     {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
                   </FormControl>
 
+                  <FormControl required>
+                    <FormLabel for="employeesCount" color="black">
+                      Number of Employees
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Number of Employees"
+                      size="sm"
+                      color="black"
+                      id="employeesCount"
+                      type="text"
+                      value={details.employeesCount || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          employeesCount: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
+
                   <FormControl>
                     <FormLabel for="registrationNumber" color="black">
                       Company Documents
@@ -710,6 +741,158 @@ let SetupProfilePage = () => {
         )}
 
         {stage() === 5 && (
+          <form id="handlesForm">
+            <Box class="animate-fade-in">
+              <HStack spacing="$5">
+                <IconButton
+                  variant="ghost"
+                  colorScheme="white"
+                  rounded="$full"
+                  size="lg"
+                  class="self-end shadow-2xl shadow-neutral-900"
+                  color="black"
+                  bg="white"
+                  _hover={{ bg: 'white' }}
+                  aria-label="Search"
+                  icon={<IconArrowLeft />}
+                  onClick={() => {
+                    setStage(stage() - 2);
+                  }}
+                />
+
+                <VStack
+                  bg="white"
+                  shadow="$2xl"
+                  borderRadius="$2xl"
+                  borderWidth="1px"
+                  borderColor="#e5e5e5"
+                  p="$5"
+                  rounded="$2xl"
+                  spacing="$3"
+                  w={{ '@initial': '300px', '@sm': '300px', '@md': '400px' }}
+                >
+                  <FormControl>
+                    <FormLabel for="website" color="black">
+                      Website
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Website"
+                      size="sm"
+                      color="black"
+                      id="website"
+                      type="text"
+                      value={details.website || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          website: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
+
+                  <FormControl>
+                    <FormLabel for="facebook" color="black">
+                      Facebook Page
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Facebook Page"
+                      size="sm"
+                      color="black"
+                      id="facebook"
+                      type="text"
+                      value={details.facebook || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          facebook: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
+
+                  <FormControl>
+                    <FormLabel for="instagram" color="black">
+                      Instagram
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="Instagram"
+                      size="sm"
+                      color="black"
+                      id="instagram"
+                      type="text"
+                      value={details.instagram || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          instagram: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
+
+                  <FormControl>
+                    <FormLabel for="youtube" color="black">
+                      YouTube Channel
+                    </FormLabel>
+                    <Input
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder="YouTube Channel"
+                      size="sm"
+                      color="black"
+                      id="youtube"
+                      type="text"
+                      value={details.youtube || ''}
+                      onChange={(event) => {
+                        setDetails({
+                          ...details,
+                          youtube: event.target.value,
+                        });
+                      }}
+                    />
+                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                  </FormControl>
+                </VStack>
+
+                <IconButton
+                  variant="ghost"
+                  colorScheme="white"
+                  rounded="$full"
+                  size="lg"
+                  class="self-end shadow-2xl shadow-neutral-900"
+                  color="black"
+                  bg="white"
+                  _hover={{ bg: 'white' }}
+                  aria-label="Search"
+                  icon={<IconArrowRight />}
+                  onClick={() => {
+                    setStage(stage() + 1);
+
+                    setTimeout(() => {
+                      setStage(stage() + 1);
+                    }, 3000);
+                  }}
+                />
+              </HStack>
+            </Box>
+          </form>
+        )}
+
+        {stage() === 7 && (
           <form id="businessForm">
             <Box class="animate-fade-in">
               <HStack spacing="$5">
@@ -845,7 +1028,7 @@ let SetupProfilePage = () => {
           </form>
         )}
 
-        {stage() === 7 && (
+        {stage() === 9 && (
           <form id="businessForm">
             <Box class="animate-fade-in">
               <HStack spacing="$5">

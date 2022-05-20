@@ -1,6 +1,10 @@
 import {
   Box,
   HStack,
+  Menu,
+  MenuContent,
+  MenuItem,
+  MenuTrigger,
   notificationService,
   Skeleton,
   VStack,
@@ -11,7 +15,6 @@ import { createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import axios from 'axios';
 import apiUrl from '../../apiUrl';
-import IconTrash from '../../icons/IconTrash';
 
 let AdminDocumentsPage = () => {
   let navigate = useNavigate();
@@ -72,73 +75,134 @@ let AdminDocumentsPage = () => {
         p={'$2'}
         overflowY={'auto'}
       >
-        {!loading() &&
-          documents.filter((folder) => folder !== undefined).length !== 0 && (
-            <div class="flex flex-wrap gap-3 w-full h-full overflow-y-auto">
-              {documents.map((document) => (
-                <div class="flex flex-col max-w-1/2 flex-1 space-y-3">
-                  <div class="flex justify-between items-center">
-                    <div>{document.name}</div>
-                    <div>
-                      <div
-                        class="flex justify-center text-white items-center px-3 py-2 space-x-2 bg-red-500 rounded-lg shadow-2xl shadow-red-900 cursor-pointer"
-                        onClick={() =>
-                          axios
-                            .delete(
-                              apiUrl +
-                                '/documents/' +
-                                document.owner +
-                                '/' +
-                                document.name,
-                              {
-                                headers: {
-                                  Authorization:
-                                    'Bearer ' + authState.authenticationToken,
-                                },
-                              }
-                            )
-                            .then((response) => {
-                              if (response.data.error)
-                                return notificationService.show({
-                                  title: 'Error',
-                                  description: 'Failed to delete document',
-                                  status: 'danger',
-                                  duration: 3000,
-                                });
-                              else {
-                                setDocuments(
-                                  documents.filter(
-                                    (d) => (d.name = document.name)
-                                  )
-                                );
+        <table class="table-auto w-full">
+          <thead class={'h-10'}>
+            <tr>
+              <th class={'text-left px-3'}>Name</th>
+              <th class={'text-left px-3'}>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            {!loading() &&
+              documents.filter((document) => document !== undefined).length >
+                0 &&
+              documents.map((document) => {
+                return (
+                  <tr>
+                    <td class={'text-left px-3'}>
+                      {document.name.split('.')[0]}
+                    </td>
+                    <td class={'text-left px-3'}>
+                      {document.name.split('.')[1]}
+                    </td>
+                    <td class={'w-10 p-0 m-0'}>
+                      <Menu color={'black'} as>
+                        <MenuTrigger
+                          class={
+                            'flex flex-col justify-center items-center w-10 h-10 hover:bg-gray-100 active:bg-gray-50 bg-opacity-50 rounded-full'
+                          }
+                          cursor={'pointer'}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="!h-6 !w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+                            />
+                          </svg>
+                        </MenuTrigger>
+                        <MenuContent
+                          minW="$60"
+                          bg="white"
+                          shadow="$md"
+                          borderRadius="$2xl"
+                          borderWidth="1px"
+                          borderColor="#e5e5e5"
+                          rounded={'$lg'}
+                          color={'black'}
+                        >
+                          <MenuItem
+                            colorScheme={'none'}
+                            class={'hover:bg-gray-100'}
+                            rounded={'$lg'}
+                            cursor={'pointer'}
+                            onSelect={() =>
+                              window.open(
+                                apiUrl +
+                                  '/documents/' +
+                                  document.owner +
+                                  '/' +
+                                  document.name,
+                                '_blank'
+                              )
+                            }
+                          >
+                            Download
+                          </MenuItem>
+                          <MenuItem
+                            colorScheme={'none'}
+                            class={'hover:bg-gray-100'}
+                            rounded={'$lg'}
+                            cursor={'pointer'}
+                            onSelect={() =>
+                              axios
+                                .delete(
+                                  apiUrl +
+                                    '/documents/' +
+                                    document.owner +
+                                    '/' +
+                                    document.name,
+                                  {
+                                    headers: {
+                                      Authorization:
+                                        'Bearer ' +
+                                        authState.authenticationToken,
+                                    },
+                                  }
+                                )
+                                .then((response) => {
+                                  if (response.data.error)
+                                    return notificationService.show({
+                                      title: 'Error',
+                                      description: 'Failed to delete document',
+                                      status: 'danger',
+                                      duration: 3000,
+                                    });
+                                  else {
+                                    setDocuments([
+                                      ...documents.map((d) => {
+                                        if (d.name !== document.name) return d;
+                                      }),
+                                    ]);
 
-                                return notificationService.show({
-                                  title: 'Success',
-                                  description: 'Deleted document successfully.',
-                                  status: 'success',
-                                  duration: 3000,
-                                });
-                              }
-                            })
-                        }
-                      >
-                        <IconTrash />
-                      </div>
-                    </div>
-                  </div>
-                  <img
-                    src={
-                      apiUrl +
-                      '/documents/' +
-                      document.owner +
-                      '/' +
-                      document.name
-                    }
-                  />
-                </div>
-              ))}
-            </div>
-          )}
+                                    return notificationService.show({
+                                      title: 'Success',
+                                      description:
+                                        'Deleted document successfully.',
+                                      status: 'success',
+                                      duration: 3000,
+                                    });
+                                  }
+                                })
+                            }
+                          >
+                            Delete
+                          </MenuItem>
+                        </MenuContent>
+                      </Menu>
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
 
         {loading() && (
           <HStack w={'100%'} alignItems="stretch" spacing="$2" p={'$3'}>

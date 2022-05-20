@@ -53,6 +53,12 @@ let AdminUserMap = () => {
                 }
               );
 
+              let oms = new window.OverlappingMarkerSpiderfier(map, {
+                markersWontMove: true,
+                markersWontHide: true,
+                basicFormatEvents: true,
+              });
+
               users.map(async (user) => {
                 let data = { ...user };
 
@@ -109,7 +115,9 @@ let AdminUserMap = () => {
                         },
                       });
 
-                      marker.addListener('click', () => {
+                      oms.addMarker(marker);
+
+                      marker.addListener('spider_click', () => {
                         if (toggled) {
                           toggled = false;
                           infoWindowForUser.close();

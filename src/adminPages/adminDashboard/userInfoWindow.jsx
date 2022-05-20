@@ -20,8 +20,12 @@ let UserInfoWindow = ({ user }) => {
                 }</div>
             </div>
             <div class="flex justify-between items-center">
+                <div>Number of Employees:</div>
+                <div class="font-bold">${user.employeesCount || 0}</div>
+            </div>
+            <div class="flex justify-between items-center">
                 <div>Total Sales:</div>
-                <div class="font-bold">${user.sales.length}</div>
+                <div class="font-bold">${user.sales.length || 0}</div>
             </div>
             <div class="flex justify-between items-center">
                 <div>Address:</div>
