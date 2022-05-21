@@ -43,34 +43,36 @@ let AdminUsersPage = () => {
       .then((response) => {
         if (response.data.error) return console.log(response.data);
         else {
-          response.data.data.map(async (user) => {
-            if (user.type === 'admin') return;
+          if (response.data.data.length === 0) return setLoading(false);
+          else
+            response.data.data.map(async (user) => {
+              if (user.type === 'admin') return;
 
-            let salesResponse = await axios.get(
-              apiUrl + '/admin/users/sales/' + user.id,
-              {
-                headers: {
-                  Authorization: 'Bearer ' + authState.authenticationToken,
-                },
-              }
-            );
-
-            if (salesResponse.data.error)
-              return console.log(salesResponse.data.error);
-            else {
-              let sales = salesResponse.data.data;
-
-              setUsers(
-                [...(users || []), { ...user, sales }].sort((a, b) => {
-                  if (a.displayName > b.displayName) return 1;
-                  if (a.displayName < b.displayName) return -1;
-                  return 0;
-                })
+              let salesResponse = await axios.get(
+                apiUrl + '/admin/users/sales/' + user.id,
+                {
+                  headers: {
+                    Authorization: 'Bearer ' + authState.authenticationToken,
+                  },
+                }
               );
 
-              return setLoading(false);
-            }
-          });
+              if (salesResponse.data.error)
+                return console.log(salesResponse.data.error);
+              else {
+                let sales = salesResponse.data.data;
+
+                setUsers(
+                  [...(users || []), { ...user, sales }].sort((a, b) => {
+                    if (a.displayName > b.displayName) return 1;
+                    if (a.displayName < b.displayName) return -1;
+                    return 0;
+                  })
+                );
+
+                return setLoading(false);
+              }
+            });
         }
       });
   };
