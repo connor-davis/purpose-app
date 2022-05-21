@@ -27,6 +27,7 @@ import IconCheck from '../../icons/IconCheck';
 
 let AddSaleModal = ({ onAdd = () => {} }) => {
   let [authState, updateAuthState] = useState('authenticationGuard');
+  let [userState, updateUserState] = useState('userState');
 
   let { isOpen, onOpen, onClose } = createDisclosure();
   let [details, setDetails] = createStore(
@@ -77,11 +78,15 @@ let AddSaleModal = ({ onAdd = () => {} }) => {
 
   let addSale = () => {
     axios
-      .post(apiUrl + '/sales', details, {
-        headers: {
-          Authorization: 'Bearer ' + authState.authenticationToken,
-        },
-      })
+      .post(
+        apiUrl + '/sales',
+        { ...details, industry: userState.type },
+        {
+          headers: {
+            Authorization: 'Bearer ' + authState.authenticationToken,
+          },
+        }
+      )
       .then((response) => {
         if (response.data.error) {
           return notificationService.show({

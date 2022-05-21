@@ -1,8 +1,13 @@
 import moment from 'moment';
 
-export let salesChart = (sales) => {
+export let salesChart = (sales, industry) => {
   let salesChart = document.getElementById('salesChart');
   let ctx = salesChart.getContext('2d');
+
+  let chartAlreadyExists = Chart.getChart('salesChart');
+  if (chartAlreadyExists) chartAlreadyExists.destroy();
+
+  console.log(industry);
 
   let months = [
     'January',
@@ -22,14 +27,23 @@ export let salesChart = (sales) => {
   let calculateMonthSales = (year, month, sales) => {
     let salesCount = 0;
 
-    sales.map((sale) => {
-      let saleMonth = moment(sale.date).format('MMMM');
-      let saleYear = moment(sale.date).format('YYYY');
+    sales
+      .filter((sale) => {
+        console.log(sale);
 
-      if (saleMonth === month && saleYear === year) salesCount++;
+        if (industry === 'all') return sale;
+        else {
+          if (sale.industry === industry) return sale;
+        }
+      })
+      .map((sale) => {
+        let saleMonth = moment(sale.date).format('MMMM');
+        let saleYear = moment(sale.date).format('YYYY');
 
-      return sale;
-    });
+        if (saleMonth === month && saleYear === year) salesCount++;
+
+        return sale;
+      });
 
     return salesCount;
   };

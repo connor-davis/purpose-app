@@ -5,6 +5,20 @@ import axios from 'axios';
 import apiUrl from '../../apiUrl';
 import AdminUserMap from './adminUserMap';
 import { gendersChart, salesChart } from '../../charts';
+import {
+  Select,
+  SelectContent,
+  SelectIcon,
+  SelectListbox,
+  SelectOption,
+  SelectOptionIndicator,
+  SelectOptionText,
+  SelectPlaceholder,
+  SelectTrigger,
+  SelectValue,
+  VStack,
+} from '@hope-ui/solid';
+import { For } from 'solid-js';
 
 let AdminDashboardPage = () => {
   let [authState, updateAuthState] = useState('authenticationGuard');
@@ -19,7 +33,7 @@ let AdminDashboardPage = () => {
 
   setTimeout(() => {
     loadUsers();
-    loadSales();
+    loadSales('all');
   }, 300);
 
   let loadUsers = async () => {
@@ -37,7 +51,21 @@ let AdminDashboardPage = () => {
       });
   };
 
-  let loadSales = async () => {
+  let industries = [
+    'Sewing',
+    'Bakery',
+    'Wood Work',
+    'Garden Service',
+    'Food And Beverage',
+    'Gardening',
+    'Nails',
+    'Salon',
+    'Consulting',
+    'Construction',
+    'Other',
+  ];
+
+  let loadSales = async (industry) => {
     await axios
       .get(apiUrl + '/admin/users/sales/all', {
         headers: { Authorization: 'Bearer ' + authState.authenticationToken },
@@ -47,7 +75,7 @@ let AdminDashboardPage = () => {
         else {
           setSales([...response.data.data]);
 
-          salesChart(sales);
+          salesChart(sales, industry);
           gendersChart(users);
         }
       });
@@ -72,71 +100,81 @@ let AdminDashboardPage = () => {
         </div>
 
         <div class="flex flex-col w-full h-full space-y-5">
-          <canvas
-            id="salesChart"
-            class="w-full max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
-          ></canvas>
+          <div class="flex flex-col w-full border-l border-t border-r border-b border-gray-200 rounded-2xl p-2">
+            <div class="self-end">
+              <Select
+                id="type"
+                variant="unstyled"
+                value={'All'}
+                onChange={(type) => {
+                  let typeSplit = type.toString().split(' ');
+                  let typeJoin = typeSplit.join('');
+                  let typeFormatted =
+                    typeJoin.split('')[0].toLowerCase() +
+                    typeJoin.substring(1, typeJoin.length);
+
+                  salesChart(sales, typeFormatted);
+                }}
+              >
+                <SelectTrigger
+                  border="none"
+                  outline="none"
+                  bg="#e5e5e5"
+                  p="$3"
+                  class="outline-none"
+                  color="black"
+                >
+                  <SelectPlaceholder>Choose Industry</SelectPlaceholder>
+                  <SelectValue />
+                  <SelectIcon />
+                </SelectTrigger>
+                <SelectContent
+                  bg="#e5e5e5"
+                  border="none"
+                  color="black"
+                  minW="$56"
+                >
+                  <SelectListbox as={VStack} spacing="$1">
+                    <For
+                      each={[
+                        'Sewing',
+                        'Bakery',
+                        'Wood Work',
+                        'Garden Service',
+                        'Food And Beverage',
+                        'Gardening',
+                        'Nails',
+                        'Salon',
+                        'Consulting',
+                        'Construction',
+                        'Other',
+                      ]}
+                    >
+                      {(item) => (
+                        <SelectOption
+                          value={item}
+                          w="100%"
+                          bg="white"
+                          _active={{ bg: 'white' }}
+                          color="black"
+                        >
+                          <SelectOptionText>{item}</SelectOptionText>
+                          <SelectOptionIndicator color="$lime4" />
+                        </SelectOption>
+                      )}
+                    </For>
+                  </SelectListbox>
+                </SelectContent>
+              </Select>
+            </div>
+            <canvas id="salesChart" class="w-full max-h-96"></canvas>
+          </div>
           <canvas
             id="gendersChart"
             class="w-full max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
           ></canvas>
           <AdminUserMap />
         </div>
-
-        {/*TODO*/}
-        {/*<div class="w-full font-bold">Latest Sales</div>*/}
-        {/*<div class="relative w-full h-32 overflow-hidden border-l border-t border-r border-b border-gray-200 rounded-2xl p-2">*/}
-        {/*  <div class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-white"></div>*/}
-        {/*  <table class="table-auto w-full">*/}
-        {/*    <tbody>*/}
-        {/*      {!loading() &&*/}
-        {/*        userData.filter((sale) => sale !== undefined).length > 0 &&*/}
-        {/*        userData.map((sale) => (*/}
-        {/*          <tr class="p-2">*/}
-        {/*            <td class={'text-left px-3'}>*/}
-        {/*              {moment(sale.date).format('DD/MM/YYYY')}*/}
-        {/*            </td>*/}
-        {/*            <td class={'text-left px-3'}>{sale.product.name}</td>*/}
-        {/*            <td class={'text-right px-3'}>R {sale.product.cost}</td>*/}
-        {/*            <td class={'text-right px-3'}>R {sale.product.price}</td>*/}
-        {/*            <td class={'text-right px-3'}>{sale.numberSold}</td>*/}
-        {/*            <td class={'text-right px-3'}>R {sale.profit}</td>*/}
-        {/*          </tr>*/}
-        {/*        ))}*/}
-        {/*    </tbody>*/}
-        {/*  </table>*/}
-
-        {/*  {loading() && (*/}
-        {/*    <VStack w={'100%'} alignItems="stretch" spacing="$2" p={'$3'}>*/}
-        {/*      <Skeleton*/}
-        {/*        height="40px"*/}
-        {/*        startColor={'#d4d4d4'}*/}
-        {/*        endColor={'#f5f5f5'}*/}
-        {/*      />*/}
-        {/*      <Skeleton*/}
-        {/*        height="40px"*/}
-        {/*        startColor={'#d4d4d4'}*/}
-        {/*        endColor={'#f5f5f5'}*/}
-        {/*      />*/}
-        {/*      <Skeleton*/}
-        {/*        height="40px"*/}
-        {/*        startColor={'#d4d4d4'}*/}
-        {/*        endColor={'#f5f5f5'}*/}
-        {/*      />*/}
-        {/*    </VStack>*/}
-        {/*  )}*/}
-
-        {/*  {!loading() && (*/}
-        {/*    <>*/}
-        {/*      {userData.filter((product) => product !== undefined).length ===*/}
-        {/*        0 && (*/}
-        {/*        <VStack w={'100%'} justifyContent={'center'} py={'$5'}>*/}
-        {/*          You have no userData.*/}
-        {/*        </VStack>*/}
-        {/*      )}*/}
-        {/*    </>*/}
-        {/*  )}*/}
-        {/*</div>*/}
       </div>
     </div>
   );
