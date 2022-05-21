@@ -136,3 +136,118 @@ export let gendersChart = (users) => {
     },
   });
 };
+
+export let userProfitChart = (sales, done = () => {}) => {
+  let profitChart = document.getElementById('profitChart');
+  let ctx = profitChart.getContext('2d');
+
+  let months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  let calculateMonthProfit = (year, month, sales) => {
+    let profit = 0;
+
+    sales.map((sale) => {
+      let saleMonth = moment(sale.date).format('MMMM');
+      let saleYear = moment(sale.date).format('YYYY');
+
+      if (saleMonth === month && saleYear === year) profit += sale.profit;
+
+      return sale;
+    });
+
+    return profit;
+  };
+
+  let getYearProfits = (year) => {
+    return [
+      ...months.map((month) => {
+        return {
+          x: month,
+          y: calculateMonthProfit(year, month, sales),
+        };
+      }),
+    ];
+  };
+
+  let data = {
+    labels: months,
+    datasets: [
+      {
+        label: '2022',
+        type: 'line',
+        data: getYearProfits('2022'),
+        backgroundColor: 'rgba(163, 230, 53, 1)',
+        borderColor: 'rgba(163, 230, 53, 0.5)',
+        fill: false,
+        tension: 0.4,
+        cubicInterpolationMode: 'monotone',
+        pointStyle: 'circle',
+        pointRadius: 4,
+        pointHoverRadius: 5,
+      },
+    ],
+  };
+
+  new Chart(ctx, {
+    type: 'line',
+    data: data,
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Monthly Profit',
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              let label = '';
+
+              if (context.parsed.y !== null) {
+                label += new Intl.NumberFormat('en-ZA', {
+                  style: 'currency',
+                  currency: 'ZAR',
+                }).format(context.parsed.y);
+              }
+
+              return label;
+            },
+          },
+        },
+      },
+      interaction: {
+        intersect: false,
+      },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+          },
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: 'Value (R)',
+          },
+        },
+      },
+    },
+  });
+
+  done();
+};

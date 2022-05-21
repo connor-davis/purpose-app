@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@easepick/bundle': ^1.1.7
   '@fortawesome/free-solid-svg-icons': ^6.1.1
   '@googlemaps/js-api-loader': ^1.14.1
   '@hope-ui/solid': ^0.4.2
@@ -26,6 +27,7 @@ specifiers:
   workbox-window: ^6.5.3
 
 dependencies:
+  '@easepick/bundle': 1.1.7
   '@fortawesome/free-solid-svg-icons': 6.1.1
   '@googlemaps/js-api-loader': 1.14.1
   '@hope-ui/solid': 0.4.2_4ff2b9ebff19c94a4f98b60c4ac325d4
@@ -1217,6 +1219,73 @@ packages:
     dependencies:
       '@babel/helper-validator-identifier': 7.16.7
       to-fast-properties: 2.0.0
+
+  /@easepick/amp-plugin/1.1.7:
+    resolution: {integrity: sha512-M4rIpZlhuZyC6hfQ368ohXFZSJdOSERAL9kAtxOG9Xk3pgCaDj/77gkKHDaMlW/d3jHTGhY+NfDRj3IsYGfVQw==}
+    dependencies:
+      '@easepick/base-plugin': 1.1.7
+    dev: false
+
+  /@easepick/base-plugin/1.1.7:
+    resolution: {integrity: sha512-mpBUYSJujcR7HR8tz/HLE27xHDZk/679mGXecFScK4NYgZybS2JjMpZVfCvoCEIYg7Xx5OL2Hhx2HVVVYVMjLQ==}
+    dependencies:
+      '@easepick/core': 1.1.7
+    dev: false
+
+  /@easepick/bundle/1.1.7:
+    resolution: {integrity: sha512-VsZZFuozOKQt3U/3uNilP/mj8atpeDGCtIWQ+E6KbDh5YDsTj88+4YAgi3D+ygbNmxMvMwkdh2z+2VAA/K58PA==}
+    dependencies:
+      '@easepick/amp-plugin': 1.1.7
+      '@easepick/base-plugin': 1.1.7
+      '@easepick/core': 1.1.7
+      '@easepick/datetime': 1.1.7
+      '@easepick/kbd-plugin': 1.1.7
+      '@easepick/lock-plugin': 1.1.7
+      '@easepick/preset-plugin': 1.1.7
+      '@easepick/range-plugin': 1.1.7
+      '@easepick/time-plugin': 1.1.7
+    dev: false
+
+  /@easepick/core/1.1.7:
+    resolution: {integrity: sha512-q7Elbb75BN+Nf0KDtRGVG8/pCw2g+fD/pJQZrADhQmR1XtV46GPi6RW83f8pLTrZNsLNrcIUVmoSGdNzfhorjA==}
+    dependencies:
+      '@easepick/datetime': 1.1.7
+    dev: false
+
+  /@easepick/datetime/1.1.7:
+    resolution: {integrity: sha512-r7n+dyGg+u+IDUWdYbuzMnCkk0amJjHoLyoz4az9OMdmJcdJzC76+n/Pt8T2KLRoCgxUwi8NEBp5MUaKqagXTw==}
+    dev: false
+
+  /@easepick/kbd-plugin/1.1.7:
+    resolution: {integrity: sha512-UpLWC7saXLx4u3GJrZwyetIlEVC4EH6nYH1QFLaCnKYV1+FMtgkKA5cRHRKdNaF9flyrEYxozQN+f8yM2O7I7A==}
+    dependencies:
+      '@easepick/base-plugin': 1.1.7
+    dev: false
+
+  /@easepick/lock-plugin/1.1.7:
+    resolution: {integrity: sha512-bwynn3w7GC1N5Txi92yPWchDRNvItnGRWgdcqW3uZnw07qNMjk6UuLaKG14uJZhPMl62qiTE7TI2ner0QMMqiQ==}
+    dependencies:
+      '@easepick/base-plugin': 1.1.7
+    dev: false
+
+  /@easepick/preset-plugin/1.1.7:
+    resolution: {integrity: sha512-DY+HvwCL1jQXeOE/sW0YNtoPpSv6tDkwqTg8KX8ngBPnfCllJc/eqOpLyKORwG+b+yGgshp9LmajJuRxcGTQng==}
+    dependencies:
+      '@easepick/base-plugin': 1.1.7
+      '@easepick/range-plugin': 1.1.7
+    dev: false
+
+  /@easepick/range-plugin/1.1.7:
+    resolution: {integrity: sha512-8nrAo9eWr+2j7jL0xKOp/mhk15AzSed2VsHhFtjs6aKdcEnby+TLOlj0oa4yAjZnL+saJKgCzjnbLQkFKRN6gg==}
+    dependencies:
+      '@easepick/base-plugin': 1.1.7
+    dev: false
+
+  /@easepick/time-plugin/1.1.7:
+    resolution: {integrity: sha512-/Zl4hBxs03m0JwhdJWOvv1BcQbAFWGqbgxngblTY6L+3yahQ6EpvAWQdl5uMbL6l8UvZbpBodHTk9ehEPLgTlw==}
+    dependencies:
+      '@easepick/base-plugin': 1.1.7
+    dev: false
 
   /@floating-ui/core/0.6.2:
     resolution: {integrity: sha512-jktYRmZwmau63adUG3GKOAVCofBXkk55S/zQ94XOorAHhwqFIOFAy1rSp2N0Wp6/tGbe9V3u/ExlGZypyY17rg==}

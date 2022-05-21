@@ -4,7 +4,7 @@ import { createStore } from 'solid-js/store';
 import axios from 'axios';
 import apiUrl from '../../apiUrl';
 import AdminUserMap from './adminUserMap';
-import { gendersChart, salesChart } from './charts';
+import { gendersChart, salesChart } from '../../charts';
 
 let AdminDashboardPage = () => {
   let [authState, updateAuthState] = useState('authenticationGuard');

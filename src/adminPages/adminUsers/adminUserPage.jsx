@@ -4,6 +4,7 @@ import {
   CircularProgressIndicator,
   HStack,
   notificationService,
+  Skeleton,
   Text,
   VStack,
 } from '@hope-ui/solid';
@@ -15,6 +16,8 @@ import apiUrl from '../../apiUrl';
 import useState from '../../hooks/state';
 import IconExport from '../../icons/IconExport';
 import { saveAs } from 'file-saver';
+import moment from 'moment';
+import { userProfitChart } from '../../charts';
 
 let AdminUserPage = () => {
   let params = useParams();
@@ -74,7 +77,7 @@ let AdminUserPage = () => {
 
                       setUserData({ ...userInfo, sales, products });
 
-                      return setLoading(false);
+                      userProfitChart(sales, () => setLoading(false));
                     }
                   });
               }
@@ -161,7 +164,7 @@ let AdminUserPage = () => {
             class={`flex flex-col justify-center items-center w-full p-10 space-y-3 ${
               loading()
                 ? 'bg-gray-200 animate-pulse rounded-lg'
-                : 'bg-lime-400 rounded-lg shadow-2xl shadow-lime-400'
+                : 'bg-lime-400 rounded-lg shadow-lg shadow-lime-200'
             }`}
           >
             <div class="text-white font-bold">
@@ -175,7 +178,7 @@ let AdminUserPage = () => {
             class={`flex flex-col justify-center items-center w-full p-10 space-y-3 ${
               loading()
                 ? 'bg-gray-200 animate-pulse rounded-lg'
-                : 'bg-lime-400 rounded-lg shadow-2xl shadow-lime-400'
+                : 'bg-lime-400 rounded-lg shadow-lg shadow-lime-200'
             }`}
           >
             <div class="text-white font-bold">
@@ -185,18 +188,87 @@ let AdminUserPage = () => {
           </div>
         </div>
 
-        <iframe
-          class={`w-full h-full rounded-lg bg-gray-200 mb-16 ${
-            loading() && 'animate-pulse'
-          }`}
-          frameborder="0"
-          style="border:0"
-          src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyAH8g_iKPrzzhPiO_wae4uXjU5sNwP-h9o&q=${
-            !loading() &&
-            userData.streetAddress + ' ' + userData.suburb + ' ' + userData.city
-          }`}
-          allowfullscreen
-        ></iframe>
+        <div class="flex flex-col w-full h-full space-y-5 overflow-y-auto pb-16">
+          <canvas
+            id="profitChart"
+            class="w-full max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
+          ></canvas>
+
+          <div
+            class="relative w-full h-32 overflow-hidden border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
+            style={{ 'min-height': '100px' }}
+          >
+            <div class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-white"></div>
+
+            <table class="table-auto w-full">
+              <tbody>
+                {!loading() &&
+                  userData.sales.filter((sale) => sale !== undefined).length >
+                    0 &&
+                  userData.sales.map((sale) => (
+                    <tr class="p-2">
+                      <td class={'text-left px-3'}>
+                        {moment(sale.date).format('DD/MM/YYYY')}
+                      </td>
+                      <td class={'text-left px-3'}>{sale.product.name}</td>
+                      <td class={'text-right px-3'}>R {sale.product.cost}</td>
+                      <td class={'text-right px-3'}>R {sale.product.price}</td>
+                      <td class={'text-right px-3'}>{sale.numberSold}</td>
+                      <td class={'text-right px-3'}>R {sale.profit}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+
+            {loading() && (
+              <VStack w={'100%'} alignItems="stretch" spacing="$2" p={'$3'}>
+                <Skeleton
+                  height="40px"
+                  startColor={'#d4d4d4'}
+                  endColor={'#f5f5f5'}
+                />
+                <Skeleton
+                  height="40px"
+                  startColor={'#d4d4d4'}
+                  endColor={'#f5f5f5'}
+                />
+                <Skeleton
+                  height="40px"
+                  startColor={'#d4d4d4'}
+                  endColor={'#f5f5f5'}
+                />
+              </VStack>
+            )}
+
+            {!loading() && (
+              <>
+                {userData.sales.filter((product) => product !== undefined)
+                  .length === 0 && (
+                  <VStack w={'100%'} justifyContent={'center'} py={'$5'}>
+                    You have no sales.
+                  </VStack>
+                )}
+              </>
+            )}
+          </div>
+
+          <iframe
+            class={`w-full h-full rounded-lg bg-gray-200 mb-16 ${
+              loading() && 'animate-pulse'
+            }`}
+            frameborder="0"
+            style={{ border: 0, 'min-height': '300px' }}
+            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyAH8g_iKPrzzhPiO_wae4uXjU5sNwP-h9o&q=${
+              !loading() &&
+              userData.streetAddress +
+                ' ' +
+                userData.suburb +
+                ' ' +
+                userData.city
+            }`}
+            allowfullscreen
+          ></iframe>
+        </div>
       </VStack>
     )
   );

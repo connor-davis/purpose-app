@@ -86,6 +86,42 @@ let AdminUsersPage = () => {
       });
   };
 
+  let deleteUser = (email) => {
+    axios
+      .delete(apiUrl + '/users/' + email, {
+        headers: { Authorization: 'Bearer ' + authState.authenticationToken },
+      })
+      .then((response) => {
+        if (response.data.error)
+          return notificationService.show({
+            title: 'Error',
+            description: 'Failed to delete the user.',
+            status: 'danger',
+            duration: 3000,
+          });
+        else {
+          setUsers([
+            ...users
+              .map((user) => {
+                if (user.email !== email) return user;
+              })
+              .sort((a, b) => {
+                if (a.displayName > b.displayName) return 1;
+                if (a.displayName < b.displayName) return -1;
+                return 0;
+              }),
+          ]);
+
+          notificationService.show({
+            title: 'Success',
+            description: 'Deleted user successfully.',
+            status: 'success',
+            duration: 3000,
+          });
+        }
+      });
+  };
+
   return (
     <VStack w="100%" h="100%" color="black" p={'$5'} spacing={'$5'}>
       <HStack w="100%" class="justify-between">
@@ -168,9 +204,29 @@ let AdminUsersPage = () => {
                           class={'hover:bg-gray-100'}
                           rounded={'$lg'}
                           cursor={'pointer'}
+                          onSelect={() => navigate('/users/edit/' + user.id)}
+                        >
+                          Edit Profile
+                        </MenuItem>
+
+                        <MenuItem
+                          colorScheme={'none'}
+                          class={'hover:bg-gray-100'}
+                          rounded={'$lg'}
+                          cursor={'pointer'}
                           onSelect={() => generateResetPassword(user.id)}
                         >
                           Reset Password
+                        </MenuItem>
+
+                        <MenuItem
+                          colorScheme={'none'}
+                          class={'hover:bg-gray-100'}
+                          rounded={'$lg'}
+                          cursor={'pointer'}
+                          onSelect={() => deleteUser(user.email)}
+                        >
+                          Delete User
                         </MenuItem>
                       </MenuContent>
                     </Menu>
