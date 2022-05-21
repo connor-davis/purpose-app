@@ -92,6 +92,8 @@ let AdminUsersPage = () => {
         headers: { Authorization: 'Bearer ' + authState.authenticationToken },
       })
       .then((response) => {
+        console.log(response.data, response.status);
+
         if (response.data.error)
           return notificationService.show({
             title: 'Error',
