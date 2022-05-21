@@ -4,7 +4,7 @@ import { createStore } from 'solid-js/store';
 import axios from 'axios';
 import apiUrl from '../../apiUrl';
 import AdminUserMap from './adminUserMap';
-import { gendersChart, salesChart } from '../../charts';
+import { agesChart, gendersChart, salesChart, typesChart } from '../../charts';
 import {
   Select,
   SelectContent,
@@ -47,11 +47,15 @@ let AdminDashboardPage = () => {
         if (response.data.error) return console.log(response.data);
         else {
           setUsers([...response.data.data]);
+
+          typesChart(users);
+          agesChart(users);
         }
       });
   };
 
   let industries = [
+    'All',
     'Sewing',
     'Bakery',
     'Wood Work',
@@ -135,21 +139,7 @@ let AdminDashboardPage = () => {
                   minW="$56"
                 >
                   <SelectListbox as={VStack} spacing="$1">
-                    <For
-                      each={[
-                        'Sewing',
-                        'Bakery',
-                        'Wood Work',
-                        'Garden Service',
-                        'Food And Beverage',
-                        'Gardening',
-                        'Nails',
-                        'Salon',
-                        'Consulting',
-                        'Construction',
-                        'Other',
-                      ]}
-                    >
+                    <For each={industries}>
                       {(item) => (
                         <SelectOption
                           value={item}
@@ -169,6 +159,14 @@ let AdminDashboardPage = () => {
             </div>
             <canvas id="salesChart" class="w-full max-h-96"></canvas>
           </div>
+          <canvas
+            id="agesChart"
+            class="w-full max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
+          ></canvas>
+          <canvas
+            id="typesChart"
+            class="w-full max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
+          ></canvas>
           <canvas
             id="gendersChart"
             class="w-full max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"

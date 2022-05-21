@@ -7,8 +7,6 @@ export let salesChart = (sales, industry) => {
   let chartAlreadyExists = Chart.getChart('salesChart');
   if (chartAlreadyExists) chartAlreadyExists.destroy();
 
-  console.log(industry);
-
   let months = [
     'January',
     'February',
@@ -29,8 +27,6 @@ export let salesChart = (sales, industry) => {
 
     sales
       .filter((sale) => {
-        console.log(sale);
-
         if (industry === 'all') return sale;
         else {
           if (sale.industry === industry) return sale;
@@ -104,6 +100,217 @@ export let salesChart = (sales, industry) => {
           title: {
             display: true,
             text: 'Number of Sales',
+          },
+        },
+      },
+    },
+  });
+};
+
+export let agesChart = (users) => {
+  let agesChart = document.getElementById('agesChart');
+  let ctx = agesChart.getContext('2d');
+
+  let chartAlreadyExists = Chart.getChart('agesChart');
+  if (chartAlreadyExists) chartAlreadyExists.destroy();
+
+  let ranges = [
+    '1-10',
+    '11-20',
+    '21-30',
+    '31-40',
+    '41-50',
+    '51-60',
+    '61-70',
+    '71-80',
+    '81-90',
+    '91-100',
+  ];
+
+  let calculateAges = (ageRangeMin, ageRangeMax, users) => {
+    let agesCount = 0;
+
+    users.map((user) => {
+      if (user.age >= ageRangeMin && user.age <= ageRangeMax) agesCount++;
+      return user;
+    });
+
+    return agesCount;
+  };
+
+  let getAges = () => {
+    return [
+      ...ranges.map((range) => {
+        let rangeMinMax = range.split('-');
+        return {
+          x: range,
+          y: calculateAges(rangeMinMax[0], rangeMinMax[1], users),
+        };
+      }),
+    ];
+  };
+
+  let data = {
+    labels: ranges,
+    datasets: [
+      {
+        label: 'Ages',
+        type: 'bar',
+        data: getAges(),
+        backgroundColor: 'rgba(163, 230, 53, 1)',
+        borderColor: 'rgba(163, 230, 53, 0.5)',
+        fill: false,
+        tension: 0.4,
+        cubicInterpolationMode: 'monotone',
+        pointStyle: 'circle',
+        pointRadius: 4,
+        pointHoverRadius: 5,
+      },
+    ],
+  };
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Ages',
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return `${ranges[context.parsed.x]}: ${context.parsed.y}`;
+            },
+          },
+        },
+      },
+      interaction: {
+        intersect: false,
+      },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+          },
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: 'Number',
+          },
+        },
+      },
+    },
+  });
+};
+
+export let typesChart = (users) => {
+  let typesChart = document.getElementById('typesChart');
+  let ctx = typesChart.getContext('2d');
+
+  let chartAlreadyExists = Chart.getChart('typesChart');
+  if (chartAlreadyExists) chartAlreadyExists.destroy();
+
+  let types = [
+    'Sewing',
+    'Bakery',
+    'Wood Work',
+    'Garden Service',
+    'Food And Beverage',
+    'Gardening',
+    'Nails',
+    'Salon',
+    'Consulting',
+    'Construction',
+    'Other',
+  ];
+
+  let calculateTypes = (type, users) => {
+    let typesCount = 0;
+
+    users.map((user) => {
+      if (user.type === type) typesCount++;
+
+      return user;
+    });
+
+    return typesCount;
+  };
+
+  let getTypes = () => {
+    return [
+      ...types.map((type) => {
+        let typeSplit = type.toString().split(' ');
+        let typeJoin = typeSplit.join('');
+        let typeFormatted =
+          typeJoin.split('')[0].toLowerCase() +
+          typeJoin.substring(1, typeJoin.length);
+
+        return {
+          x: type,
+          y: calculateTypes(typeFormatted, users),
+        };
+      }),
+    ];
+  };
+
+  let data = {
+    labels: types,
+    datasets: [
+      {
+        label: '',
+        type: 'bar',
+        data: getTypes(),
+        backgroundColor: 'rgba(163, 230, 53, 1)',
+        borderColor: 'rgba(163, 230, 53, 0.5)',
+        fill: false,
+        tension: 0.4,
+        cubicInterpolationMode: 'monotone',
+        pointStyle: 'circle',
+        pointRadius: 4,
+        pointHoverRadius: 5,
+      },
+    ],
+  };
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Business Types',
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return `${types[context.parsed.x]}: ${context.parsed.y}`;
+            },
+          },
+        },
+      },
+      interaction: {
+        intersect: false,
+      },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+          },
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: 'Number of Types',
           },
         },
       },

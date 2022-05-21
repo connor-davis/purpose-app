@@ -43,16 +43,34 @@ let AdminUsersPage = () => {
       .then((response) => {
         if (response.data.error) return console.log(response.data);
         else {
-          setUsers([
-            ...users,
-            ...response.data.data.sort((a, b) => {
-              if (a.displayName > b.displayName) return 1;
-              if (a.displayName < b.displayName) return -1;
-              return 0;
-            }),
-          ]);
+          response.data.data.map(async (user) => {
+            if (user.type === 'admin') return;
 
-          return setLoading(false);
+            let salesResponse = await axios.get(
+              apiUrl + '/admin/users/sales/' + user.id,
+              {
+                headers: {
+                  Authorization: 'Bearer ' + authState.authenticationToken,
+                },
+              }
+            );
+
+            if (salesResponse.data.error)
+              return console.log(salesResponse.data.error);
+            else {
+              let sales = salesResponse.data.data;
+
+              setUsers(
+                [...(users || []), { ...user, sales }].sort((a, b) => {
+                  if (a.displayName > b.displayName) return 1;
+                  if (a.displayName < b.displayName) return -1;
+                  return 0;
+                })
+              );
+
+              return setLoading(false);
+            }
+          });
         }
       });
   };
@@ -146,6 +164,8 @@ let AdminUsersPage = () => {
               <th class={'text-left px-3'}>Name</th>
               <th class={'text-left px-3'}>Email</th>
               <th class={'text-left px-3'}>Address</th>
+              <th class={'text-left px-3'}>Employees</th>
+              <th class={'text-left px-3'}>Sales</th>
             </tr>
           </thead>
           <tbody>
@@ -157,6 +177,10 @@ let AdminUsersPage = () => {
                   <td class={'text-left px-3'}>{user.email}</td>
                   <td class={'text-left px-3'}>
                     {user.streetAddress + ', ' + user.city}
+                  </td>
+                  <td class={'text-left px-3'}>{user.employeesCount}</td>
+                  <td class={'text-left px-3'}>
+                    {(user.sales && user.sales.length) || 0}
                   </td>
                   <td class={'w-10 p-0 m-0'}>
                     <Menu color={'black'} as>
@@ -201,15 +225,15 @@ let AdminUsersPage = () => {
                           View Profile
                         </MenuItem>
 
-                        <MenuItem
-                          colorScheme={'none'}
-                          class={'hover:bg-gray-100'}
-                          rounded={'$lg'}
-                          cursor={'pointer'}
-                          onSelect={() => navigate('/users/edit/' + user.id)}
-                        >
-                          Edit Profile
-                        </MenuItem>
+                        {/*<MenuItem*/}
+                        {/*  colorScheme={'none'}*/}
+                        {/*  class={'hover:bg-gray-100'}*/}
+                        {/*  rounded={'$lg'}*/}
+                        {/*  cursor={'pointer'}*/}
+                        {/*  onSelect={() => navigate('/users/edit/' + user.id)}*/}
+                        {/*>*/}
+                        {/*  Edit Profile*/}
+                        {/*</MenuItem>*/}
 
                         <MenuItem
                           colorScheme={'none'}
@@ -223,7 +247,7 @@ let AdminUsersPage = () => {
 
                         <MenuItem
                           colorScheme={'none'}
-                          class={'hover:bg-gray-100'}
+                          class={'hover:bg-red-500 hover:text-white'}
                           rounded={'$lg'}
                           cursor={'pointer'}
                           onSelect={() => deleteUser(user.email)}
