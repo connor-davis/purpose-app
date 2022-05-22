@@ -48,19 +48,6 @@ let EditSaleModal = ({
   onMount(() => {
     setTimeout(() => {
       loadProducts();
-
-      const elem = document.querySelector('input[id="datepicker"]');
-
-      if (elem) {
-        const datepicker = new Datepicker(elem, {});
-
-        elem.addEventListener('changeDate', (event) => {
-          setDetails({
-            ...details,
-            date: event.target.datepicker.dates[0],
-          });
-        });
-      }
     }, 300);
   });
 
@@ -118,6 +105,25 @@ let EditSaleModal = ({
           });
         }
       });
+  };
+
+  let setupDatePicker = () => {
+    let element = document.getElementById('datepicker');
+
+    if (element) {
+      let datepicker = new Datepicker(element, {});
+
+      element.addEventListener('changeDate', (event) => {
+        setDetails({
+          ...details,
+          date: event.target.datepicker.dates[0],
+        });
+      });
+
+      return datepicker;
+    }
+
+    return element;
   };
 
   return (
@@ -209,10 +215,13 @@ let EditSaleModal = ({
                       variant="unstyled"
                       bg="#e5e5e5"
                       p="$3"
-                      placeholder={moment().format('MM/DD/YYYY')}
+                      placeholder={
+                        setupDatePicker() &&
+                        moment(details.date).format('MM/DD/YYYY')
+                      }
                       size="sm"
                       color="black"
-                      data-date={moment().format('MM/DD/YYYY')}
+                      data-date={moment(details.date).format('MM/DD/YYYY')}
                     />
                     <FormHelperText>When was the sale made?</FormHelperText>
                   </FormControl>
@@ -285,21 +294,6 @@ let EditSaleModal = ({
                     onClick={() => {
                       setDetails({ ...details, product: selectedProduct() });
                       setSelectedProduct({});
-
-                      const elem = document.querySelector(
-                        'input[id="datepicker"]'
-                      );
-
-                      if (elem) {
-                        const datepicker = new Datepicker(elem, {});
-
-                        elem.addEventListener('changeDate', (event) => {
-                          setDetails({
-                            ...details,
-                            date: event.target.datepicker.dates[0],
-                          });
-                        });
-                      }
                     }}
                   >
                     Next
