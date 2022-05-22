@@ -24,6 +24,7 @@ import useState from '../../hooks/state';
 import axios from 'axios';
 import { createSignal, onMount } from 'solid-js';
 import IconCheck from '../../icons/IconCheck';
+import moment from 'moment';
 
 let AddSaleModal = ({ onAdd = () => {} }) => {
   let [authState, updateAuthState] = useState('authenticationGuard');
@@ -192,6 +193,23 @@ let AddSaleModal = ({ onAdd = () => {} }) => {
 
                   <FormControl required>
                     <FormLabel for="numberSold" color="black">
+                      Date Sold
+                    </FormLabel>
+                    <Input
+                      id="datepicker"
+                      variant="unstyled"
+                      bg="#e5e5e5"
+                      p="$3"
+                      placeholder={moment().format('MM/DD/YYYY')}
+                      size="sm"
+                      color="black"
+                      data-date={moment().format('MM/DD/YYYY')}
+                    />
+                    <FormHelperText>When was the sale made?</FormHelperText>
+                  </FormControl>
+
+                  <FormControl required>
+                    <FormLabel for="numberSold" color="black">
                       Number Sold
                     </FormLabel>
                     <Input
@@ -258,6 +276,18 @@ let AddSaleModal = ({ onAdd = () => {} }) => {
                     onClick={() => {
                       setDetails({ ...details, product: selectedProduct() });
                       setSelectedProduct({});
+
+                      const elem = document.querySelector(
+                        'input[id="datepicker"]'
+                      );
+                      const datepicker = new Datepicker(elem, {});
+
+                      elem.addEventListener('changeDate', (event) => {
+                        setDetails({
+                          ...details,
+                          date: event.target.datepicker.dates[0],
+                        });
+                      });
                     }}
                   >
                     Next
