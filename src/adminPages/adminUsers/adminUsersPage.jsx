@@ -186,7 +186,7 @@ let AdminUsersPage = () => {
         if (response.data.error) return console.log(response.data);
         else {
           if (response.status === 200) {
-            saveAs(response.data, `${userData.email}-data.xlsx`);
+            saveAs(response.data, `purpose-users-data.xlsx`);
 
             notificationService.hide('download-progress');
 
