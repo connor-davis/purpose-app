@@ -117,7 +117,7 @@ let AddSaleModal = ({ onAdd = () => {} }) => {
     let element = document.getElementById('datepicker');
 
     if (element) {
-      let datepicker = new Datepicker(element, {});
+      let datepicker = new Datepicker(element, { minDate: '01/01/2022' });
 
       element.addEventListener('changeDate', (event) => {
         setDetails({

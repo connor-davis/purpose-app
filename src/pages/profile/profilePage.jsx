@@ -21,6 +21,7 @@ import apiUrl from '../../apiUrl';
 import EditBusinessDetails from './editBusinessDetails';
 import EditBankDetails from './editBankDetails';
 import EditLocationDetails from './editLocationDetails';
+import EditHandleDetails from './editHandleDetails';
 
 let ProfilePage = () => {
   let [userState, updateUserState] = useState('userState');
@@ -30,6 +31,7 @@ let ProfilePage = () => {
     {
       editingPersonalDetails: false,
       editingBusinessDetails: false,
+      editingHandleDetails: false,
       editingBankDetails: false,
       editingLocationDetails: false,
       loadingDetails: true,
@@ -57,6 +59,16 @@ let ProfilePage = () => {
       registrationNumber: '',
     },
     { name: 'business-details' }
+  );
+
+  let [handleDetails, setHandleDetails] = createStore(
+    {
+      website: '',
+      facebook: '',
+      instagram: '',
+      youtube: '',
+    },
+    { name: 'handle-details' }
   );
 
   let [bankDetails, setBankDetails] = createStore(
@@ -118,6 +130,13 @@ let ProfilePage = () => {
         type: userState.type,
         typeDescription: userState.typeDescription || undefined,
         registrationNumber: userState.registrationNumber || undefined,
+      });
+
+      setHandleDetails({
+        website: userState.website || undefined,
+        facebook: userState.facebook || undefined,
+        instagram: userState.instagram || undefined,
+        youtube: userState.youtube || undefined,
       });
 
       setBankDetails({
@@ -446,6 +465,106 @@ let ProfilePage = () => {
           >
             <AccordionButton _hover={{ bg: 'white', color: 'black' }}>
               <Text flex={1} fontWeight="$medium" textAlign="start">
+                Handle Details
+              </Text>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel>
+              {pageSettings.editingHandleDetails && (
+                <EditHandleDetails
+                  data={{ ...handleDetails }}
+                  onChange={(data) => {
+                    updateData(data);
+                    setPageSettings('editingHandleDetails', false);
+                  }}
+                />
+              )}
+
+              {!pageSettings.editingHandleDetails && (
+                <Box w="100%" h="100%">
+                  <VStack spacing="$3">
+                    <VStack w={'100%'} spacing={'$2'}>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
+                        <Box w={'100%'}>Website</Box>
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
+                        >
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {handleDetails.website || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
+                      </VStack>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
+                        <Box w={'100%'}>Facebook</Box>
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
+                        >
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {handleDetails.facebook || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
+                      </VStack>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
+                        <Box w={'100%'}>Instagram</Box>
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
+                        >
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {handleDetails.instagram || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
+                      </VStack>
+                      <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
+                        <Box w={'100%'}>YouTube</Box>
+                        <Skeleton
+                          startColor={'#d4d4d4'}
+                          endColor={'#f5f5f5'}
+                          loaded={!pageSettings.loadingDetails}
+                        >
+                          <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
+                            {handleDetails.youtube || 'Unspecified'}
+                          </Box>
+                        </Skeleton>
+                      </VStack>
+                    </VStack>
+                    <Box w="100%">
+                      <Button
+                        color="black"
+                        rounded="$md"
+                        class="bg-lime-400 shadow-lg shadow-lime-200 select-none outline-none"
+                        w="100%"
+                        variant="solid"
+                        colorScheme="$lime4"
+                        onClick={() =>
+                          setPageSettings('editingHandleDetails', true)
+                        }
+                      >
+                        Edit
+                      </Button>
+                    </Box>
+                  </VStack>
+                </Box>
+              )}
+            </AccordionPanel>
+          </AccordionItem>
+
+          <AccordionItem
+            borderRadius="$2xl"
+            borderWidth="1px"
+            borderColor="#e5e5e5"
+            rounded={'$lg'}
+            w={'100%'}
+            class={`${pageIndex() === 3 ? 'h-full overflow-y-auto' : ''}`}
+            bg={'white'}
+          >
+            <AccordionButton _hover={{ bg: 'white', color: 'black' }}>
+              <Text flex={1} fontWeight="$medium" textAlign="start">
                 Bank Details
               </Text>
               <AccordionIcon />
@@ -529,7 +648,7 @@ let ProfilePage = () => {
             borderColor="#e5e5e5"
             rounded={'$lg'}
             w={'100%'}
-            class={`${pageIndex() === 3 ? 'h-full overflow-y-auto' : ''}`}
+            class={`${pageIndex() === 4 ? 'h-full overflow-y-auto' : ''}`}
             bg={'white'}
           >
             <AccordionButton _hover={{ bg: 'white', color: 'black' }}>

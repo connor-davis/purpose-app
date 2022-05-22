@@ -195,59 +195,69 @@ let DashboardPage = () => {
           ></canvas>
           <div class="w-full font-bold">Latest Sales</div>
           <div
-              class="relative w-full h-32 overflow-hidden border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
-              style={{ 'min-height': '100px' }}
+            class="relative w-full h-32 overflow-hidden border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
+            style={{ 'min-height': '150px' }}
           >
-            <div class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-white"></div>
+            <div class="absolute bottom-0 w-full h-20 bg-gradient-to-t from-white"></div>
 
             <table class="table-auto w-full">
+              <thead class={'h-10'}>
+                <tr>
+                  <th class={'text-left px-3'}>Date</th>
+                  <th class={'text-left px-3'}>Name</th>
+                  <th class={'text-right px-3'}>Price</th>
+                  <th class={'text-right px-3'}>Cost</th>
+                  <th class={'text-right px-3'}>Quantity</th>
+                  <th class={'text-right px-3'}>Profit</th>
+                </tr>
+              </thead>
               <tbody>
-              {!loading() &&
+                {!loading() &&
                   sales.filter((sale) => sale !== undefined).length > 0 &&
                   sales.map((sale) => (
-                      <tr class="p-2">
-                        <td class={'text-left px-3'}>
-                          {moment(sale.date).format('DD/MM/YYYY')}
-                        </td>
-                        <td class={'text-left px-3'}>{sale.product.name}</td>
-                        <td class={'text-right px-3'}>R {sale.product.cost}</td>
-                        <td class={'text-right px-3'}>R {sale.product.price}</td>
-                        <td class={'text-right px-3'}>{sale.numberSold}</td>
-                        <td class={'text-right px-3'}>R {sale.profit}</td>
-                      </tr>
+                    <tr class="p-2">
+                      <td class={'text-left px-3'}>
+                        {moment(sale.date).format('DD/MM/YYYY')}
+                      </td>
+                      <td class={'text-left px-3'}>{sale.product.name}</td>
+                      <td class={'text-right px-3'}>R {sale.product.cost}</td>
+                      <td class={'text-right px-3'}>R {sale.product.price}</td>
+                      <td class={'text-right px-3'}>{sale.numberSold}</td>
+                      <td class={'text-right px-3'}>R {sale.profit}</td>
+                    </tr>
                   ))}
               </tbody>
             </table>
 
             {loading() && (
-                <VStack w={'100%'} alignItems="stretch" spacing="$2" p={'$3'}>
-                  <Skeleton
-                      height="40px"
-                      startColor={'#d4d4d4'}
-                      endColor={'#f5f5f5'}
-                  />
-                  <Skeleton
-                      height="40px"
-                      startColor={'#d4d4d4'}
-                      endColor={'#f5f5f5'}
-                  />
-                  <Skeleton
-                      height="40px"
-                      startColor={'#d4d4d4'}
-                      endColor={'#f5f5f5'}
-                  />
-                </VStack>
+              <VStack w={'100%'} alignItems="stretch" spacing="$2" p={'$3'}>
+                <Skeleton
+                  height="40px"
+                  startColor={'#d4d4d4'}
+                  endColor={'#f5f5f5'}
+                />
+                <Skeleton
+                  height="40px"
+                  startColor={'#d4d4d4'}
+                  endColor={'#f5f5f5'}
+                />
+                <Skeleton
+                  height="40px"
+                  startColor={'#d4d4d4'}
+                  endColor={'#f5f5f5'}
+                />
+              </VStack>
             )}
 
             {!loading() && (
-                <>
-                  {sales.filter((product) => product !== undefined).length ===
-                      0 && (
-                          <VStack w={'100%'} justifyContent={'center'} py={'$5'}>
-                            You have no sales.
-                          </VStack>
-                      )}
-                </>
+              <>
+                {sales.filter((product) => product !== undefined).length ===
+                  0 && (
+                  <VStack w={'100%'} justifyContent={'center'} py={'$5'}>
+                    You have no sales.
+                  </VStack>
+                )}
+              </>
             )}
           </div>
         </div>

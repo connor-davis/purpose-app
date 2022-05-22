@@ -196,11 +196,21 @@ let AdminUserPage = () => {
 
           <div
             class="relative w-full h-32 overflow-hidden border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
-            style={{ 'min-height': '100px' }}
+            style={{ 'min-height': '150px' }}
           >
-            <div class="absolute bottom-0 w-full h-24 bg-gradient-to-t from-white"></div>
+            <div class="absolute bottom-0 w-full h-20 bg-gradient-to-t from-white"></div>
 
             <table class="table-auto w-full">
+              <thead class={'h-10'}>
+                <tr>
+                  <th class={'text-left px-3'}>Date</th>
+                  <th class={'text-left px-3'}>Name</th>
+                  <th class={'text-right px-3'}>Price</th>
+                  <th class={'text-right px-3'}>Cost</th>
+                  <th class={'text-right px-3'}>Quantity</th>
+                  <th class={'text-right px-3'}>Profit</th>
+                </tr>
+              </thead>
               <tbody>
                 {!loading() &&
                   userData.sales.filter((sale) => sale !== undefined).length >
