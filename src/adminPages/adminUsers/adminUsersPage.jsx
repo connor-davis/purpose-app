@@ -1,6 +1,8 @@
 import useState from '../../hooks/state';
 import {
   Box,
+  CircularProgress,
+  CircularProgressIndicator,
   HStack,
   Menu,
   MenuContent,
@@ -8,6 +10,7 @@ import {
   MenuTrigger,
   notificationService,
   Skeleton,
+  Text,
   VStack,
 } from '@hope-ui/solid';
 import { createSignal, onMount } from 'solid-js';
@@ -15,6 +18,7 @@ import { createStore } from 'solid-js/store';
 import axios from 'axios';
 import apiUrl from '../../apiUrl';
 import { useNavigate } from 'solid-app-router';
+import IconExport from '../../icons/IconExport';
 
 let AdminUsersPage = () => {
   let navigate = useNavigate();
@@ -144,10 +148,70 @@ let AdminUsersPage = () => {
       });
   };
 
+  let exportUsers = () => {
+    axios
+      .get(apiUrl + '/admin/exportUsers', {
+        responseType: 'blob',
+        onDownloadProgress: (progressEvent) => {
+          let percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
+
+          notificationService.show({
+            id: 'download-progress',
+            render: (props) => (
+              <HStack
+                bg="$loContrast"
+                rounded="$md"
+                border="1px solid $neutral7"
+                shadow="$lg"
+                p="$4"
+                w="$full"
+              >
+                <CircularProgress value={percentCompleted}>
+                  <CircularProgressIndicator />
+                </CircularProgress>
+                <VStack alignItems="flex-start">
+                  <Text size="sm" fontWeight="$medium">
+                    Downloading file
+                  </Text>
+                </VStack>
+              </HStack>
+            ),
+          });
+        },
+        headers: { Authorization: 'Bearer ' + authState.authenticationToken },
+      })
+      .then((response) => {
+        if (response.data.error) return console.log(response.data);
+        else {
+          if (response.status === 200) {
+            saveAs(response.data, `${userData.email}-data.xlsx`);
+
+            notificationService.hide('download-progress');
+
+            return notificationService.show({
+              title: 'Success',
+              description: 'The file will be downloaded now.',
+              status: 'success',
+              duration: 3000,
+            });
+          }
+        }
+      });
+  };
+
   return (
     <VStack w="100%" h="100%" color="black" p={'$5'} spacing={'$5'}>
       <HStack w="100%" class="justify-between">
         <Box>Your Users</Box>
+        <div
+          class="flex justify-center items-center px-3 py-2 space-x-2 bg-lime-400 rounded-lg shadow-2xl shadow-lime-400 cursor-pointer"
+          onClick={() => exportUsers()}
+        >
+          <IconExport />
+          <div>Users</div>
+        </div>
       </HStack>
 
       <Box
