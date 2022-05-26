@@ -1,10 +1,8 @@
-import { Loader } from '@googlemaps/js-api-loader';
 import useState from '../../hooks/state';
 import axios from 'axios';
 import apiUrl from '../../apiUrl';
-import UserInfoWindow from './userInfoWindow';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'solid-app-router';
+import UserInfoWindow from './userInfoWindow';
 
 let AdminUserMap = () => {
   let navigate = useNavigate();
@@ -13,11 +11,7 @@ let AdminUserMap = () => {
   let [userState, updateUserState] = useState('userState');
 
   let loadData = async () => {
-    let lmapElement = document.createElement('div');
-
-    lmapElement.id = 'lmap';
-
-    var lmap = L.map('lmap', {
+    var lmap = L.map('adminUserMap', {
       center: [-29.75298, 30.82111],
       zoom: 13,
       preferCanvas: true,
@@ -28,7 +22,13 @@ let AdminUserMap = () => {
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(lmap);
 
-    console.log(lmap);
+    let markers = L.markerClusterGroup({
+      spiderfyOnMaxZoom: true,
+      showCoverageOnHover: false,
+      zoomToBoundsOnClick: true,
+      removeOutsideVisibleBounds: false,
+      singleMarkerMode: true,
+    });
 
     await axios
       .get(apiUrl + '/admin/users', {
@@ -39,137 +39,67 @@ let AdminUserMap = () => {
         else {
           let users = response.data.data;
 
-          const loader = new Loader({
-            apiKey: 'AIzaSyALY5RV-exvEf9BHaMqaPvqdFi7a6IOe-k',
-            version: 'weekly',
+          users.map(async (user) => {
+            let data = { ...user };
+
+            if (data.type === 'admin') return;
+
+            await axios
+              .get(apiUrl + '/admin/users/' + user.id, {
+                headers: {
+                  Authorization: 'Bearer ' + authState.authenticationToken,
+                },
+              })
+              .then(async (response) => {
+                if (response.data.error) return console.log(response.data);
+                else {
+                  let user = response.data.data;
+
+                  let sales = await axios.get(
+                    apiUrl + '/admin/users/sales/' + user.id,
+                    {
+                      headers: {
+                        Authorization:
+                          'Bearer ' + authState.authenticationToken,
+                      },
+                    }
+                  );
+
+                  user.sales = sales.data.data;
+
+                  if (isNaN(user.lat) && isNaN(user.lng)) return;
+
+                  let svgIcon = L.divIcon({
+                    html: ``,
+                    className: 'h-6 w-6',
+                    iconSize: [24, 24],
+                    iconAnchor: [0, 10],
+                  });
+
+                  let marker = L.marker(
+                    [parseFloat(user.lat), parseFloat(user.lng)],
+                    {
+                      elevation: 260.0,
+                      title: user.displayName,
+                      icon: svgIcon,
+                    }
+                  ).addTo(lmap);
+
+                  let infoForUser = UserInfoWindow({
+                    user,
+                    viewProfile: () => {
+                      navigate('/users/' + user.id);
+                    },
+                  });
+
+                  marker.bindPopup(infoForUser);
+
+                  markers.addLayer(marker);
+                }
+              });
           });
 
-          let position = {
-            lat: parseFloat(userState.lat),
-            lng: parseFloat(userState.lng),
-          };
-
-          loader
-            .load()
-            .then((google) => {
-              let map = new google.maps.Map(
-                document.getElementById('adminUserMap'),
-                {
-                  center: position,
-                  zoom: 12,
-                  styles: [
-                    {
-                      featureType: 'all',
-                      stylers: [{ visibility: 'off' }],
-                    },
-                    {
-                      featureType: 'road',
-                      stylers: [{ visibility: 'on' }],
-                    },
-                  ],
-                }
-              );
-
-              let oms = new window.OverlappingMarkerSpiderfier(map, {
-                markersWontMove: true,
-                markersWontHide: true,
-                basicFormatEvents: true,
-              });
-
-              users.map(async (user) => {
-                let data = { ...user };
-
-                if (data.type === 'admin') return;
-
-                await axios
-                  .get(apiUrl + '/admin/users/' + user.id, {
-                    headers: {
-                      Authorization: 'Bearer ' + authState.authenticationToken,
-                    },
-                  })
-                  .then(async (response) => {
-                    if (response.data.error) return console.log(response.data);
-                    else {
-                      let user = response.data.data;
-
-                      let sales = await axios.get(
-                        apiUrl + '/admin/users/sales/' + user.id,
-                        {
-                          headers: {
-                            Authorization:
-                              'Bearer ' + authState.authenticationToken,
-                          },
-                        }
-                      );
-
-                      user.sales = sales.data.data;
-
-                      let position = {
-                        lat: parseFloat(user.lat),
-                        lng: parseFloat(user.lng),
-                      };
-
-                      let infoForUser = UserInfoWindow({
-                        user,
-                      });
-
-                      let infoWindowForUser = new google.maps.InfoWindow({
-                        content: infoForUser,
-                      });
-
-                      let toggled = false;
-
-                      let marker = new google.maps.Marker({
-                        position,
-                        map,
-                        icon: {
-                          path: faUser.icon[4],
-                          fillColor: '#262626',
-                          fillOpacity: 1,
-                          strokeWeight: 1,
-                          strokeColor: '#a3e635',
-                          scale: 0.04,
-                        },
-                      });
-
-                      oms.addMarker(marker);
-
-                      marker.addListener('spider_click', () => {
-                        if (toggled) {
-                          toggled = false;
-                          infoWindowForUser.close();
-                        } else {
-                          toggled = true;
-                          infoWindowForUser.open({
-                            anchor: marker,
-                            map,
-                            shouldFocus: true,
-                          });
-
-                          google.maps.event.addListener(
-                            infoWindowForUser,
-                            'domready',
-                            () => {
-                              let viewProfileButton =
-                                document.getElementById('viewProfileButton');
-
-                              viewProfileButton.addEventListener(
-                                'click',
-                                () => {
-                                  navigate('/users/' + user.id);
-                                }
-                              );
-                            }
-                          );
-                        }
-                      });
-                    }
-                  });
-              });
-            })
-            .catch((e) => {
-              // do something
-            });
+          lmap.addLayer(markers);
         }
       });
   };
