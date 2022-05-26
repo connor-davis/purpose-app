@@ -22,12 +22,18 @@ let AdminUserMap = () => {
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(lmap);
 
-    let markers = L.markerClusterGroup({
-      spiderfyOnMaxZoom: true,
-      showCoverageOnHover: false,
-      zoomToBoundsOnClick: true,
-      removeOutsideVisibleBounds: false,
-      singleMarkerMode: true,
+    let oms = new OverlappingMarkerSpiderfier(lmap);
+
+    let popup = new L.Popup();
+
+    oms.addListener('click', function (marker) {
+      popup.setContent(marker.content);
+      popup.setLatLng(marker.getLatLng());
+      lmap.openPopup(popup);
+    });
+
+    oms.addListener('spiderfy', function (markers) {
+      lmap.closePopup();
     });
 
     await axios
@@ -70,7 +76,9 @@ let AdminUserMap = () => {
                   if (isNaN(user.lat) && isNaN(user.lng)) return;
 
                   let svgIcon = L.divIcon({
-                    html: ``,
+                    html: `<svg xmlns="http://www.w3.org/2000/svg" fill="#171717" viewBox="0 0 24 24" stroke="#A3E635" stroke-width="1">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+  </svg>`,
                     className: 'h-6 w-6',
                     iconSize: [24, 24],
                     iconAnchor: [0, 10],
@@ -92,14 +100,13 @@ let AdminUserMap = () => {
                     },
                   });
 
-                  marker.bindPopup(infoForUser);
+                  marker.content = infoForUser;
 
-                  markers.addLayer(marker);
+                  lmap.addLayer(marker);
+                  oms.addMarker(marker);
                 }
               });
           });
-
-          lmap.addLayer(markers);
         }
       });
   };
