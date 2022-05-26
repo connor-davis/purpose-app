@@ -13,6 +13,23 @@ let AdminUserMap = () => {
   let [userState, updateUserState] = useState('userState');
 
   let loadData = async () => {
+    let lmapElement = document.createElement('div');
+
+    lmapElement.id = 'lmap';
+
+    var lmap = L.map('lmap', {
+      center: [-29.75298, 30.82111],
+      zoom: 13,
+      preferCanvas: true,
+    });
+
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution:
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(lmap);
+
+    console.log(lmap);
+
     await axios
       .get(apiUrl + '/admin/users', {
         headers: { Authorization: 'Bearer ' + authState.authenticationToken },
