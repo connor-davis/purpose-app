@@ -19,6 +19,7 @@ import AdminDocumentsPage from './adminPages/adminDocuments/adminDocumentsPage';
 import io from 'socket.io-client';
 import AdminArchivePage from './adminPages/adminArchive/adminArchivePage';
 import ArchivePage from './pages/archive/archivePage';
+import DocumentsPage from './pages/documents/documentsPage';
 
 let socket = io('https://api.purpose360.co.za');
 
@@ -98,6 +99,7 @@ let PurposeApp = () => {
                 <Route path="/products" element={<ProductsPage />} />
                 <Route path="/sales" element={<SalesPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/documents" element={<DocumentsPage />} />
                 <Route path="/archive" element={<ArchivePage />} />
               </Route>
             </Routes>

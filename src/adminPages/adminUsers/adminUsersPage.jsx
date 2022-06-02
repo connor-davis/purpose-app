@@ -1,5 +1,6 @@
 import useState from '../../hooks/state';
 import {
+  Avatar,
   Box,
   CircularProgress,
   CircularProgressIndicator,
@@ -227,6 +228,7 @@ let AdminUsersPage = () => {
         <table class="table-auto w-full">
           <thead class={'h-10'}>
             <tr>
+              <th class={'text-left px-3'}>Image</th>
               <th class={'text-left px-3'}>Name</th>
               <th class={'text-left px-3'}>Email</th>
               <th class={'text-left px-3'}>Address</th>
@@ -239,6 +241,14 @@ let AdminUsersPage = () => {
               users.filter((user) => user !== undefined).length > 0 &&
               users.map((user) => (
                 <tr>
+                  <td class={'text-left px-3'}>
+                    <Avatar
+                      size={'sm'}
+                      bg={'$lime4'}
+                      name={user.firstName + ' ' + user.lastName || ''}
+                      src={user.image ? user.image : 'broken-link'}
+                    />
+                  </td>
                   <td class={'text-left px-3'}>{user.displayName}</td>
                   <td class={'text-left px-3'}>{user.email}</td>
                   <td class={'text-left px-3'}>

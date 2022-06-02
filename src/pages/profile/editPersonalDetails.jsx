@@ -31,8 +31,27 @@ let EditPersonalDetails = ({ data, onChange = (data) => {} }) => {
       <Avatar
         size={'2xl'}
         bg={'$lime4'}
+        cursor={'pointer'}
         name={details.firstName + ' ' + details.lastName}
-        src="broken-link"
+        src={details.image ? details.image : 'broken-link'}
+        onClick={() => {
+          let inputElement = document.createElement('input');
+
+          inputElement.setAttribute('type', 'file');
+
+          inputElement.click();
+
+          inputElement.addEventListener('change', (event) => {
+            let file = event.target.files[0];
+            let reader = new FileReader();
+
+            reader.readAsDataURL(file);
+
+            reader.onload = (_) => {
+              setDetails({ ...details, image: reader.result });
+            };
+          });
+        }}
       />
       <HStack w={'100%'} spacing={'$2'}>
         <FormControl required>

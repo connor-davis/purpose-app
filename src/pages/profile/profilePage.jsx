@@ -107,6 +107,8 @@ let ProfilePage = () => {
         else {
           updateUserState(response.data.data);
 
+          console.log(userState);
+
           setPageSettings('loadingDetails', false);
 
           loadDetails();
@@ -117,6 +119,7 @@ let ProfilePage = () => {
   let loadDetails = () => {
     setTimeout(() => {
       setPersonalDetails({
+        image: userState.image,
         firstName: userState.firstName,
         lastName: userState.lastName,
         idNumber: userState.idNumber,
@@ -245,7 +248,11 @@ let ProfilePage = () => {
                           ' ' +
                           personalDetails.lastName || ''
                       }
-                      src="broken-link"
+                      src={
+                        personalDetails.image
+                          ? personalDetails.image
+                          : 'broken-link'
+                      }
                     />
                     <VStack w={'100%'} spacing={'$2'}>
                       <HStack w={'100%'} spacing={'$2'}>

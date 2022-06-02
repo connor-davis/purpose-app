@@ -28,6 +28,7 @@ import IconCash from '../../icons/IconCash';
 import apiUrl from '../../apiUrl';
 import axios from 'axios';
 import IconDocumentsArchive from '../../icons/IconDocumentsArchive';
+import IconDocumentsIn from '../../icons/IconDocumentsIn';
 
 let RootPage = ({ children }) => {
   const { isOpen, onOpen, onClose } = createDisclosure();
@@ -177,6 +178,30 @@ let RootPage = ({ children }) => {
                     >
                       <IconCash />
                     </Box>
+                  </Tooltip>
+                  <Tooltip
+                    label="Documents"
+                    placement="right"
+                    color="white"
+                    bg="$blackAlpha11"
+                  >
+                    <Radio
+                      name="documents"
+                      rounded="$md"
+                      shadow="$2xl"
+                      bg={path() === '/documents' ? '$limeAlpha4' : '$gray800'}
+                      color={path() === '/documents' ? '$lime4' : 'white'}
+                      borderColor="none"
+                      px="$4"
+                      py="$3"
+                      w="$full"
+                      outline="none"
+                      onClick={() => navigate('/documents')}
+                    >
+                      <RadioLabel>
+                        <IconDocumentsIn />
+                      </RadioLabel>
+                    </Radio>
                   </Tooltip>
                   <Tooltip
                     label="Archive"
@@ -399,6 +424,42 @@ let RootPage = ({ children }) => {
                               </Box>
                             </HStack>
                           </Box>
+                        </Tooltip>
+                        <Tooltip
+                          label="Documents"
+                          placement="right"
+                          color="white"
+                          bg="$blackAlpha11"
+                        >
+                          <Radio
+                            name="documents"
+                            rounded="$md"
+                            shadow="$2xl"
+                            bg={
+                              path() === '/documents'
+                                ? '$limeAlpha4'
+                                : '$gray800'
+                            }
+                            color={path() === '/documents' ? '$lime4' : 'white'}
+                            borderColor="none"
+                            px="$4"
+                            py="$3"
+                            w="$full"
+                            outline="none"
+                            onClick={() => {
+                              navigate('/documents');
+                              onClose();
+                            }}
+                          >
+                            <RadioLabel>
+                              <HStack spacing="$5">
+                                <IconDocumentsIn />
+                                <Box as="div" class="select-none">
+                                  Documents
+                                </Box>
+                              </HStack>
+                            </RadioLabel>
+                          </Radio>
                         </Tooltip>
                         <Tooltip
                           label="Archive"

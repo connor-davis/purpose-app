@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   CircularProgress,
   CircularProgressIndicator,
@@ -143,13 +144,23 @@ let AdminUserPage = () => {
     userData && (
       <VStack w="100%" h="100%" color="black" p={'$5'} spacing={'$5'}>
         <HStack w="100%" class="justify-between space-x-5">
-          <Box
+          <HStack
             class={`w-full ${
               loading() ? 'bg-gray-200 animate-pulse rounded-lg p-4' : ''
             }`}
+            spacing={'$2'}
           >
-            {userData.displayName || ''}
-          </Box>
+            {!loading() && (
+              <Avatar
+                size={'sm'}
+                bg={'$lime4'}
+                name={userData.firstName + ' ' + userData.lastName || ''}
+                src={userData.image ? userData.image : 'broken-link'}
+              />
+            )}
+
+            {!loading() && <Box>{userData.displayName || ''}</Box>}
+          </HStack>
           <div
             class="flex justify-center items-center px-3 py-2 space-x-2 bg-lime-400 rounded-lg shadow-2xl shadow-lime-400 cursor-pointer"
             onClick={() => exportUser()}
