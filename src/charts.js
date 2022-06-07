@@ -22,8 +22,8 @@ export let salesChart = (sales, industry) => {
     'December',
   ];
 
-  let calculateMonthSales = (year, month, sales) => {
-    let salesCount = 0;
+  let calculateMonthProfit = (year, month, sales) => {
+    let totalProfit = 0;
 
     sales
       .filter((sale) => {
@@ -36,12 +36,17 @@ export let salesChart = (sales, industry) => {
         let saleMonth = moment(sale.date).format('MMMM');
         let saleYear = moment(sale.date).format('YYYY');
 
-        if (saleMonth === month && saleYear === year) salesCount++;
+        if (!sale.profit) return sale;
+
+        if (saleMonth !==  month) return sale;
+        if (saleYear !== year) return sale;
+
+        if (saleMonth === month && saleYear === year) totalProfit += sale.profit;
 
         return sale;
       });
 
-    return salesCount;
+    return totalProfit;
   };
 
   let getYearSales = (year) => {
@@ -49,7 +54,7 @@ export let salesChart = (sales, industry) => {
       ...months.map((month) => {
         return {
           x: month,
-          y: calculateMonthSales(year, month, sales),
+          y: calculateMonthProfit(year, month, sales),
         };
       }),
     ];
@@ -82,7 +87,14 @@ export let salesChart = (sales, industry) => {
       plugins: {
         title: {
           display: true,
-          text: 'Monthly Sales',
+          text: 'Monthly Profit',
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return `R ${context.parsed.y}`;
+            },
+          },
         },
       },
       interaction: {
@@ -99,7 +111,7 @@ export let salesChart = (sales, industry) => {
           display: true,
           title: {
             display: true,
-            text: 'Number of Sales',
+            text: 'Profit (R)',
           },
         },
       },
