@@ -1,4 +1,3 @@
-import useState from '../../hooks/state';
 import {
   Avatar,
   Box,
@@ -12,13 +11,14 @@ import {
   notificationService,
   Skeleton,
   Text,
-  VStack,
+  VStack
 } from '@hope-ui/solid';
+import axios from 'axios';
+import { useNavigate } from 'solid-app-router';
 import { createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import axios from 'axios';
 import apiUrl from '../../apiUrl';
-import { useNavigate } from 'solid-app-router';
+import useState from '../../hooks/state';
 import IconExport from '../../icons/IconExport';
 
 let AdminUsersPage = () => {
@@ -301,15 +301,15 @@ let AdminUsersPage = () => {
                           View Profile
                         </MenuItem>
 
-                        {/*<MenuItem*/}
-                        {/*  colorScheme={'none'}*/}
-                        {/*  class={'hover:bg-gray-100'}*/}
-                        {/*  rounded={'$lg'}*/}
-                        {/*  cursor={'pointer'}*/}
-                        {/*  onSelect={() => navigate('/users/edit/' + user.id)}*/}
-                        {/*>*/}
-                        {/*  Edit Profile*/}
-                        {/*</MenuItem>*/}
+                        <MenuItem
+                          colorScheme={'none'}
+                          class={'hover:bg-gray-100'}
+                          rounded={'$lg'}
+                          cursor={'pointer'}
+                          onSelect={() => navigate('/users/edit/' + user.id)}
+                        >
+                          Edit Profile
+                        </MenuItem>
 
                         <MenuItem
                           colorScheme={'none'}
