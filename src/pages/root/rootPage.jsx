@@ -10,25 +10,23 @@ import {
   HStack,
   notificationService,
   Radio,
-  RadioGroup,
-  RadioLabel,
-  Tooltip,
-  VStack,
+  RadioGroup, Tooltip,
+  VStack
 } from '@hope-ui/solid';
-import { createMemo, createSignal } from 'solid-js';
 import { Outlet, useLocation, useNavigate } from 'solid-app-router';
+import { createMemo, createSignal } from 'solid-js';
 
-import IconCube from '../../icons/IconCube';
-import IconHome from '../../icons/IconHome';
+import axios from 'axios';
+import apiUrl from '../../apiUrl';
 import PurposeLogoSmall from '../../components/PurposeLogoSmall';
 import useState from '../../hooks/state';
-import IconProfile from '../../icons/IconProfile';
-import IconLogout from '../../icons/IconLogout';
 import IconCash from '../../icons/IconCash';
-import apiUrl from '../../apiUrl';
-import axios from 'axios';
+import IconCube from '../../icons/IconCube';
 import IconDocumentsArchive from '../../icons/IconDocumentsArchive';
 import IconDocumentsIn from '../../icons/IconDocumentsIn';
+import IconHome from '../../icons/IconHome';
+import IconLogout from '../../icons/IconLogout';
+import IconProfile from '../../icons/IconProfile';
 
 let RootPage = ({ children }) => {
   const { isOpen, onOpen, onClose } = createDisclosure();
@@ -117,23 +115,13 @@ let RootPage = ({ children }) => {
                     color="white"
                     bg="$blackAlpha11"
                   >
-                    <Radio
+                    <div
                       name="dashboard"
-                      rounded="$md"
-                      shadow="$2xl"
-                      bg={path() === '/' ? '$limeAlpha4' : '$gray800'}
-                      color={path() === '/' ? '$lime4' : 'white'}
-                      borderColor="none"
-                      px="$4"
-                      py="$3"
-                      w="$full"
-                      outline="none"
+                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
                       onClick={() => navigate('/')}
                     >
-                      <RadioLabel>
-                        <IconHome />
-                      </RadioLabel>
-                    </Radio>
+                      <IconHome class="w-4 h-4" />
+                    </div>
                   </Tooltip>
                   <Tooltip
                     label="Products"
@@ -141,21 +129,13 @@ let RootPage = ({ children }) => {
                     color="white"
                     bg="$blackAlpha11"
                   >
-                    <Box
-                      cursor="pointer"
-                      rounded="$md"
-                      shadow="$2xl"
-                      bg={path() === '/products' ? '$limeAlpha4' : '$gray800'}
-                      color={path() === '/products' ? '$lime4' : 'white'}
-                      borderColor="none"
-                      px="$4"
-                      py="$3"
-                      w="$full"
-                      outline="none"
+                    <div
+                      name="dashboard"
+                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/products' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
                       onClick={() => navigate('/products')}
                     >
-                      <IconCube />
-                    </Box>
+                      <IconCube class="w-4 h-4" />
+                    </div>
                   </Tooltip>
                   <Tooltip
                     label="Sales"
@@ -163,21 +143,13 @@ let RootPage = ({ children }) => {
                     color="white"
                     bg="$blackAlpha11"
                   >
-                    <Box
-                      cursor="pointer"
-                      rounded="$md"
-                      shadow="$2xl"
-                      bg={path() === '/sales' ? '$limeAlpha4' : '$gray800'}
-                      color={path() === '/sales' ? '$lime4' : 'white'}
-                      borderColor="none"
-                      px="$4"
-                      py="$3"
-                      w="$full"
-                      outline="none"
+                    <div
+                      name="dashboard"
+                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/sales' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
                       onClick={() => navigate('/sales')}
                     >
-                      <IconCash />
-                    </Box>
+                      <IconCash class="w-4 h-4" />
+                    </div>
                   </Tooltip>
                   <Tooltip
                     label="Documents"
@@ -185,23 +157,13 @@ let RootPage = ({ children }) => {
                     color="white"
                     bg="$blackAlpha11"
                   >
-                    <Radio
-                      name="documents"
-                      rounded="$md"
-                      shadow="$2xl"
-                      bg={path() === '/documents' ? '$limeAlpha4' : '$gray800'}
-                      color={path() === '/documents' ? '$lime4' : 'white'}
-                      borderColor="none"
-                      px="$4"
-                      py="$3"
-                      w="$full"
-                      outline="none"
+                    <div
+                      name="dashboard"
+                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/documents' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
                       onClick={() => navigate('/documents')}
                     >
-                      <RadioLabel>
-                        <IconDocumentsIn />
-                      </RadioLabel>
-                    </Radio>
+                      <IconDocumentsIn class="w-4 h-4" />
+                    </div>
                   </Tooltip>
                   <Tooltip
                     label="Archive"
@@ -209,21 +171,13 @@ let RootPage = ({ children }) => {
                     color="white"
                     bg="$blackAlpha11"
                   >
-                    <Box
-                      cursor="pointer"
-                      rounded="$md"
-                      shadow="$2xl"
-                      bg={path() === '/archive' ? '$limeAlpha4' : '$gray800'}
-                      color={path() === '/archive' ? '$lime4' : 'white'}
-                      borderColor="none"
-                      px="$4"
-                      py="$3"
-                      w="$full"
-                      outline="none"
+                    <div
+                      name="dashboard"
+                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/archive' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
                       onClick={() => navigate('/archive')}
                     >
-                      <IconDocumentsArchive />
-                    </Box>
+                      <IconDocumentsArchive class="w-4 h-4" />
+                    </div>
                   </Tooltip>
                 </VStack>
               </RadioGroup>
@@ -237,23 +191,13 @@ let RootPage = ({ children }) => {
                     color="white"
                     bg="$blackAlpha11"
                   >
-                    <Radio
-                      name="profile"
-                      rounded="$md"
-                      shadow="$2xl"
-                      bg={path() === '/profile' ? '$limeAlpha4' : '$gray800'}
-                      color={path() === '/profile' ? '$lime4' : 'white'}
-                      borderColor="none"
-                      px="$4"
-                      py="$3"
-                      w="$full"
-                      outline="none"
+                    <div
+                      name="dashboard"
+                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/profile' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
                       onClick={() => navigate('/profile')}
                     >
-                      <RadioLabel>
-                        <IconProfile />
-                      </RadioLabel>
-                    </Radio>
+                      <IconProfile class="w-4 h-4" />
+                    </div>
                   </Tooltip>
                   <Tooltip
                     label="Logout"
@@ -280,7 +224,7 @@ let RootPage = ({ children }) => {
                         window.location.href = '/';
                       }}
                     >
-                      <IconLogout />
+                      <IconLogout class="w-5 h-5" />
                     </Box>
                   </Tooltip>
                 </VStack>
@@ -333,31 +277,21 @@ let RootPage = ({ children }) => {
                           color="white"
                           bg="$blackAlpha11"
                         >
-                          <Radio
+                          <div
                             name="dashboard"
-                            rounded="$md"
-                            shadow="$2xl"
-                            bg={path() === '/' ? '$limeAlpha4' : '$gray800'}
-                            color={path() === '/' ? '$lime4' : 'white'}
-                            borderColor="none"
-                            px="$4"
-                            py="$3"
-                            w="$full"
-                            outline="none"
+                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
                             onClick={() => {
                               navigate('/');
                               onClose();
                             }}
                           >
-                            <RadioLabel>
-                              <HStack spacing="$5">
-                                <IconHome />
-                                <Box as="div" class="select-none">
-                                  Dashboard
-                                </Box>
-                              </HStack>
-                            </RadioLabel>
-                          </Radio>
+                            <HStack spacing="$5">
+                              <IconHome class="w-4 h-4" />
+                              <Box as="div" class="select-none">
+                                Dashboard
+                              </Box>
+                            </HStack>
+                          </div>
                         </Tooltip>
                         <Tooltip
                           label="Products"
@@ -365,33 +299,21 @@ let RootPage = ({ children }) => {
                           color="white"
                           bg="$blackAlpha11"
                         >
-                          <Box
-                            cursor="pointer"
-                            rounded="$md"
-                            shadow="$2xl"
-                            bg={
-                              path() === '/products'
-                                ? '$limeAlpha4'
-                                : '$gray800'
-                            }
-                            color={path() === '/products' ? '$lime4' : 'white'}
-                            borderColor="none"
-                            px="$4"
-                            py="$3"
-                            w="$full"
-                            outline="none"
+                          <div
+                            name="dashboard"
+                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/products' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
                             onClick={() => {
                               navigate('/products');
                               onClose();
                             }}
                           >
                             <HStack spacing="$5">
-                              <IconCube />
+                              <IconCube class="w-4 h-4" />
                               <Box as="div" class="select-none">
                                 Products
                               </Box>
                             </HStack>
-                          </Box>
+                          </div>
                         </Tooltip>
                         <Tooltip
                           label="Sales"
@@ -399,31 +321,21 @@ let RootPage = ({ children }) => {
                           color="white"
                           bg="$blackAlpha11"
                         >
-                          <Box
-                            cursor="pointer"
-                            rounded="$md"
-                            shadow="$2xl"
-                            bg={
-                              path() === '/sales' ? '$limeAlpha4' : '$gray800'
-                            }
-                            color={path() === '/sales' ? '$lime4' : 'white'}
-                            borderColor="none"
-                            px="$4"
-                            py="$3"
-                            w="$full"
-                            outline="none"
+                          <div
+                            name="dashboard"
+                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/sales' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
                             onClick={() => {
                               navigate('/sales');
                               onClose();
                             }}
                           >
                             <HStack spacing="$5">
-                              <IconCash />
+                              <IconCash class="w-4 h-4" />
                               <Box as="div" class="select-none">
                                 Sales
                               </Box>
                             </HStack>
-                          </Box>
+                          </div>
                         </Tooltip>
                         <Tooltip
                           label="Documents"
@@ -431,35 +343,21 @@ let RootPage = ({ children }) => {
                           color="white"
                           bg="$blackAlpha11"
                         >
-                          <Radio
-                            name="documents"
-                            rounded="$md"
-                            shadow="$2xl"
-                            bg={
-                              path() === '/documents'
-                                ? '$limeAlpha4'
-                                : '$gray800'
-                            }
-                            color={path() === '/documents' ? '$lime4' : 'white'}
-                            borderColor="none"
-                            px="$4"
-                            py="$3"
-                            w="$full"
-                            outline="none"
+                          <div
+                            name="dashboard"
+                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/documents' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
                             onClick={() => {
                               navigate('/documents');
                               onClose();
                             }}
                           >
-                            <RadioLabel>
-                              <HStack spacing="$5">
-                                <IconDocumentsIn />
-                                <Box as="div" class="select-none">
-                                  Documents
-                                </Box>
-                              </HStack>
-                            </RadioLabel>
-                          </Radio>
+                            <HStack spacing="$5">
+                              <IconDocumentsIn class="w-4 h-4" />
+                              <Box as="div" class="select-none">
+                                Documents
+                              </Box>
+                            </HStack>
+                          </div>
                         </Tooltip>
                         <Tooltip
                           label="Archive"
@@ -467,31 +365,21 @@ let RootPage = ({ children }) => {
                           color="white"
                           bg="$blackAlpha11"
                         >
-                          <Box
-                            cursor="pointer"
-                            rounded="$md"
-                            shadow="$2xl"
-                            bg={
-                              path() === '/archive' ? '$limeAlpha4' : '$gray800'
-                            }
-                            color={path() === '/archive' ? '$lime4' : 'white'}
-                            borderColor="none"
-                            px="$4"
-                            py="$3"
-                            w="$full"
-                            outline="none"
+                          <div
+                            name="dashboard"
+                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/archive' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
                             onClick={() => {
                               navigate('/archive');
                               onClose();
                             }}
                           >
                             <HStack spacing="$5">
-                              <IconDocumentsArchive />
+                              <IconDocumentsArchive class="w-4 h-4" />
                               <Box as="div" class="select-none">
                                 Archive
                               </Box>
                             </HStack>
-                          </Box>
+                          </div>
                         </Tooltip>
                       </VStack>
                     </RadioGroup>
@@ -508,35 +396,21 @@ let RootPage = ({ children }) => {
                             bg="$blackAlpha11"
                             w="100%"
                           >
-                            <Radio
-                              name="profile"
-                              rounded="$md"
-                              shadow="$2xl"
-                              bg={
-                                path() === '/profile'
-                                  ? '$limeAlpha4'
-                                  : '$gray800'
-                              }
-                              color={path() === '/profile' ? '$lime4' : 'white'}
-                              borderColor="none"
-                              px="$4"
-                              py="$3"
-                              w="100%"
-                              outline="none"
+                            <div
+                              name="dashboard"
+                              class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/profile' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
                               onClick={() => {
                                 navigate('/profile');
                                 onClose();
                               }}
                             >
-                              <RadioLabel>
-                                <HStack spacing="$5">
-                                  <IconProfile />
-                                  <Box as="div" class="select-none">
-                                    Profile
-                                  </Box>
-                                </HStack>
-                              </RadioLabel>
-                            </Radio>
+                              <HStack spacing="$5">
+                                <IconProfile class="w-4 h-4" />
+                                <Box as="div" class="select-none">
+                                  Profile
+                                </Box>
+                              </HStack>
+                            </div>
                           </Tooltip>
                           <Tooltip
                             label="Logout"
@@ -566,7 +440,7 @@ let RootPage = ({ children }) => {
                               }}
                             >
                               <HStack spacing="$5">
-                                <IconLogout />
+                                <IconLogout class="w-5 h-5" />
                                 <Box as="div" class="select-none">
                                   Logout
                                 </Box>

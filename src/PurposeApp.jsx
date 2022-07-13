@@ -1,26 +1,26 @@
 import { Route, Routes } from 'solid-app-router';
 
-import AuthenticationGuard from './guards/authenticationGuard';
-import DashboardPage from './pages/dashboard/dashboardPage';
+import AdminDashboardPage from './adminPages/adminDashboard/adminDashboardPage';
+import AdminDocumentsPage from './adminPages/adminDocuments/adminDocumentsPage';
+import AdminFoldersPage from './adminPages/adminDocuments/adminFoldersPage';
+import AdminRootPage from './adminPages/adminRoot/adminRootPage';
+import AdminUserPage from './adminPages/adminUsers/adminUserPage';
+import AdminUsersPage from './adminPages/adminUsers/adminUsersPage';
 import NoType from './components/NoType';
-import RootPage from './pages/root/rootPage';
-import SetupProfilePage from './pages/setup/setupProfilePage';
+import AuthenticationGuard from './guards/authenticationGuard';
 import useState from './hooks/state';
+import DashboardPage from './pages/dashboard/dashboardPage';
 import ProductsPage from './pages/products/productsPage';
 import ProfilePage from './pages/profile/profilePage';
+import RootPage from './pages/root/rootPage';
 import SalesPage from './pages/sales/salesPage';
-import AdminRootPage from './adminPages/adminRoot/adminRootPage';
-import AdminDashboardPage from './adminPages/adminDashboard/adminDashboardPage';
-import AdminUsersPage from './adminPages/adminUsers/adminUsersPage';
-import AdminUserPage from './adminPages/adminUsers/adminUserPage';
-import AdminFoldersPage from './adminPages/adminDocuments/adminFoldersPage';
-import AdminDocumentsPage from './adminPages/adminDocuments/adminDocumentsPage';
+import SetupProfilePage from './pages/setup/setupProfilePage';
 
 import io from 'socket.io-client';
 import AdminArchivePage from './adminPages/adminArchive/adminArchivePage';
+import AdminEditUserPage from './adminPages/adminUsers/adminEditUserPage';
 import ArchivePage from './pages/archive/archivePage';
 import DocumentsPage from './pages/documents/documentsPage';
-import AdminEditUserPage from './adminPages/adminUsers/adminEditUserPage';
 
 let socket = io('https://api.purpose360.co.za');
 
@@ -65,6 +65,8 @@ let PurposeApp = () => {
       'province',
       'country',
       'type',
+      'positionAtECD',
+      'numberOfChildren',
       'displayName',
       'accountNumber',
       'bankName',
@@ -78,7 +80,9 @@ let PurposeApp = () => {
       })
       .filter((field) => field);
 
-    if (weight.length > 1) return true;
+    console.log(weight.length);
+
+    if (weight.length > 0) return true;
     else return false;
   };
 

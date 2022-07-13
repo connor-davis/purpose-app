@@ -10,14 +10,14 @@ import {
   notificationService,
   Skeleton,
   Text,
-  VStack,
+  VStack
 } from '@hope-ui/solid';
+import axios from 'axios';
 import { useNavigate } from 'solid-app-router';
-import useState from '../../hooks/state';
 import { createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import axios from 'axios';
 import apiUrl from '../../apiUrl';
+import useState from '../../hooks/state';
 import IconImport from '../../icons/IconImport';
 
 let DocumentsPage = () => {
@@ -164,11 +164,24 @@ let DocumentsPage = () => {
           <tbody>
             {!loading() &&
               documents.filter((document) => document !== undefined).length >
-                0 &&
+              0 &&
               documents.map((document) => {
                 return (
                   <tr>
-                    <td class={'text-left px-3'}>
+                    <td class={'text-left px-3 flex items-center'}>
+                      {(
+                        document.name.split('.')[1] === "png" ||
+                        document.name.split('.')[1] === ".jpeg" ||
+                        document.name.split('.')[1] === ".jpg" ||
+                        document.name.split('.')[1] === ".webp") ?
+                        <img class="w-10 mr-3" src={apiUrl +
+                          '/documents/' +
+                          document.owner +
+                          '/' +
+                          document.name} /> :
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-lime-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                        </svg>}
                       {document.name.split('.')[0]}
                     </td>
                     <td class={'text-left px-3'}>
@@ -215,10 +228,10 @@ let DocumentsPage = () => {
                             onSelect={() =>
                               window.open(
                                 apiUrl +
-                                  '/documents/' +
-                                  document.owner +
-                                  '/' +
-                                  document.name,
+                                '/documents/' +
+                                document.owner +
+                                '/' +
+                                document.name,
                                 '_blank'
                               )
                             }
@@ -234,10 +247,10 @@ let DocumentsPage = () => {
                               axios
                                 .delete(
                                   apiUrl +
-                                    '/documents/' +
-                                    document.owner +
-                                    '/' +
-                                    document.name,
+                                  '/documents/' +
+                                  document.owner +
+                                  '/' +
+                                  document.name,
                                   {
                                     headers: {
                                       Authorization:
@@ -310,10 +323,10 @@ let DocumentsPage = () => {
           <>
             {documents.filter((folder) => folder !== undefined).length ===
               0 && (
-              <VStack w={'100%'} justifyContent={'center'} py={'$5'}>
-                User has no documents.
-              </VStack>
-            )}
+                <VStack w={'100%'} justifyContent={'center'} py={'$5'}>
+                  User has no documents.
+                </VStack>
+              )}
           </>
         )}
       </Box>

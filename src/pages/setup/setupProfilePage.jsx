@@ -18,18 +18,19 @@ import {
   SelectPlaceholder,
   SelectTrigger,
   SelectValue,
-  VStack,
+  VStack
 } from '@hope-ui/solid';
 import { createSignal, For, onMount } from 'solid-js';
 
+import { Checkbox } from '@hope-ui/solid';
+import axios from 'axios';
+import { useNavigate } from 'solid-app-router';
+import { createStore } from 'solid-js/store';
+import apiUrl from '../../apiUrl';
+import useState from '../../hooks/state';
 import IconArrowLeft from '../../icons/IconArrowLeft';
 import IconArrowRight from '../../icons/IconArrowRight';
 import IconCheck from '../../icons/IconCheck';
-import apiUrl from '../../apiUrl';
-import axios from 'axios';
-import { createStore } from 'solid-js/store';
-import { useNavigate } from 'solid-app-router';
-import useState from '../../hooks/state';
 import IconSearch from '../../icons/IconSearch';
 
 let SetupProfilePage = () => {
@@ -49,7 +50,7 @@ let SetupProfilePage = () => {
     name: 'searchResults',
   });
 
-  onMount(() => {});
+  onMount(() => { });
 
   setTimeout(() => {
     setStage(stage() + 1);
@@ -57,19 +58,19 @@ let SetupProfilePage = () => {
     if (userState.gender)
       setUserGender(
         userState.gender.split('')[0].toUpperCase() +
-          userState.gender.substring(1, userState.gender.length)
+        userState.gender.substring(1, userState.gender.length)
       );
 
     if (userState.ethnicity)
       setUserEthnicity(
         userState.ethnicity.split('')[0].toUpperCase() +
-          userState.ethnicity.substring(1, userState.ethnicity.length)
+        userState.ethnicity.substring(1, userState.ethnicity.length)
       );
 
     if (userState.type)
       setUserType(
         userState.type.split('')[0].toUpperCase() +
-          userState.type.substring(1, userState.type.length)
+        userState.type.substring(1, userState.type.length)
       );
 
     setDetails(userState);
@@ -95,7 +96,7 @@ let SetupProfilePage = () => {
           }, 4000);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   return (
@@ -261,10 +262,10 @@ let SetupProfilePage = () => {
                       value={
                         (details.gender &&
                           details.gender.split('')[0].toUpperCase() +
-                            details.gender.substring(
-                              1,
-                              details.gender.length
-                            )) ||
+                          details.gender.substring(
+                            1,
+                            details.gender.length
+                          )) ||
                         ''
                       }
                       onChange={(gender) => setDetails({ ...details, gender })}
@@ -312,10 +313,10 @@ let SetupProfilePage = () => {
                       value={
                         (details.ethnicity &&
                           details.ethnicity.split('')[0].toUpperCase() +
-                            details.ethnicity.substring(
-                              1,
-                              details.ethnicity.length
-                            )) ||
+                          details.ethnicity.substring(
+                            1,
+                            details.ethnicity.length
+                          )) ||
                         ''
                       }
                       onChange={(ethnicity) =>
@@ -483,6 +484,7 @@ let SetupProfilePage = () => {
                         <SelectListbox as={VStack} spacing="$1">
                           <For
                             each={[
+                              'Early Childhood Development Center',
                               'Sewing',
                               'Bakery',
                               'Wood Work',
@@ -514,6 +516,58 @@ let SetupProfilePage = () => {
                     </Select>
                   </FormControl>
 
+                  {details.type === 'earlyChildhoodDevelopmentCenter' && (
+                    <FormControl required>
+                      <FormLabel for="positionAtECD" color="black">
+                        Position at ECD
+                      </FormLabel>
+                      <Input
+                        variant="unstyled"
+                        bg="#e5e5e5"
+                        p="$3"
+                        placeholder="What position are you at the ECD?"
+                        size="sm"
+                        color="black"
+                        id="positionAtECD"
+                        type="text"
+                        value={details.positionAtECD || ''}
+                        onChange={(event) => {
+                          setDetails({
+                            ...details,
+                            positionAtECD: event.target.value,
+                          });
+                        }}
+                      />
+                      {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                    </FormControl>
+                  )}
+
+                  {details.type === 'earlyChildhoodDevelopmentCenter' && (
+                    <FormControl required>
+                      <FormLabel for="typeDescription" color="black">
+                        How many children
+                      </FormLabel>
+                      <Input
+                        variant="unstyled"
+                        bg="#e5e5e5"
+                        p="$3"
+                        placeholder="How many children are at the ECD?"
+                        size="sm"
+                        color="black"
+                        id="numberOfChildren"
+                        type="text"
+                        value={details.numberOfChildren || ''}
+                        onChange={(event) => {
+                          setDetails({
+                            ...details,
+                            numberOfChildren: event.target.value,
+                          });
+                        }}
+                      />
+                      {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                    </FormControl>
+                  )}
+
                   {details.type === 'other' && (
                     <FormControl required>
                       <FormLabel for="typeDescription" color="black">
@@ -541,28 +595,43 @@ let SetupProfilePage = () => {
                   )}
 
                   <FormControl>
-                    <FormLabel for="registrationNumber" color="black">
-                      Registration Number
-                    </FormLabel>
-                    <Input
-                      variant="unstyled"
-                      bg="#e5e5e5"
-                      p="$3"
-                      placeholder="Registration Number"
-                      size="sm"
-                      color="black"
-                      id="registrationNumber"
-                      type="text"
-                      value={details.registrationNumber || ''}
-                      onChange={(event) => {
-                        setDetails({
-                          ...details,
-                          registrationNumber: event.target.value,
-                        });
-                      }}
-                    />
-                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                    <div onClick={() => {
+                      if (!details.registeredBusiness) setDetails({ ...details, registeredBusiness: true });
+                      else setDetails({ ...details, registeredBusiness: false });
+                    }} class="flex items-center space-x-3 text-black cursor-pointer select-none">
+                      <div class={`flex flex-col justify-center items-center w-5 h-5 rounded-md ${details.registeredBusiness ? "bg-lime-400 text-white" : " bg-gray-300"}`}>
+                        {details.registeredBusiness && <IconCheck />}
+                      </div>
+                      <div>
+                        Are you registered?
+                      </div>
+                    </div>
                   </FormControl>
+
+                  {details.registeredBusiness &&
+                    <FormControl>
+                      <FormLabel for="registrationNumber" color="black">
+                        Registration Number
+                      </FormLabel>
+                      <Input
+                        variant="unstyled"
+                        bg="#e5e5e5"
+                        p="$3"
+                        placeholder="Registration Number"
+                        size="sm"
+                        color="black"
+                        id="registrationNumber"
+                        type="text"
+                        value={details.registrationNumber || ''}
+                        onChange={(event) => {
+                          setDetails({
+                            ...details,
+                            registrationNumber: event.target.value,
+                          });
+                        }}
+                      />
+                      {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                    </FormControl>}
 
                   <FormControl required>
                     <FormLabel for="employeesCount" color="black">
@@ -1124,7 +1193,7 @@ let SetupProfilePage = () => {
                           _hover={{ bg: 'white' }}
                           aria-label="Search"
                           icon={<IconSearch />}
-                          onClick={() => {}}
+                          onClick={() => { }}
                         />
                       </InputRightElement>
                       <div class="flex flex-col py-2 space-y-2 text-black">
