@@ -19,10 +19,18 @@ import SetupProfilePage from './pages/setup/setupProfilePage';
 import io from 'socket.io-client';
 import AdminArchivePage from './adminPages/adminArchive/adminArchivePage';
 import AdminEditUserPage from './adminPages/adminUsers/adminEditUserPage';
+import apiUrl from './apiUrl';
+import EcdArchivePage from './ecdPages/ecdArchive/ecdArchivePage';
+import EcdDashboardPage from './ecdPages/ecdDashboard/ecdDashboardPage';
+import EcdDocumentsPage from './ecdPages/ecdDocuments/ecdDocumentsPage';
+import EcdProfilePage from './ecdPages/ecdProfile/ecdProfilePage';
+import EcdRootPage from './ecdPages/ecdRoot/ecdRootPage';
+import EcdSalesPage from './ecdPages/ecdSales/ecdSalesPage';
 import ArchivePage from './pages/archive/archivePage';
 import DocumentsPage from './pages/documents/documentsPage';
+import EcdProducePage from './ecdPages/ecdProduce/ecdProducePage';
 
-let socket = io('https://api.purpose360.co.za');
+let socket = io(apiUrl);
 
 window.socket = socket;
 
@@ -70,8 +78,7 @@ let PurposeApp = () => {
       'displayName',
       'accountNumber',
       'bankName',
-      'bankBranch',
-      // 'photo',
+      'bankBranch'
     ];
 
     let weight = requiredFields
@@ -80,9 +87,7 @@ let PurposeApp = () => {
       })
       .filter((field) => field);
 
-    console.log(weight.length);
-
-    if (weight.length > 0) return true;
+    if (weight.length > 2) return true;
     else return false;
   };
 
@@ -97,7 +102,7 @@ let PurposeApp = () => {
 
       {!showSetupProfileRequest() && (
         <>
-          {userState.type !== 'admin' && (
+          {userState.type !== 'admin' && userState.type !== 'earlyChildhoodDevelopmentCenter' && (
             <Routes>
               <Route path="/" element={<RootPage />}>
                 <Route path="/" element={<DashboardPage />} />
@@ -106,6 +111,19 @@ let PurposeApp = () => {
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/documents" element={<DocumentsPage />} />
                 <Route path="/archive" element={<ArchivePage />} />
+              </Route>
+            </Routes>
+          )}
+
+          {userState.type === "earlyChildhoodDevelopmentCenter" && (
+            <Routes>
+              <Route path="/" element={<EcdRootPage />}>
+                <Route path="/" element={<EcdDashboardPage />} />
+                <Route path="/produce" element={<EcdProducePage />} />
+                <Route path="/sales" element={<EcdSalesPage />} />
+                <Route path="/documents" element={<EcdDocumentsPage />} />
+                <Route path="/archive" element={<EcdArchivePage />} />
+                <Route path="/profile" element={<EcdProfilePage />} />
               </Route>
             </Routes>
           )}
