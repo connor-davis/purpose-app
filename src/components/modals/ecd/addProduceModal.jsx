@@ -15,13 +15,12 @@ import {
   ModalHeader,
   ModalOverlay,
   notificationService,
-  VStack,
+  VStack
 } from '@hope-ui/solid';
-import IconPlus from '../../../icons/IconPlus';
+import axios from 'axios';
+import { createSignal } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import apiUrl from '../../../apiUrl';
-import useState from '../../../hooks/state';
-import axios from 'axios';
 import Beans from "../../../assets/beans.png";
 import BeetRoot from "../../../assets/beetroot.png";
 import Butternut from "../../../assets/butternut.png";
@@ -38,7 +37,8 @@ import Rosemary from "../../../assets/rosemary.png";
 import SpringOnion from "../../../assets/springonion.png";
 import Thyme from "../../../assets/thyme.png";
 import Tomatoe from "../../../assets/tomatoe.png";
-import { createSignal } from 'solid-js';
+import useState from '../../../hooks/state';
+import IconPlus from '../../../icons/IconPlus';
 
 let AddProduceModal = ({ onAdd = () => { } }) => {
   let [authState, updateAuthState] = useState('authenticationGuard');
@@ -71,36 +71,54 @@ let AddProduceModal = ({ onAdd = () => { } }) => {
     { name: "Tomatoe", image: Tomatoe },
   ]
 
+  let toBase64Image = (id, callback = (data) => { }) => {
+    let imageElement = document.getElementById(id);
+
+    let reader = new FileReader();
+
+    fetch(imageElement.src).then((response) => {
+      return response.blob();
+    }).then((imageBlob) => {
+      reader.readAsDataURL(imageBlob);
+    });
+
+    reader.onload = () => {
+      callback(reader.result);
+    }
+  }
+
   let [selected, setSelected] = createSignal({});
 
   let addProduce = () => {
-    axios
-      .post(apiUrl + '/produce', selected(), {
-        headers: {
-          Authorization: 'Bearer ' + authState.authenticationToken,
-        },
-      })
-      .then((response) => {
-        if (response.data.error) {
-          console.log(response.data);
+    toBase64Image(selected().name + "-image", (image) => {
+      axios
+        .post(apiUrl + '/produce', { ...selected(), image }, {
+          headers: {
+            Authorization: 'Bearer ' + authState.authenticationToken,
+          },
+        })
+        .then((response) => {
+          if (response.data.error) {
+            console.log(response.data);
 
-          return notificationService.show({
-            status: 'danger' /* or success, warning, danger */,
-            title: 'Error',
-            description: 'Unable to add new produce.',
-          });
-        } else {
-          onAdd(response.data.data);
+            return notificationService.show({
+              status: 'danger' /* or success, warning, danger */,
+              title: 'Error',
+              description: 'Unable to add new produce.',
+            });
+          } else {
+            onAdd(response.data.data);
 
-          setSelected({});
+            setSelected({});
 
-          return notificationService.show({
-            status: 'success' /* or success, warning, danger */,
-            title: 'Success',
-            description: 'Added a new produce.',
-          });
-        }
-      });
+            return notificationService.show({
+              status: 'success' /* or success, warning, danger */,
+              title: 'Success',
+              description: 'Added a new produce.',
+            });
+          }
+        });
+    });
   };
 
   return (
@@ -116,13 +134,39 @@ let AddProduceModal = ({ onAdd = () => { } }) => {
                 {items.map((item) => (
                   <div class="flex w-full items-center space-x-2">
                     <div class={`flex w-full items-center space-x-3 ${selected().name === item.name && "bg-lime-400 text-white rounded-lg"}`}>
-                      <img src={item.image} class="w-10 h-10" />
+                      <img id={item.name + "-image"} src={item.image} class="w-10 h-10" />
                       <div>{item.name}</div>
                     </div>
                     <div class="hover:bg-gray-200 cursor-pointer p-2 rounded-lg" onClick={() => setSelected(item)}>Select</div>
                   </div>
                 ))}
               </VStack>
+
+              <FormControl required>
+                <FormLabel for="price" color="black">
+                  Produce Price
+                </FormLabel>
+                <Input
+                  variant="unstyled"
+                  bg="#e5e5e5"
+                  p="$3"
+                  placeholder="Produce Price"
+                  size="sm"
+                  color="black"
+                  id="price"
+                  type="number"
+                  value={details.price || ''}
+                  onChange={(event) =>
+                    setSelected({
+                      ...selected(),
+                      price: parseInt(event.target.value),
+                    })
+                  }
+                />
+                <FormHelperText>
+                  How much are you selling the produce for?
+                </FormHelperText>
+              </FormControl>
             </form>
           </ModalBody>
           <ModalFooter>

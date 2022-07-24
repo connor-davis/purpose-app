@@ -66,8 +66,6 @@ let EcdProducePage = () => {
       })
       .then((response) => {
         if (response.data.error) {
-          console.log(response.data);
-
           return notificationService.show({
             status: 'danger' /* or success, warning, danger */,
             title: 'Error',
@@ -128,6 +126,7 @@ let EcdProducePage = () => {
             <tr>
               <th class={'text-left px-3'}>Image</th>
               <th class={'text-left px-3'}>Name</th>
+              <th class={'text-right px-3'}>Price (R)</th>
             </tr>
           </thead>
           <tbody>
@@ -136,9 +135,10 @@ let EcdProducePage = () => {
               produce.map((produce) => (
                 <tr>
                   <td class={'text-left px-3'}>
-                    <img src={produce.image} class="w-20 h-20 bg-gray-200" />
+                    <img src={produce.image} class="max-w-20 w-20 h-20 bg-gray-200" />
                   </td>
                   <td class={'text-left px-3'}>{produce.name}</td>
+                  <td class={'text-right px-3'}>{produce.price}</td>
                   <td class={'w-10 p-0 m-0'}>
                     <Menu color={'black'} as>
                       <MenuTrigger

@@ -38,7 +38,7 @@ export let salesChart = (sales, industry) => {
 
         if (!sale.profit) return sale;
 
-        if (saleMonth !==  month) return sale;
+        if (saleMonth !== month) return sale;
         if (saleYear !== year) return sale;
 
         if (saleMonth === month && saleYear === year) totalProfit += sale.profit;
@@ -112,6 +112,117 @@ export let salesChart = (sales, industry) => {
           title: {
             display: true,
             text: 'Profit (R)',
+          },
+        },
+      },
+    },
+  });
+};
+
+export let harvestsChart = (harvests) => {
+  let harvestsChart = document.getElementById('harvestsChart');
+  let ctx = harvestsChart.getContext('2d');
+
+  let chartAlreadyExists = Chart.getChart('harvestsChart');
+  if (chartAlreadyExists) chartAlreadyExists.destroy();
+
+  let months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  let calculateMonthHarvests = (year, month, harvests) => {
+    let totalHarvests = 0;
+
+    harvests
+      .map((harvest) => {
+        let harvestMonth = moment(harvest.date).format('MMMM');
+        let harvestYear = moment(harvest.date).format('YYYY');
+
+        if (harvestMonth !== month) return harvest;
+        if (harvestYear !== year) return harvest;
+
+        if (harvestMonth === month && harvestYear === year) totalHarvests += 1;
+
+        return harvest;
+      });
+
+    return totalHarvests;
+  };
+
+  let getYearHarvests = (year) => {
+    return [
+      ...months.map((month) => {
+        return {
+          x: month,
+          y: calculateMonthHarvests(year, month, harvests),
+        };
+      }),
+    ];
+  };
+
+  let data = {
+    labels: months,
+    datasets: [
+      {
+        label: '2022',
+        type: 'bar',
+        data: getYearHarvests('2022'),
+        backgroundColor: 'rgba(163, 230, 53, 1)',
+        borderColor: 'rgba(163, 230, 53, 0.5)',
+        fill: false,
+        tension: 0.4,
+        cubicInterpolationMode: 'monotone',
+        pointStyle: 'circle',
+        pointRadius: 4,
+        pointHoverRadius: 5,
+      },
+    ],
+  };
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Monthly Harvests',
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return `${context.parsed.y} harvests`;
+            },
+          },
+        },
+      },
+      interaction: {
+        intersect: false,
+      },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+          },
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: 'Number',
           },
         },
       },
@@ -239,6 +350,7 @@ export let typesChart = (users) => {
     'Salon',
     'Consulting',
     'Construction',
+    'Early Childhood Development Center',
     'Other',
   ];
 
@@ -370,7 +482,7 @@ export let gendersChart = (users) => {
   });
 };
 
-export let userProfitChart = (sales, done = () => {}) => {
+export let userProfitChart = (sales, done = () => { }) => {
   let profitChart = document.getElementById('profitChart');
   let ctx = profitChart.getContext('2d');
 
@@ -483,4 +595,80 @@ export let userProfitChart = (sales, done = () => {}) => {
   });
 
   done();
+};
+
+export let ecdChildrenCountChart = (users) => {
+  let ecdChildrenCountChart = document.getElementById('ecdChildrenCountChart');
+  let ctx = ecdChildrenCountChart.getContext('2d');
+
+  users = users.filter((user) => user.type === "earlyChildhoodDevelopmentCenter");
+
+  let getChildrenPerEcd = () => {
+    return users.map((user) => {
+      return {
+        x: user.displayName,
+        y: user.numberOfChildren
+      }
+    })
+  };
+
+  let data = {
+    labels: users.map((user) => {
+      return user.displayName
+    }),
+    datasets: [
+      {
+        label: '2022',
+        type: 'bar',
+        data: getChildrenPerEcd(),
+        backgroundColor: 'rgba(163, 230, 53, 1)',
+        borderColor: 'rgba(163, 230, 53, 0.5)',
+        fill: false,
+        tension: 0.4,
+        cubicInterpolationMode: 'monotone',
+        pointStyle: 'circle',
+        pointRadius: 4,
+        pointHoverRadius: 5,
+      },
+    ],
+  };
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Number of Children per ECD',
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return `${context.parsed.y} children`;
+            },
+          },
+        },
+      },
+      interaction: {
+        intersect: false,
+      },
+      scales: {
+        x: {
+          display: true,
+          title: {
+            display: true,
+          },
+        },
+        y: {
+          display: true,
+          title: {
+            display: true,
+            text: 'Number of Children',
+          },
+        },
+      },
+    },
+  });
 };

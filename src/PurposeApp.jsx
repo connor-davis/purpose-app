@@ -29,6 +29,7 @@ import EcdSalesPage from './ecdPages/ecdSales/ecdSalesPage';
 import ArchivePage from './pages/archive/archivePage';
 import DocumentsPage from './pages/documents/documentsPage';
 import EcdProducePage from './ecdPages/ecdProduce/ecdProducePage';
+import EcdHarvestedPage from './ecdPages/ecdHarvested/ecdHarvestedPage';
 
 let socket = io(apiUrl);
 
@@ -121,6 +122,7 @@ let PurposeApp = () => {
                 <Route path="/" element={<EcdDashboardPage />} />
                 <Route path="/produce" element={<EcdProducePage />} />
                 <Route path="/sales" element={<EcdSalesPage />} />
+                <Route path="/harvested" element={<EcdHarvestedPage />} />
                 <Route path="/documents" element={<EcdDocumentsPage />} />
                 <Route path="/archive" element={<EcdArchivePage />} />
                 <Route path="/profile" element={<EcdProfilePage />} />

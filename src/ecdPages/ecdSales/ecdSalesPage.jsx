@@ -14,9 +14,9 @@ import { createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import axios from 'axios';
 import apiUrl from '../../apiUrl';
-import AddSaleModal from '../../components/modals/addSaleModal';
+import AddSaleModal from '../../components/modals/ecd/addSaleModal';
 import moment from 'moment';
-import EditSaleModal from '../../components/modals/editSaleModal';
+import EditSaleModal from '../../components/modals/ecd/editSaleModal';
 
 let EcdSalesPage = () => {
   let [authState, updateAuthState] = useState('authenticationGuard');
@@ -141,7 +141,6 @@ let EcdSalesPage = () => {
             <tr>
               <th class={'text-left px-3'}>Date</th>
               <th class={'text-left px-3'}>Name</th>
-              <th class={'text-right px-3'}>Cost</th>
               <th class={'text-right px-3'}>Price</th>
               <th class={'text-right px-3'}>Quantity</th>
               <th class={'text-right px-3'}>Profit</th>
@@ -156,7 +155,6 @@ let EcdSalesPage = () => {
                     {moment(sale.date).format('DD/MM/YYYY')}
                   </td>
                   <td class={'text-left px-3'}>{sale.product.name}</td>
-                  <td class={'text-right px-3'}>R {sale.product.cost}</td>
                   <td class={'text-right px-3'}>R {sale.product.price}</td>
                   <td class={'text-right px-3'}>{sale.numberSold}</td>
                   <td class={'text-right px-3'}>R {sale.profit}</td>

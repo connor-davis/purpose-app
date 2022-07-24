@@ -7,18 +7,18 @@ import {
   notificationService,
   Skeleton,
   Text,
-  VStack,
+  VStack
 } from '@hope-ui/solid';
+import axios from 'axios';
+import { saveAs } from 'file-saver';
+import moment from 'moment';
 import { useParams } from 'solid-app-router';
 import { createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import axios from 'axios';
 import apiUrl from '../../apiUrl';
+import { userProfitChart } from '../../charts';
 import useState from '../../hooks/state';
 import IconExport from '../../icons/IconExport';
-import { saveAs } from 'file-saver';
-import moment from 'moment';
-import { userProfitChart } from '../../charts';
 
 let AdminUserPage = () => {
   let params = useParams();
@@ -74,11 +74,31 @@ let AdminUserPage = () => {
                   .then((response) => {
                     if (response.data.error) return console.log(response.data);
                     else {
+                      console.log(response.data);
+
                       let products = response.data.data;
 
-                      setUserData({ ...userInfo, sales, products });
+                      if (userInfo.type === "earlyChildhoodDevelopmentCenter") {
+                        axios.get(apiUrl + '/admin/users/harvests/' + id, {
+                          responseType: 'json',
+                          headers: {
+                            Authorization: 'Bearer ' + authState.authenticationToken
+                          }
+                        }).then((response) => {
+                          if (response.data.error) return console.log(response.data);
+                          else {
+                            let harvests = response.data.data;
 
-                      userProfitChart(sales, () => setLoading(false));
+                            setUserData({ ...userInfo, sales, products, harvests });
+
+                            userProfitChart(sales, () => setLoading(false));
+                          }
+                        })
+                      } else {
+                        setUserData({ ...userInfo, sales, products });
+
+                        userProfitChart(sales, () => setLoading(false));
+                      }
                     }
                   });
               }
@@ -145,9 +165,8 @@ let AdminUserPage = () => {
       <VStack w="100%" h="100%" color="black" p={'$5'} spacing={'$5'}>
         <HStack w="100%" class="justify-between space-x-5">
           <HStack
-            class={`w-full ${
-              loading() ? 'bg-gray-200 animate-pulse rounded-lg p-4' : ''
-            }`}
+            class={`w-full ${loading() ? 'bg-gray-200 animate-pulse rounded-lg p-4' : ''
+              }`}
             spacing={'$2'}
           >
             {!loading() && (
@@ -172,31 +191,42 @@ let AdminUserPage = () => {
 
         <div class="flex space-x-5 w-full">
           <div
-            class={`flex flex-col justify-center items-center w-full p-10 space-y-3 ${
-              loading()
-                ? 'bg-gray-200 animate-pulse rounded-lg'
-                : 'bg-lime-400 rounded-lg shadow-lg shadow-lime-200'
-            }`}
+            class={`flex flex-col justify-center items-center w-full p-10 space-y-3 ${loading()
+              ? 'bg-gray-200 animate-pulse rounded-lg'
+              : 'bg-lime-400 rounded-lg shadow-lg shadow-lime-200'
+              }`}
           >
             <div class="text-white font-bold">
-              {!loading() && 'Total Products'}
+              {!loading() && userData.type === 'earlyChildhoodDevelopmentCenter' ? 'Total Produce' : 'Total Products'}
             </div>
             <div class="text-white">
               {!loading() && userData.products.length}
             </div>
           </div>
           <div
-            class={`flex flex-col justify-center items-center w-full p-10 space-y-3 ${
-              loading()
-                ? 'bg-gray-200 animate-pulse rounded-lg'
-                : 'bg-lime-400 rounded-lg shadow-lg shadow-lime-200'
-            }`}
+            class={`flex flex-col justify-center items-center w-full p-10 space-y-3 ${loading()
+              ? 'bg-gray-200 animate-pulse rounded-lg'
+              : 'bg-lime-400 rounded-lg shadow-lg shadow-lime-200'
+              }`}
           >
             <div class="text-white font-bold">
               {!loading() && 'Total Sales'}
             </div>
             <div class="text-white">{!loading() && userData.sales.length}</div>
           </div>
+          {userData.type === "earlyChildhoodDevelopmentCenter" && (
+            <div
+              class={`flex flex-col justify-center items-center w-full p-10 space-y-3 ${loading()
+                ? 'bg-gray-200 animate-pulse rounded-lg'
+                : 'bg-lime-400 rounded-lg shadow-lg shadow-lime-200'
+                }`}
+            >
+              <div class="text-white font-bold">
+                {!loading() && 'Total Harvests'}
+              </div>
+              <div class="text-white">{!loading() && userData.harvests.length}</div>
+            </div>
+          )}
         </div>
 
         <div class="flex flex-col w-full h-full space-y-5 overflow-y-auto pb-16">
@@ -225,7 +255,7 @@ let AdminUserPage = () => {
               <tbody>
                 {!loading() &&
                   userData.sales.filter((sale) => sale !== undefined).length >
-                    0 &&
+                  0 &&
                   userData.sales.map((sale) => (
                     <tr class="p-2">
                       <td class={'text-left px-3'}>
@@ -265,28 +295,26 @@ let AdminUserPage = () => {
               <>
                 {userData.sales.filter((product) => product !== undefined)
                   .length === 0 && (
-                  <VStack w={'100%'} justifyContent={'center'} py={'$5'}>
-                    You have no sales.
-                  </VStack>
-                )}
+                    <VStack w={'100%'} justifyContent={'center'} py={'$5'}>
+                      You have no sales.
+                    </VStack>
+                  )}
               </>
             )}
           </div>
 
           <iframe
-            class={`w-full h-full rounded-lg bg-gray-200 mb-16 ${
-              loading() && 'animate-pulse'
-            }`}
+            class={`w-full h-full rounded-lg bg-gray-200 mb-16 ${loading() && 'animate-pulse'
+              }`}
             frameborder="0"
             style={{ border: 0, 'min-height': '300px' }}
-            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyAH8g_iKPrzzhPiO_wae4uXjU5sNwP-h9o&q=${
-              !loading() &&
+            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyAH8g_iKPrzzhPiO_wae4uXjU5sNwP-h9o&q=${!loading() &&
               userData.streetAddress +
-                ' ' +
-                userData.suburb +
-                ' ' +
-                userData.city
-            }`}
+              ' ' +
+              userData.suburb +
+              ' ' +
+              userData.city
+              }`}
             allowfullscreen
           ></iframe>
         </div>

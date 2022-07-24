@@ -130,7 +130,7 @@ let EcdRootPage = ({ children }) => {
                   >
                     <div
                       name="produce"
-                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/products' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/produce' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
                       onClick={() => navigate('/produce')}
                     >
                       <IconCube class="w-4 h-4" />
@@ -314,7 +314,7 @@ let EcdRootPage = ({ children }) => {
                         >
                           <div
                             name="produce"
-                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/products' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/produce' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
                             onClick={() => {
                               navigate('/produce');
                               onClose();

@@ -1,10 +1,3 @@
-import useState from '../../hooks/state';
-import 'https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js';
-import { createStore } from 'solid-js/store';
-import axios from 'axios';
-import apiUrl from '../../apiUrl';
-import AdminUserMap from './adminUserMap';
-import { agesChart, gendersChart, salesChart, typesChart } from '../../charts';
 import {
   Select,
   SelectContent,
@@ -16,9 +9,16 @@ import {
   SelectPlaceholder,
   SelectTrigger,
   SelectValue,
-  VStack,
+  VStack
 } from '@hope-ui/solid';
+import axios from 'axios';
+import 'https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js';
 import { For } from 'solid-js';
+import { createStore } from 'solid-js/store';
+import apiUrl from '../../apiUrl';
+import { agesChart, ecdChildrenCountChart, gendersChart, harvestsChart, salesChart, typesChart } from '../../charts';
+import useState from '../../hooks/state';
+import AdminUserMap from './adminUserMap';
 
 let AdminDashboardPage = () => {
   let [authState, updateAuthState] = useState('authenticationGuard');
@@ -30,10 +30,14 @@ let AdminDashboardPage = () => {
   let [sales, setSales] = createStore([], {
     name: 'dashboard-sales',
   });
+  let [harvests, setHarvests] = createStore([], {
+    name: 'dashboard-harvests'
+  });
 
   setTimeout(() => {
     loadUsers();
     loadSales('all');
+    loadHarvests();
   }, 300);
 
   let loadUsers = async () => {
@@ -50,6 +54,7 @@ let AdminDashboardPage = () => {
 
           typesChart(users);
           agesChart(users);
+          ecdChildrenCountChart(users);
         }
       });
   };
@@ -66,6 +71,7 @@ let AdminDashboardPage = () => {
     'Salon',
     'Consulting',
     'Construction',
+    'Early Childhood Development Center',
     'Other',
   ];
 
@@ -85,6 +91,20 @@ let AdminDashboardPage = () => {
       });
   };
 
+  let loadHarvests = async () => {
+    await axios.get(apiUrl + "/admin/ecd/harvests", {
+      headers: {
+        Authorization: 'Bearer ' + authState.authenticationToken
+      }
+    }).then((response) => {
+      if (response.data.error) return console.log(response.data);
+      else {
+        setHarvests([...response.data.data]);
+        harvestsChart(harvests);
+      }
+    });
+  }
+
   return (
     <div class="flex flex-col w-full h-full text-black rounded-xl overflow-y-scroll">
       <div class="flex w-full justify-between p-5">
@@ -100,6 +120,10 @@ let AdminDashboardPage = () => {
           <div class="flex flex-col justify-center items-center w-full p-10 space-y-3 bg-lime-400 rounded-lg shadow-xl shadow-lime-200">
             <div class="text-white font-bold">Total Sales</div>
             <div class="text-white">{sales.length}</div>
+          </div>
+          <div class="flex flex-col justify-center items-center w-full p-10 space-y-3 bg-lime-400 rounded-lg shadow-xl shadow-lime-200">
+            <div class="text-white font-bold">Total Harvests</div>
+            <div class="text-white">{harvests.length}</div>
           </div>
         </div>
 
@@ -159,12 +183,17 @@ let AdminDashboardPage = () => {
             </div>
             <canvas id="salesChart" class="w-full max-h-96"></canvas>
           </div>
+          <canvas id="harvestsChart" class="w-full max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"></canvas>
           <canvas
             id="agesChart"
             class="w-full max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
           ></canvas>
           <canvas
             id="typesChart"
+            class="w-full max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
+          ></canvas>
+          <canvas
+            id="ecdChildrenCountChart"
             class="w-full max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
           ></canvas>
           <canvas
