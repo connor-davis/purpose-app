@@ -23,13 +23,13 @@ import apiUrl from './apiUrl';
 import EcdArchivePage from './ecdPages/ecdArchive/ecdArchivePage';
 import EcdDashboardPage from './ecdPages/ecdDashboard/ecdDashboardPage';
 import EcdDocumentsPage from './ecdPages/ecdDocuments/ecdDocumentsPage';
+import EcdHarvestedPage from './ecdPages/ecdHarvested/ecdHarvestedPage';
+import EcdProducePage from './ecdPages/ecdProduce/ecdProducePage';
 import EcdProfilePage from './ecdPages/ecdProfile/ecdProfilePage';
 import EcdRootPage from './ecdPages/ecdRoot/ecdRootPage';
 import EcdSalesPage from './ecdPages/ecdSales/ecdSalesPage';
 import ArchivePage from './pages/archive/archivePage';
 import DocumentsPage from './pages/documents/documentsPage';
-import EcdProducePage from './ecdPages/ecdProduce/ecdProducePage';
-import EcdHarvestedPage from './ecdPages/ecdHarvested/ecdHarvestedPage';
 
 let socket = io(apiUrl);
 
@@ -60,27 +60,50 @@ let PurposeApp = () => {
   let showSetupProfileRequest = () => {
     if (userState.type === 'admin') return false;
 
-    let requiredFields = [
-      'firstName',
-      'lastName',
-      'idNumber',
-      'age',
-      'gender',
-      'ethnicity',
-      'streetAddress',
-      'suburb',
-      'city',
-      'areaCode',
-      'province',
-      'country',
-      'type',
-      'positionAtECD',
-      'numberOfChildren',
-      'displayName',
-      'accountNumber',
-      'bankName',
-      'bankBranch'
-    ];
+    let requiredFields;
+
+    if (userState.type !== 'earlyChildhoodDevelopmentCenter')
+      requiredFields = [
+        'firstName',
+        'lastName',
+        'idNumber',
+        'age',
+        'gender',
+        'ethnicity',
+        'streetAddress',
+        'suburb',
+        'city',
+        'areaCode',
+        'province',
+        'country',
+        'type',
+        'displayName',
+        'accountNumber',
+        'bankName',
+        'bankBranch',
+      ];
+    else
+      requiredFields = [
+        'firstName',
+        'lastName',
+        'idNumber',
+        'age',
+        'gender',
+        'ethnicity',
+        'streetAddress',
+        'suburb',
+        'city',
+        'areaCode',
+        'province',
+        'country',
+        'type',
+        'positionAtECD',
+        'numberOfChildren',
+        'displayName',
+        'accountNumber',
+        'bankName',
+        'bankBranch',
+      ];
 
     let weight = requiredFields
       .map((field) => {
@@ -103,20 +126,21 @@ let PurposeApp = () => {
 
       {!showSetupProfileRequest() && (
         <>
-          {userState.type !== 'admin' && userState.type !== 'earlyChildhoodDevelopmentCenter' && (
-            <Routes>
-              <Route path="/" element={<RootPage />}>
-                <Route path="/" element={<DashboardPage />} />
-                <Route path="/products" element={<ProductsPage />} />
-                <Route path="/sales" element={<SalesPage />} />
-                <Route path="/profile" element={<ProfilePage />} />
-                <Route path="/documents" element={<DocumentsPage />} />
-                <Route path="/archive" element={<ArchivePage />} />
-              </Route>
-            </Routes>
-          )}
+          {userState.type !== 'admin' &&
+            userState.type !== 'earlyChildhoodDevelopmentCenter' && (
+              <Routes>
+                <Route path="/" element={<RootPage />}>
+                  <Route path="/" element={<DashboardPage />} />
+                  <Route path="/products" element={<ProductsPage />} />
+                  <Route path="/sales" element={<SalesPage />} />
+                  <Route path="/profile" element={<ProfilePage />} />
+                  <Route path="/documents" element={<DocumentsPage />} />
+                  <Route path="/archive" element={<ArchivePage />} />
+                </Route>
+              </Routes>
+            )}
 
-          {userState.type === "earlyChildhoodDevelopmentCenter" && (
+          {userState.type === 'earlyChildhoodDevelopmentCenter' && (
             <Routes>
               <Route path="/" element={<EcdRootPage />}>
                 <Route path="/" element={<EcdDashboardPage />} />
