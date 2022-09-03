@@ -39,11 +39,11 @@ let EditBusinessDetails = ({ data, onChange = (data) => {} }) => {
           color="black"
           id="displayName"
           type="text"
-          value={details.displayName || ''}
+          value={details.businessName || ''}
           onChange={(event) => {
             setDetails({
               ...details,
-              displayName: event.target.value,
+              businessName: event.target.value,
             });
           }}
         />
@@ -58,9 +58,9 @@ let EditBusinessDetails = ({ data, onChange = (data) => {} }) => {
           id="type"
           variant="unstyled"
           value={
-            details.type
-              ? details.type.split('')[0].toUpperCase() +
-                details.type.substring(1, details.type.length)
+            details.businessType
+              ? details.businessType.split('')[0].toUpperCase() +
+                details.businessType.substring(1, details.businessType.length)
               : ''
           }
           onChange={(type) => {
@@ -72,7 +72,7 @@ let EditBusinessDetails = ({ data, onChange = (data) => {} }) => {
 
             setDetails({
               ...details,
-              type: typeFormatted,
+              businessType: typeFormatted,
             });
           }}
         >
@@ -123,7 +123,7 @@ let EditBusinessDetails = ({ data, onChange = (data) => {} }) => {
         </Select>
       </FormControl>
 
-      {details.type === 'other' && (
+      {details.businessType === 'other' && (
         <FormControl required>
           <FormLabel for="typeDescription" color="black">
             Tell us more?
@@ -137,11 +137,11 @@ let EditBusinessDetails = ({ data, onChange = (data) => {} }) => {
             color="black"
             id="typeDescription"
             type="text"
-            value={details.typeDescription || ''}
+            value={details.businessTypeDescription || ''}
             onChange={(event) => {
               setDetails({
                 ...details,
-                typeDescription: event.target.value,
+                businessTypeDescription: event.target.value,
               });
             }}
           />
@@ -162,11 +162,11 @@ let EditBusinessDetails = ({ data, onChange = (data) => {} }) => {
           color="black"
           id="registrationNumber"
           type="text"
-          value={details.registrationNumber || ''}
+          value={details.businessRegistrationNumber || ''}
           onChange={(event) => {
             setDetails({
               ...details,
-              registrationNumber: event.target.value,
+              businessRegistrationNumber: event.target.value,
             });
           }}
         />

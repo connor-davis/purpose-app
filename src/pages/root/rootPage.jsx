@@ -455,7 +455,7 @@ let RootPage = ({ children }) => {
               </Drawer>
             </div>
             <Box as={'div'} ml="auto" mb="$5">
-              Welcome, {userState.displayName}
+              Welcome, {userState.businessName || userState.firstName + " " + userState.lastName}
             </Box>
           </HStack>
           <VStack w="100%" h="100%" bg="white" roundedTop="$xl">

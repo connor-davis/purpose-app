@@ -18,6 +18,7 @@ import SetupProfilePage from './pages/setup/setupProfilePage';
 
 import io from 'socket.io-client';
 import AdminArchivePage from './adminPages/adminArchive/adminArchivePage';
+import AdminEmployeesPage from './adminPages/adminEmployees/adminEmployeesPage';
 import AdminEditUserPage from './adminPages/adminUsers/adminEditUserPage';
 import apiUrl from './apiUrl';
 import EcdArchivePage from './ecdPages/ecdArchive/ecdArchivePage';
@@ -59,60 +60,9 @@ let PurposeApp = () => {
 
   let showSetupProfileRequest = () => {
     if (userState.type === 'admin') return false;
+    if (userState.completedProfile) return false;
 
-    let requiredFields;
-
-    if (userState.type !== 'earlyChildhoodDevelopmentCenter')
-      requiredFields = [
-        'firstName',
-        'lastName',
-        'idNumber',
-        'age',
-        'gender',
-        'ethnicity',
-        'streetAddress',
-        'suburb',
-        'city',
-        'areaCode',
-        'province',
-        'country',
-        'type',
-        'displayName',
-        'accountNumber',
-        'bankName',
-        'bankBranch',
-      ];
-    else
-      requiredFields = [
-        'firstName',
-        'lastName',
-        'idNumber',
-        'age',
-        'gender',
-        'ethnicity',
-        'streetAddress',
-        'suburb',
-        'city',
-        'areaCode',
-        'province',
-        'country',
-        'type',
-        'positionAtECD',
-        'numberOfChildren',
-        'displayName',
-        'accountNumber',
-        'bankName',
-        'bankBranch',
-      ];
-
-    let weight = requiredFields
-      .map((field) => {
-        if (userState[field] === undefined) return field;
-      })
-      .filter((field) => field);
-
-    if (weight.length > 2) return true;
-    else return false;
+    return true;
   };
 
   return (
@@ -161,6 +111,7 @@ let PurposeApp = () => {
                 <Route path="/users" element={<AdminUsersPage />} />
                 <Route path="/users/:id" element={<AdminUserPage />} />
                 <Route path="/users/edit/:id" element={<AdminEditUserPage />} />
+                <Route path="/employees" element={<AdminEmployeesPage />} />
                 <Route path="/documents" element={<AdminFoldersPage />} />
                 <Route path="/documents/:id" element={<AdminDocumentsPage />} />
                 <Route path="/archive" element={<AdminArchivePage />} />

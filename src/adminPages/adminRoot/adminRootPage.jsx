@@ -20,6 +20,7 @@ import PurposeLogoSmall from '../../components/PurposeLogoSmall';
 import useState from '../../hooks/state';
 import IconDocumentsArchive from '../../icons/IconDocumentsArchive';
 import IconDocumentsIn from '../../icons/IconDocumentsIn';
+import IconEmployees from '../../icons/IconEmployees';
 import IconHome from '../../icons/IconHome';
 import IconLogout from '../../icons/IconLogout';
 import IconUsers from '../../icons/IconUsers';
@@ -85,6 +86,20 @@ let AdminRootPage = ({ children }) => {
                       onClick={() => navigate('/users')}
                     >
                       <IconUsers class="w-4 h-4" />
+                    </div>
+                  </Tooltip>
+                  <Tooltip
+                    label="Employees"
+                    placement="right"
+                    color="white"
+                    bg="$blackAlpha11"
+                  >
+                    <div
+                      name="employees"
+                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/employees' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                      onClick={() => navigate('/employees')}
+                    >
+                      <IconEmployees class="w-4 h-4" />
                     </div>
                   </Tooltip>
                   <Tooltip
@@ -252,6 +267,28 @@ let AdminRootPage = ({ children }) => {
                               <IconUsers class="w-4 h-4" />
                               <Box as="div" class="select-none">
                                 Users
+                              </Box>
+                            </HStack>
+                          </div>
+                        </Tooltip>
+                        <Tooltip
+                          label="Employees"
+                          placement="right"
+                          color="white"
+                          bg="$blackAlpha11"
+                        >
+                          <div
+                            name="employees"
+                            class={`flex items-center rounded-md shadow-2xl w-full p-3 ${path() === '/employees' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                            onClick={() => {
+                              navigate('/employees');
+                              onClose();
+                            }}
+                          >
+                            <HStack spacing="$5">
+                              <IconEmployees class="w-4 h-4" />
+                              <Box as="div" class="select-none">
+                                Employees
                               </Box>
                             </HStack>
                           </div>

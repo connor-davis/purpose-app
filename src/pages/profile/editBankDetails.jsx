@@ -87,11 +87,11 @@ let EditBankDetails = ({ data, onChange = (data) => {} }) => {
           color="black"
           id="bankBranch"
           type="text"
-          value={details.bankBranch || ''}
+          value={details.bankBranchCode || ''}
           onChange={(event) => {
             setDetails({
               ...details,
-              bankBranch: event.target.value,
+              bankBranchCode: event.target.value,
             });
           }}
         />

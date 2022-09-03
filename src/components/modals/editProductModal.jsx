@@ -23,7 +23,7 @@ import useState from '../../hooks/state';
 import axios from 'axios';
 
 let EditProductModal = ({
-  data = { id: '', name: '', cost: '', price: '' },
+  data = { _id: '', name: '', cost: '', price: '' },
   onEdit = () => {},
 }) => {
   let [authState, updateAuthState] = useState('authenticationGuard');
@@ -31,7 +31,7 @@ let EditProductModal = ({
   let { isOpen, onOpen, onClose } = createDisclosure();
   let [details, setDetails] = createStore(
     {
-      id: data.id,
+      id: data._id,
       name: data.name,
       cost: data.cost,
       price: data.price,

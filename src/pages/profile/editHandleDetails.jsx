@@ -28,11 +28,11 @@ let EditHandleDetails = ({ data, onChange = (data) => {} }) => {
           color="black"
           id="website"
           type="text"
-          value={details.website || ''}
+          value={details.websiteUrl || ''}
           onChange={(event) => {
             setDetails({
               ...details,
-              website: event.target.value,
+              websiteUrl: event.target.value,
             });
           }}
         />
@@ -52,11 +52,11 @@ let EditHandleDetails = ({ data, onChange = (data) => {} }) => {
           color="black"
           id="website"
           type="text"
-          value={details.facebook || ''}
+          value={details.facebookPageUrl || ''}
           onChange={(event) => {
             setDetails({
               ...details,
-              facebook: event.target.value,
+              facebookPageUrl: event.target.value,
             });
           }}
         />
@@ -76,11 +76,11 @@ let EditHandleDetails = ({ data, onChange = (data) => {} }) => {
           color="black"
           id="instagram"
           type="text"
-          value={details.instagram || ''}
+          value={details.instagramPageUrl || ''}
           onChange={(event) => {
             setDetails({
               ...details,
-              instagram: event.target.value,
+              instagramPageUrl: event.target.value,
             });
           }}
         />
@@ -100,11 +100,11 @@ let EditHandleDetails = ({ data, onChange = (data) => {} }) => {
           color="black"
           id="youtube"
           type="text"
-          value={details.youtube || ''}
+          value={details.youTubeChannelUrl || ''}
           onChange={(event) => {
             setDetails({
               ...details,
-              youtube: event.target.value,
+              youTubeChannelUrl: event.target.value,
             });
           }}
         />

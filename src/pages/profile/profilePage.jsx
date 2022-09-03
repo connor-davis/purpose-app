@@ -53,20 +53,20 @@ let ProfilePage = () => {
 
   let [businessDetails, setBusinessDetails] = createStore(
     {
-      displayName: '',
-      type: '',
-      typeDescription: '',
-      registrationNumber: '',
+      businessName: '',
+      businessType: '',
+      businessTypeDescription: '',
+      businessRegistrationNumber: '',
     },
     { name: 'business-details' }
   );
 
   let [handleDetails, setHandleDetails] = createStore(
     {
-      website: '',
-      facebook: '',
-      instagram: '',
-      youtube: '',
+      websiteUrl: '',
+      facebookPageUrl: '',
+      instagramPageUrl: '',
+      youTubeChannelUrl: '',
     },
     { name: 'handle-details' }
   );
@@ -75,7 +75,7 @@ let ProfilePage = () => {
     {
       accountNumber: '',
       bankName: '',
-      bankBranch: '',
+      bankBranchCode: '',
     },
     { name: 'bank-details' }
   );
@@ -107,8 +107,6 @@ let ProfilePage = () => {
         else {
           updateUserState(response.data.data);
 
-          console.log(userState);
-
           setPageSettings('loadingDetails', false);
 
           loadDetails();
@@ -129,23 +127,23 @@ let ProfilePage = () => {
       });
 
       setBusinessDetails({
-        displayName: userState.displayName,
-        type: userState.type,
-        typeDescription: userState.typeDescription || undefined,
-        registrationNumber: userState.registrationNumber || undefined,
+        businessName: userState.businessName,
+        businessType: userState.businessType,
+        businessTypeDescription: userState.businessTypeDescription || undefined,
+        businessRegistrationNumber: userState.businessRegistrationNumber || undefined,
       });
 
       setHandleDetails({
-        website: userState.website || undefined,
-        facebook: userState.facebook || undefined,
-        instagram: userState.instagram || undefined,
-        youtube: userState.youtube || undefined,
+        websiteUrl: userState.websiteUrl || undefined,
+        facebookPageUrl: userState.facebookPageUrl || undefined,
+        instagramPageUrl: userState.instagramPageUrl || undefined,
+        youtubeChannelUrl: userState.youtubeChannelUrl || undefined,
       });
 
       setBankDetails({
         accountNumber: userState.accountNumber,
         bankName: userState.bankName,
-        bankBranch: userState.bankBranch,
+        bankBranchCode: userState.bankBranchCode,
       });
 
       setLocationDetails({
@@ -389,7 +387,7 @@ let ProfilePage = () => {
                           loaded={!pageSettings.loadingDetails}
                         >
                           <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
-                            {businessDetails.displayName || 'Unspecified'}
+                            {businessDetails.businessName || 'Unspecified'}
                           </Box>
                         </Skeleton>
                       </VStack>
@@ -401,19 +399,19 @@ let ProfilePage = () => {
                           loaded={!pageSettings.loadingDetails}
                         >
                           <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
-                            {businessDetails.type
-                              ? businessDetails.type
+                            {businessDetails.businessType
+                              ? businessDetails.businessType
                                   .split('')[0]
                                   .toUpperCase() +
-                                businessDetails.type.substring(
+                                businessDetails.businessType.substring(
                                   1,
-                                  businessDetails.type.length
+                                  businessDetails.businessType.length
                                 )
                               : 'Unspecified'}
                           </Box>
                         </Skeleton>
                       </VStack>
-                      {businessDetails.type === 'other' && (
+                      {businessDetails.businessType === 'other' && (
                         <VStack alignItems="stretch" w={'100%'} spacing={'$1'}>
                           <Box w={'100%'}>More</Box>
                           <Skeleton
@@ -422,7 +420,7 @@ let ProfilePage = () => {
                             loaded={!pageSettings.loadingDetails}
                           >
                             <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
-                              {businessDetails.typeDescription || 'Unspecified'}
+                              {businessDetails.businessTypeDescription || 'Unspecified'}
                             </Box>
                           </Skeleton>
                         </VStack>
@@ -499,7 +497,7 @@ let ProfilePage = () => {
                           loaded={!pageSettings.loadingDetails}
                         >
                           <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
-                            {handleDetails.website || 'Unspecified'}
+                            {handleDetails.websiteUrl || 'Unspecified'}
                           </Box>
                         </Skeleton>
                       </VStack>
@@ -511,7 +509,7 @@ let ProfilePage = () => {
                           loaded={!pageSettings.loadingDetails}
                         >
                           <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
-                            {handleDetails.facebook || 'Unspecified'}
+                            {handleDetails.facebookPageUrl || 'Unspecified'}
                           </Box>
                         </Skeleton>
                       </VStack>
@@ -523,7 +521,7 @@ let ProfilePage = () => {
                           loaded={!pageSettings.loadingDetails}
                         >
                           <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
-                            {handleDetails.instagram || 'Unspecified'}
+                            {handleDetails.instagramPageUrl || 'Unspecified'}
                           </Box>
                         </Skeleton>
                       </VStack>
@@ -535,7 +533,7 @@ let ProfilePage = () => {
                           loaded={!pageSettings.loadingDetails}
                         >
                           <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
-                            {handleDetails.youtube || 'Unspecified'}
+                            {handleDetails.youtubeChannelUrl || 'Unspecified'}
                           </Box>
                         </Skeleton>
                       </VStack>
@@ -623,7 +621,7 @@ let ProfilePage = () => {
                           loaded={!pageSettings.loadingDetails}
                         >
                           <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
-                            {bankDetails.bankBranch || 'Unspecified'}
+                            {bankDetails.bankBranchCode || 'Unspecified'}
                           </Box>
                         </Skeleton>
                       </VStack>

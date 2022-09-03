@@ -22,7 +22,6 @@ import {
 } from '@hope-ui/solid';
 import { createSignal, For, onMount } from 'solid-js';
 
-import { Checkbox } from '@hope-ui/solid';
 import axios from 'axios';
 import { useNavigate } from 'solid-app-router';
 import { createStore } from 'solid-js/store';
@@ -50,7 +49,7 @@ let SetupProfilePage = () => {
     name: 'searchResults',
   });
 
-  onMount(() => { });
+  onMount(() => {});
 
   setTimeout(() => {
     setStage(stage() + 1);
@@ -58,19 +57,19 @@ let SetupProfilePage = () => {
     if (userState.gender)
       setUserGender(
         userState.gender.split('')[0].toUpperCase() +
-        userState.gender.substring(1, userState.gender.length)
+          userState.gender.substring(1, userState.gender.length)
       );
 
     if (userState.ethnicity)
       setUserEthnicity(
         userState.ethnicity.split('')[0].toUpperCase() +
-        userState.ethnicity.substring(1, userState.ethnicity.length)
+          userState.ethnicity.substring(1, userState.ethnicity.length)
       );
 
     if (userState.type)
       setUserType(
         userState.type.split('')[0].toUpperCase() +
-        userState.type.substring(1, userState.type.length)
+          userState.type.substring(1, userState.type.length)
       );
 
     setDetails(userState);
@@ -78,11 +77,19 @@ let SetupProfilePage = () => {
 
   let completeProfile = () => {
     axios
-      .put(apiUrl + '/users', details, {
-        headers: {
-          authorization: 'Bearer ' + authState.authenticationToken,
+      .put(
+        apiUrl + '/users',
+        {
+          ...details,
+          email: userState.email,
+          completedProfile: true,
         },
-      })
+        {
+          headers: {
+            authorization: 'Bearer ' + authState.authenticationToken,
+          },
+        }
+      )
       .then((response) => {
         if (response.status === 200) {
           setStage(stage() + 1);
@@ -96,7 +103,7 @@ let SetupProfilePage = () => {
           }, 4000);
         }
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 
   return (
@@ -262,10 +269,10 @@ let SetupProfilePage = () => {
                       value={
                         (details.gender &&
                           details.gender.split('')[0].toUpperCase() +
-                          details.gender.substring(
-                            1,
-                            details.gender.length
-                          )) ||
+                            details.gender.substring(
+                              1,
+                              details.gender.length
+                            )) ||
                         ''
                       }
                       onChange={(gender) => setDetails({ ...details, gender })}
@@ -313,10 +320,10 @@ let SetupProfilePage = () => {
                       value={
                         (details.ethnicity &&
                           details.ethnicity.split('')[0].toUpperCase() +
-                          details.ethnicity.substring(
-                            1,
-                            details.ethnicity.length
-                          )) ||
+                            details.ethnicity.substring(
+                              1,
+                              details.ethnicity.length
+                            )) ||
                         ''
                       }
                       onChange={(ethnicity) =>
@@ -434,11 +441,11 @@ let SetupProfilePage = () => {
                       color="black"
                       id="displayName"
                       type="text"
-                      value={details.displayName || ''}
+                      value={details.businessName || ''}
                       onChange={(event) => {
                         setDetails({
                           ...details,
-                          displayName: event.target.value,
+                          businessName: event.target.value,
                         });
                       }}
                     />
@@ -452,7 +459,7 @@ let SetupProfilePage = () => {
                     <Select
                       id="type"
                       variant="unstyled"
-                      value={details.type || ''}
+                      value={details.businessType || ''}
                       onChange={(type) => {
                         let typeSplit = type.toString().split(' ');
                         let typeJoin = typeSplit.join('');
@@ -462,7 +469,7 @@ let SetupProfilePage = () => {
 
                         setDetails({
                           ...details,
-                          type: typeFormatted,
+                          businessType: typeFormatted,
                         });
                       }}
                     >
@@ -516,7 +523,8 @@ let SetupProfilePage = () => {
                     </Select>
                   </FormControl>
 
-                  {details.type === 'earlyChildhoodDevelopmentCenter' && (
+                  {details.businessType ===
+                    'earlyChildhoodDevelopmentCenter' && (
                     <FormControl required>
                       <FormLabel for="positionAtECD" color="black">
                         Position at ECD
@@ -542,7 +550,8 @@ let SetupProfilePage = () => {
                     </FormControl>
                   )}
 
-                  {details.type === 'earlyChildhoodDevelopmentCenter' && (
+                  {details.businessType ===
+                    'earlyChildhoodDevelopmentCenter' && (
                     <FormControl required>
                       <FormLabel for="typeDescription" color="black">
                         How many children
@@ -568,7 +577,7 @@ let SetupProfilePage = () => {
                     </FormControl>
                   )}
 
-                  {details.type === 'other' && (
+                  {details.businessType === 'other' && (
                     <FormControl required>
                       <FormLabel for="typeDescription" color="black">
                         Tell us more?
@@ -595,20 +604,29 @@ let SetupProfilePage = () => {
                   )}
 
                   <FormControl>
-                    <div onClick={() => {
-                      if (!details.registeredBusiness) setDetails({ ...details, registeredBusiness: true });
-                      else setDetails({ ...details, registeredBusiness: false });
-                    }} class="flex items-center space-x-3 text-black cursor-pointer select-none">
-                      <div class={`flex flex-col justify-center items-center w-5 h-5 rounded-md ${details.registeredBusiness ? "bg-lime-400 text-white" : " bg-gray-300"}`}>
-                        {details.registeredBusiness && <IconCheck />}
+                    <div
+                      onClick={() => {
+                        if (!details.businessRegistered)
+                          setDetails({ ...details, businessRegistered: true });
+                        else
+                          setDetails({ ...details, businessRegistered: false });
+                      }}
+                      class="flex items-center space-x-3 text-black cursor-pointer select-none"
+                    >
+                      <div
+                        class={`flex flex-col justify-center items-center w-5 h-5 rounded-md ${
+                          details.businessRegistered
+                            ? 'bg-lime-400 text-white'
+                            : ' bg-gray-300'
+                        }`}
+                      >
+                        {details.businessRegistered && <IconCheck />}
                       </div>
-                      <div>
-                        Are you registered?
-                      </div>
+                      <div>Are you registered?</div>
                     </div>
                   </FormControl>
 
-                  {details.registeredBusiness &&
+                  {details.businessRegistrationNumber && (
                     <FormControl>
                       <FormLabel for="registrationNumber" color="black">
                         Registration Number
@@ -622,16 +640,17 @@ let SetupProfilePage = () => {
                         color="black"
                         id="registrationNumber"
                         type="text"
-                        value={details.registrationNumber || ''}
+                        value={details.businessRegistrationNumber || ''}
                         onChange={(event) => {
                           setDetails({
                             ...details,
-                            registrationNumber: event.target.value,
+                            businessRegistrationNumber: event.target.value,
                           });
                         }}
                       />
                       {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
-                    </FormControl>}
+                    </FormControl>
+                  )}
 
                   <FormControl required>
                     <FormLabel for="employeesCount" color="black">
@@ -646,11 +665,11 @@ let SetupProfilePage = () => {
                       color="black"
                       id="employeesCount"
                       type="text"
-                      value={details.employeesCount || ''}
+                      value={details.businessNumberOfEmployees || ''}
                       onChange={(event) => {
                         setDetails({
                           ...details,
-                          employeesCount: event.target.value,
+                          businessNumberOfEmployees: event.target.value,
                         });
                       }}
                     />
@@ -853,11 +872,11 @@ let SetupProfilePage = () => {
                       color="black"
                       id="website"
                       type="text"
-                      value={details.website || ''}
+                      value={details.websiteUrl || ''}
                       onChange={(event) => {
                         setDetails({
                           ...details,
-                          website: event.target.value,
+                          websiteUrl: event.target.value,
                         });
                       }}
                     />
@@ -877,11 +896,11 @@ let SetupProfilePage = () => {
                       color="black"
                       id="facebook"
                       type="text"
-                      value={details.facebook || ''}
+                      value={details.facebookPageUrl || ''}
                       onChange={(event) => {
                         setDetails({
                           ...details,
-                          facebook: event.target.value,
+                          facebookPageUrl: event.target.value,
                         });
                       }}
                     />
@@ -901,11 +920,11 @@ let SetupProfilePage = () => {
                       color="black"
                       id="instagram"
                       type="text"
-                      value={details.instagram || ''}
+                      value={details.instagramPageUrl || ''}
                       onChange={(event) => {
                         setDetails({
                           ...details,
-                          instagram: event.target.value,
+                          instagramPageUrl: event.target.value,
                         });
                       }}
                     />
@@ -925,11 +944,11 @@ let SetupProfilePage = () => {
                       color="black"
                       id="youtube"
                       type="text"
-                      value={details.youtube || ''}
+                      value={details.youTubeChannelUrl || ''}
                       onChange={(event) => {
                         setDetails({
                           ...details,
-                          youtube: event.target.value,
+                          youTubeChannelUrl: event.target.value,
                         });
                       }}
                     />
@@ -1053,11 +1072,11 @@ let SetupProfilePage = () => {
                       color="black"
                       id="bankBranch"
                       type="text"
-                      value={details.bankBranch || ''}
+                      value={details.bankBranchCode || ''}
                       onChange={(event) => {
                         setDetails({
                           ...details,
-                          bankBranch: event.target.value,
+                          bankBranchCode: event.target.value,
                         });
                       }}
                     />
@@ -1148,6 +1167,8 @@ let SetupProfilePage = () => {
 
                           setSearchValue(value);
 
+                          console.log(authState.authenticationToken);
+
                           axios
                             .get(apiUrl + '/findCoords/' + value, {
                               headers: {
@@ -1193,7 +1214,7 @@ let SetupProfilePage = () => {
                           _hover={{ bg: 'white' }}
                           aria-label="Search"
                           icon={<IconSearch />}
-                          onClick={() => { }}
+                          onClick={() => {}}
                         />
                       </InputRightElement>
                       <div class="flex flex-col py-2 space-y-2 text-black">

@@ -7,15 +7,15 @@ import {
   MenuTrigger,
   notificationService,
   Skeleton,
-  VStack,
+  VStack
 } from '@hope-ui/solid';
+import axios from 'axios';
+import { createSignal, onMount } from 'solid-js';
+import { createStore } from 'solid-js/store';
+import apiUrl from '../../apiUrl';
 import AddProductModal from '../../components/modals/addProductModal';
 import EditProductModal from '../../components/modals/editProductModal';
 import useState from '../../hooks/state';
-import { createSignal, onMount } from 'solid-js';
-import axios from 'axios';
-import apiUrl from '../../apiUrl';
-import { createStore } from 'solid-js/store';
 
 let ProductsPage = () => {
   let [authState, updateAuthState] = useState('authenticationGuard');
@@ -76,7 +76,7 @@ let ProductsPage = () => {
           setProducts(
             [
               ...products.map((product) => {
-                if (product.id !== id) return product;
+                if (product._id !== id) return product;
               }),
             ].sort((a, b) => {
               if (a.name > b.name) return 1;
@@ -187,7 +187,7 @@ let ProductsPage = () => {
                               setProducts(
                                 [
                                   ...products.map((product) => {
-                                    if (product.id === data.id) return data;
+                                    if (product._id === data._id) return data;
                                     else return product;
                                   }),
                                 ].sort((a, b) => {
@@ -205,7 +205,7 @@ let ProductsPage = () => {
                           class={'hover:bg-red-500 hover:text-white'}
                           rounded={'$lg'}
                           cursor={'pointer'}
-                          onSelect={() => deleteProduct(product.id)}
+                          onSelect={() => deleteProduct(product._id)}
                         >
                           Delete Product
                         </MenuItem>
