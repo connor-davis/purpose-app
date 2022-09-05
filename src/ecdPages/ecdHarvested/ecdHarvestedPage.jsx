@@ -136,7 +136,7 @@ const EcdHarvestedPage = () => {
                                     <td class={'text-left px-3'}>
                                         {moment(harvest.date).format("DD/MM/YYYY")}
                                     </td>
-                                    <td class={'text-left px-3'}>{harvest.produceName}</td>
+                                    <td class={'text-left px-3'}>{harvest.produce.name}</td>
                                     <td class={'text-left px-3'}>{harvest.yield}</td>
                                     <td class={'text-left px-3'}>{harvest.weight}</td>
                                     <td class={'w-10 p-0 m-0'}>

@@ -15,20 +15,19 @@ import {
   ModalHeader,
   ModalOverlay,
   notificationService,
-  VStack,
+  VStack
 } from '@hope-ui/solid';
-import IconPlus from '../../../icons/IconPlus';
+import axios from 'axios';
+import moment from 'moment';
+import { createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import apiUrl from '../../../apiUrl';
 import useState from '../../../hooks/state';
-import axios from 'axios';
-import { createSignal, onMount } from 'solid-js';
 import IconCheck from '../../../icons/IconCheck';
-import moment from 'moment';
 
 let EditSaleModal = ({
   data = { id: '', date: '', product: {}, numberSold: 0, profit: 0 },
-  onEdit = () => { }
+  onEdit = () => {},
 }) => {
   let [authState, updateAuthState] = useState('authenticationGuard');
 
@@ -76,11 +75,15 @@ let EditSaleModal = ({
 
   let editSale = () => {
     axios
-      .put(apiUrl + '/sales', details, {
-        headers: {
-          Authorization: 'Bearer ' + authState.authenticationToken,
-        },
-      })
+      .put(
+        apiUrl + '/sales',
+        { ...details, product: { ...details.produce, cost: 0 } },
+        {
+          headers: {
+            Authorization: 'Bearer ' + authState.authenticationToken,
+          },
+        }
+      )
       .then((response) => {
         if (response.data.error) {
           return notificationService.show({
@@ -158,10 +161,11 @@ let EditSaleModal = ({
                       <HStack w="100%" spacing="$2">
                         <Box
                           w="100%"
-                          bg={`${selectedProduce().name === product.name
-                            ? '$lime400'
-                            : '$gray200'
-                            }`}
+                          bg={`${
+                            selectedProduce().name === product.name
+                              ? '$lime400'
+                              : '$gray200'
+                          }`}
                           p="$3"
                           rounded="$sm"
                         >
@@ -241,9 +245,7 @@ let EditSaleModal = ({
                       value={details.numberSold || ''}
                       onChange={(event) => {
                         let numberSold = event.target.value;
-                        let profit =
-                          details.product.price *
-                          numberSold;
+                        let profit = details.product.price * numberSold;
 
                         setDetails({
                           ...details,

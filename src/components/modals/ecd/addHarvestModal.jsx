@@ -82,14 +82,7 @@ let AddHarvestModal = ({ onAdd = () => { } }) => {
         if (!details.date) details.date = moment();
 
         axios
-            .post(apiUrl + '/harvests', {
-                date: details.date,
-                yield: details.yield,
-                weight: details.weight,
-                produceName: details.produce.name,
-                produceImage: details.produce.image,
-                producePrice: details.produce.price,
-            }, {
+            .post(apiUrl + '/harvests', details, {
                 headers: {
                     Authorization: 'Bearer ' + authState.authenticationToken,
                 },

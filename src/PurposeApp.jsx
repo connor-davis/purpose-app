@@ -41,14 +41,14 @@ let PurposeApp = () => {
 
   setTimeout(() => {
     if (document.title === 'Purpose') {
-      switch (userState.type) {
+      switch (userState.businessType) {
         case 'admin':
           document.title = document.title + ' | Admin';
           break;
 
         default:
-          if (userState.displayName) {
-            document.title = `Purpose | ${userState.displayName}`;
+          if (userState.businessName) {
+            document.title = `Purpose | ${userState.businessName}`;
             break;
           }
 
@@ -59,7 +59,7 @@ let PurposeApp = () => {
   }, 300);
 
   let showSetupProfileRequest = () => {
-    if (userState.type === 'admin') return false;
+    if (userState.businessType === 'admin') return false;
     if (userState.completedProfile) return false;
 
     return true;
@@ -76,8 +76,8 @@ let PurposeApp = () => {
 
       {!showSetupProfileRequest() && (
         <>
-          {userState.type !== 'admin' &&
-            userState.type !== 'earlyChildhoodDevelopmentCenter' && (
+          {userState.businessType !== 'admin' &&
+            userState.businessType !== 'earlyChildhoodDevelopmentCenter' && (
               <Routes>
                 <Route path="/" element={<RootPage />}>
                   <Route path="/" element={<DashboardPage />} />
@@ -90,7 +90,7 @@ let PurposeApp = () => {
               </Routes>
             )}
 
-          {userState.type === 'earlyChildhoodDevelopmentCenter' && (
+          {userState.businessType === 'earlyChildhoodDevelopmentCenter' && (
             <Routes>
               <Route path="/" element={<EcdRootPage />}>
                 <Route path="/" element={<EcdDashboardPage />} />
@@ -104,7 +104,7 @@ let PurposeApp = () => {
             </Routes>
           )}
 
-          {userState.type === 'admin' && (
+          {userState.businessType === 'admin' && (
             <Routes>
               <Route path="/" element={<AdminRootPage />}>
                 <Route path="/" element={<AdminDashboardPage />} />

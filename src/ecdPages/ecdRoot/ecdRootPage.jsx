@@ -8,7 +8,9 @@ import {
   DrawerFooter,
   DrawerOverlay,
   HStack,
-  notificationService, RadioGroup, Tooltip,
+  notificationService,
+  RadioGroup,
+  Tooltip,
   VStack
 } from '@hope-ui/solid';
 import { Outlet, useLocation, useNavigate } from 'solid-app-router';
@@ -116,7 +118,11 @@ let EcdRootPage = ({ children }) => {
                   >
                     <div
                       name="dashboard"
-                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${
+                        path() === '/'
+                          ? 'text-white bg-lime-400'
+                          : 'bg-gray-800 text-gray-400'
+                      }`}
                       onClick={() => navigate('/')}
                     >
                       <IconHome class="w-4 h-4" />
@@ -130,7 +136,11 @@ let EcdRootPage = ({ children }) => {
                   >
                     <div
                       name="produce"
-                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/produce' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${
+                        path() === '/produce'
+                          ? 'text-white bg-lime-400'
+                          : 'bg-gray-800 text-gray-400'
+                      }`}
                       onClick={() => navigate('/produce')}
                     >
                       <IconCube class="w-4 h-4" />
@@ -144,7 +154,11 @@ let EcdRootPage = ({ children }) => {
                   >
                     <div
                       name="sales"
-                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/sales' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${
+                        path() === '/sales'
+                          ? 'text-white bg-lime-400'
+                          : 'bg-gray-800 text-gray-400'
+                      }`}
                       onClick={() => navigate('/sales')}
                     >
                       <IconCash class="w-4 h-4" />
@@ -158,7 +172,11 @@ let EcdRootPage = ({ children }) => {
                   >
                     <div
                       name="harvested"
-                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/harvested' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${
+                        path() === '/harvested'
+                          ? 'text-white bg-lime-400'
+                          : 'bg-gray-800 text-gray-400'
+                      }`}
                       onClick={() => navigate('/harvested')}
                     >
                       <IconTruck class="w-4 h-4" />
@@ -172,7 +190,11 @@ let EcdRootPage = ({ children }) => {
                   >
                     <div
                       name="dashboard"
-                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/documents' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${
+                        path() === '/documents'
+                          ? 'text-white bg-lime-400'
+                          : 'bg-gray-800 text-gray-400'
+                      }`}
                       onClick={() => navigate('/documents')}
                     >
                       <IconDocumentsIn class="w-4 h-4" />
@@ -186,7 +208,11 @@ let EcdRootPage = ({ children }) => {
                   >
                     <div
                       name="dashboard"
-                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/archive' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${
+                        path() === '/archive'
+                          ? 'text-white bg-lime-400'
+                          : 'bg-gray-800 text-gray-400'
+                      }`}
                       onClick={() => navigate('/archive')}
                     >
                       <IconDocumentsArchive class="w-4 h-4" />
@@ -206,7 +232,11 @@ let EcdRootPage = ({ children }) => {
                   >
                     <div
                       name="dashboard"
-                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/profile' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                      class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${
+                        path() === '/profile'
+                          ? 'text-white bg-lime-400'
+                          : 'bg-gray-800 text-gray-400'
+                      }`}
                       onClick={() => navigate('/profile')}
                     >
                       <IconProfile class="w-4 h-4" />
@@ -292,7 +322,11 @@ let EcdRootPage = ({ children }) => {
                         >
                           <div
                             name="dashboard"
-                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${
+                              path() === '/'
+                                ? 'text-white bg-lime-400'
+                                : 'bg-gray-800 text-gray-400'
+                            }`}
                             onClick={() => {
                               navigate('/');
                               onClose();
@@ -314,7 +348,11 @@ let EcdRootPage = ({ children }) => {
                         >
                           <div
                             name="produce"
-                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/produce' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${
+                              path() === '/produce'
+                                ? 'text-white bg-lime-400'
+                                : 'bg-gray-800 text-gray-400'
+                            }`}
                             onClick={() => {
                               navigate('/produce');
                               onClose();
@@ -336,7 +374,11 @@ let EcdRootPage = ({ children }) => {
                         >
                           <div
                             name="dashboard"
-                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/sales' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${
+                              path() === '/sales'
+                                ? 'text-white bg-lime-400'
+                                : 'bg-gray-800 text-gray-400'
+                            }`}
                             onClick={() => {
                               navigate('/sales');
                               onClose();
@@ -358,7 +400,11 @@ let EcdRootPage = ({ children }) => {
                         >
                           <div
                             name="harvested"
-                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/harvested' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${
+                              path() === '/harvested'
+                                ? 'text-white bg-lime-400'
+                                : 'bg-gray-800 text-gray-400'
+                            }`}
                             onClick={() => {
                               navigate('/harvested');
                               onClose();
@@ -380,7 +426,11 @@ let EcdRootPage = ({ children }) => {
                         >
                           <div
                             name="dashboard"
-                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/documents' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${
+                              path() === '/documents'
+                                ? 'text-white bg-lime-400'
+                                : 'bg-gray-800 text-gray-400'
+                            }`}
                             onClick={() => {
                               navigate('/documents');
                               onClose();
@@ -402,7 +452,11 @@ let EcdRootPage = ({ children }) => {
                         >
                           <div
                             name="dashboard"
-                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/archive' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                            class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${
+                              path() === '/archive'
+                                ? 'text-white bg-lime-400'
+                                : 'bg-gray-800 text-gray-400'
+                            }`}
                             onClick={() => {
                               navigate('/archive');
                               onClose();
@@ -433,7 +487,11 @@ let EcdRootPage = ({ children }) => {
                           >
                             <div
                               name="dashboard"
-                              class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${path() === '/profile' ? 'text-white bg-lime-400' : 'bg-gray-800 text-gray-400'}`}
+                              class={`flex flex-col items-center justify-center rounded-md shadow-2xl w-full p-3 ${
+                                path() === '/profile'
+                                  ? 'text-white bg-lime-400'
+                                  : 'bg-gray-800 text-gray-400'
+                              }`}
                               onClick={() => {
                                 navigate('/profile');
                                 onClose();
@@ -490,7 +548,9 @@ let EcdRootPage = ({ children }) => {
               </Drawer>
             </div>
             <Box as={'div'} ml="auto" mb="$5">
-              Welcome, {userState.displayName}
+              Welcome,{' '}
+              {userState.businessName ||
+                userState.firstname + ' ' + userState.lastName}
             </Box>
           </HStack>
           <VStack w="100%" h="100%" bg="white" roundedTop="$xl">
