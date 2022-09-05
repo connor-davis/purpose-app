@@ -48,10 +48,10 @@ let AdminUserMap = () => {
           users.map(async (user) => {
             let data = { ...user };
 
-            if (data.type === 'admin') return;
+            if (data.businessType === 'admin') return;
 
             await axios
-              .get(apiUrl + '/admin/users/' + user.id, {
+              .get(apiUrl + '/admin/users/' + user._id, {
                 headers: {
                   Authorization: 'Bearer ' + authState.authenticationToken,
                 },
@@ -62,7 +62,7 @@ let AdminUserMap = () => {
                   let user = response.data.data;
 
                   let sales = await axios.get(
-                    apiUrl + '/admin/users/sales/' + user.id,
+                    apiUrl + '/admin/users/sales/' + user._id,
                     {
                       headers: {
                         Authorization:
@@ -96,7 +96,7 @@ let AdminUserMap = () => {
                   let infoForUser = UserInfoWindow({
                     user,
                     viewProfile: () => {
-                      navigate('/users/' + user.id);
+                      navigate('/users/' + user._id);
                     },
                   });
 

@@ -16,7 +16,14 @@ import 'https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js';
 import { For } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import apiUrl from '../../apiUrl';
-import { agesChart, ecdChildrenCountChart, gendersChart, harvestsChart, salesChart, typesChart } from '../../charts';
+import {
+  agesChart,
+  ecdChildrenCountChart,
+  gendersChart,
+  harvestsChart,
+  salesChart,
+  typesChart
+} from '../../charts';
 import useState from '../../hooks/state';
 import AdminUserMap from './adminUserMap';
 
@@ -31,7 +38,7 @@ let AdminDashboardPage = () => {
     name: 'dashboard-sales',
   });
   let [harvests, setHarvests] = createStore([], {
-    name: 'dashboard-harvests'
+    name: 'dashboard-harvests',
   });
 
   setTimeout(() => {
@@ -50,7 +57,11 @@ let AdminDashboardPage = () => {
       .then((response) => {
         if (response.data.error) return console.log(response.data);
         else {
-          setUsers([...response.data.data]);
+          setUsers([
+            ...response.data.data.filter(
+              (user) => user.businessType !== 'admin'
+            ),
+          ]);
 
           typesChart(users);
           agesChart(users);
@@ -83,7 +94,16 @@ let AdminDashboardPage = () => {
       .then((response) => {
         if (response.data.error) return console.log(response.data);
         else {
-          setSales([...response.data.data]);
+          setSales(
+            [...response.data.data].map((sale) => {
+              let saleOwner = users.find((user) => (user._id = sale.owner));
+
+              return {
+                ...sale,
+                owner: saleOwner,
+              };
+            })
+          );
 
           salesChart(sales, industry);
           gendersChart(users);
@@ -92,18 +112,20 @@ let AdminDashboardPage = () => {
   };
 
   let loadHarvests = async () => {
-    await axios.get(apiUrl + "/admin/ecd/harvests", {
-      headers: {
-        Authorization: 'Bearer ' + authState.authenticationToken
-      }
-    }).then((response) => {
-      if (response.data.error) return console.log(response.data);
-      else {
-        setHarvests([...response.data.data]);
-        harvestsChart(harvests);
-      }
-    });
-  }
+    await axios
+      .get(apiUrl + '/admin/ecd/harvests', {
+        headers: {
+          Authorization: 'Bearer ' + authState.authenticationToken,
+        },
+      })
+      .then((response) => {
+        if (response.data.error) return console.log(response.data);
+        else {
+          setHarvests([...response.data.data]);
+          harvestsChart(harvests);
+        }
+      });
+  };
 
   return (
     <div class="flex flex-col w-full h-full text-black rounded-xl overflow-y-scroll">
@@ -183,7 +205,10 @@ let AdminDashboardPage = () => {
             </div>
             <canvas id="salesChart" class="w-full max-h-96"></canvas>
           </div>
-          <canvas id="harvestsChart" class="w-full max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"></canvas>
+          <canvas
+            id="harvestsChart"
+            class="w-full max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"
+          ></canvas>
           <canvas
             id="agesChart"
             class="w-full max-h-96 border-l border-t border-r border-b border-gray-200 rounded-2xl p-2"

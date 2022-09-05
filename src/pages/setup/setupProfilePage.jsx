@@ -579,7 +579,7 @@ let SetupProfilePage = () => {
 
                   {details.businessType === 'other' && (
                     <FormControl required>
-                      <FormLabel for="typeDescription" color="black">
+                      <FormLabel for="businessTypeDescription" color="black">
                         Tell us more?
                       </FormLabel>
                       <Input
@@ -589,13 +589,13 @@ let SetupProfilePage = () => {
                         placeholder="Tell us more?"
                         size="sm"
                         color="black"
-                        id="typeDescription"
+                        id="businessTypeDescription"
                         type="text"
-                        value={details.typeDescription || ''}
+                        value={details.businessTypeDescription || ''}
                         onChange={(event) => {
                           setDetails({
                             ...details,
-                            typeDescription: event.target.value,
+                            businessTypeDescription: event.target.value,
                           });
                         }}
                       />

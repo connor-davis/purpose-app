@@ -49,12 +49,12 @@ let AdminUsersPage = () => {
         if (response.data.error) return console.log(response.data);
         else {
           if (response.data.data.length === 0) return setLoading(false);
-          else
+          else {
             response.data.data.map(async (user) => {
-              if (user.type === 'admin') return;
+              if (user.businessType === 'admin') return;
 
               let salesResponse = await axios.get(
-                apiUrl + '/admin/users/sales/' + user.id,
+                apiUrl + '/admin/users/sales/' + user._id,
                 {
                   headers: {
                     Authorization: 'Bearer ' + authState.authenticationToken,
@@ -78,6 +78,7 @@ let AdminUsersPage = () => {
                 return setLoading(false);
               }
             });
+          }
         }
       });
   };
@@ -111,9 +112,9 @@ let AdminUsersPage = () => {
       });
   };
 
-  let deleteUser = (email) => {
+  let deleteUser = (id) => {
     axios
-      .delete(apiUrl + '/users/' + email, {
+      .delete(apiUrl + '/admin/deleteUser/' + id, {
         headers: { Authorization: 'Bearer ' + authState.authenticationToken },
       })
       .then((response) => {
@@ -130,7 +131,7 @@ let AdminUsersPage = () => {
           setUsers([
             ...users
               .map((user) => {
-                if (user.email !== email) return user;
+                if (user.email !== id) return user;
               })
               .sort((a, b) => {
                 if (a.displayName > b.displayName) return 1;
@@ -249,7 +250,7 @@ let AdminUsersPage = () => {
                       src={user.image ? user.image : 'broken-link'}
                     />
                   </td>
-                  <td class={'text-left px-3'}>{user.displayName}</td>
+                  <td class={'text-left px-3'}>{user.businessName}</td>
                   <td class={'text-left px-3'}>{user.email}</td>
                   <td class={'text-left px-3'}>
                     {user.streetAddress + ', ' + user.city}
@@ -296,7 +297,7 @@ let AdminUsersPage = () => {
                           class={'hover:bg-gray-100'}
                           rounded={'$lg'}
                           cursor={'pointer'}
-                          onSelect={() => navigate('/users/' + user.id)}
+                          onSelect={() => navigate('/users/' + user._id)}
                         >
                           View Profile
                         </MenuItem>
@@ -306,7 +307,7 @@ let AdminUsersPage = () => {
                           class={'hover:bg-gray-100'}
                           rounded={'$lg'}
                           cursor={'pointer'}
-                          onSelect={() => navigate('/users/edit/' + user.id)}
+                          onSelect={() => navigate('/users/edit/' + user._id)}
                         >
                           Edit Profile
                         </MenuItem>
@@ -316,7 +317,7 @@ let AdminUsersPage = () => {
                           class={'hover:bg-gray-100'}
                           rounded={'$lg'}
                           cursor={'pointer'}
-                          onSelect={() => generateResetPassword(user.id)}
+                          onSelect={() => generateResetPassword(user._id)}
                         >
                           Reset Password
                         </MenuItem>
@@ -326,7 +327,7 @@ let AdminUsersPage = () => {
                           class={'hover:bg-red-500 hover:text-white'}
                           rounded={'$lg'}
                           cursor={'pointer'}
-                          onSelect={() => deleteUser(user.email)}
+                          onSelect={() => deleteUser(user._id)}
                         >
                           Delete User
                         </MenuItem>

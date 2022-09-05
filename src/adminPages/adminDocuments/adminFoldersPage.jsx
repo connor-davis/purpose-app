@@ -6,14 +6,14 @@ import {
   MenuItem,
   MenuTrigger,
   Skeleton,
-  VStack,
+  VStack
 } from '@hope-ui/solid';
+import axios from 'axios';
 import { useNavigate } from 'solid-app-router';
-import useState from '../../hooks/state';
 import { createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import axios from 'axios';
 import apiUrl from '../../apiUrl';
+import useState from '../../hooks/state';
 
 let AdminFoldersPage = () => {
   let navigate = useNavigate();
@@ -75,7 +75,7 @@ let AdminFoldersPage = () => {
         <table class="table-auto w-full">
           <thead class={'h-10'}>
             <tr>
-              <th class={'text-left px-3'}>Owner</th>
+              <th class={'text-left px-3'}>Name</th>
               <th class={'text-left px-3'}>Email</th>
               <th class={'text-right px-3'}>Files</th>
             </tr>
@@ -87,8 +87,9 @@ let AdminFoldersPage = () => {
                 return (
                   <tr>
                     <td class={'text-left px-3'}>
-                      {(folder.owner && folder.owner.displayName) ||
-                        JSON.stringify(folder)}
+                      {(folder.owner && folder.owner.businessName) ||
+                        folder.owner.firstName + ' ' + folder.owner.lastName ||
+                        ''}
                     </td>
                     <td class={'text-left px-3'}>
                       {(folder.owner && folder.owner.email) || ''}

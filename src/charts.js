@@ -29,7 +29,7 @@ export let salesChart = (sales, industry) => {
       .filter((sale) => {
         if (industry === 'all') return sale;
         else {
-          if (sale.industry === industry) return sale;
+          if (sale.owner.businessType === industry) return sale;
         }
       })
       .map((sale) => {
@@ -358,7 +358,7 @@ export let typesChart = (users) => {
     let typesCount = 0;
 
     users.map((user) => {
-      if (user.type === type) typesCount++;
+      if (user.businessType === type) typesCount++;
 
       return user;
     });
