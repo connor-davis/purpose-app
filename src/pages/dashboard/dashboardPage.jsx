@@ -19,7 +19,7 @@ let DashboardPage = () => {
 
   setTimeout(() => {
     loadProducts();
-    // loadSales();
+    loadSales();
   }, 300);
 
   let loadProducts = async () => {

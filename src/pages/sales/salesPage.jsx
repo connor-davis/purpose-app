@@ -7,16 +7,16 @@ import {
   MenuTrigger,
   notificationService,
   Skeleton,
-  VStack,
+  VStack
 } from '@hope-ui/solid';
-import useState from '../../hooks/state';
+import axios from 'axios';
+import moment from 'moment';
 import { createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import axios from 'axios';
 import apiUrl from '../../apiUrl';
 import AddSaleModal from '../../components/modals/addSaleModal';
-import moment from 'moment';
 import EditSaleModal from '../../components/modals/editSaleModal';
+import useState from '../../hooks/state';
 
 let SalesPage = () => {
   let [authState, updateAuthState] = useState('authenticationGuard');
@@ -86,7 +86,7 @@ let SalesPage = () => {
           setSales(
             [
               ...sales.map((sale) => {
-                if (sale.id !== id) return sale;
+                if (sale._id !== id) return sale;
               }),
             ].sort((a, b) => {
               if (a.date < b.date) return 1;
@@ -206,18 +206,20 @@ let SalesPage = () => {
                                 data.date = parseInt(data.date);
                               if (typeof data.numberSold === 'string')
                                 data.numberSold = parseInt(data.numberSold);
+                              if (typeof data.profit === 'string')
+                                data.profit = parseFloat(data.profit);
 
                               setSales(
-                                [
-                                  ...sales.map((sale) => {
-                                    if (sale.id === data.id) return data;
+                                sales
+                                  .map((sale) => {
+                                    if (sale._id === data._id) return data;
                                     else return sale;
-                                  }),
-                                ].sort((a, b) => {
-                                  if (a.date < b.date) return 1;
-                                  if (a.date > b.date) return -1;
-                                  return 0;
-                                })
+                                  })
+                                  .sort((a, b) => {
+                                    if (a.date < b.date) return 1;
+                                    if (a.date > b.date) return -1;
+                                    return 0;
+                                  })
                               );
                             }}
                           />
@@ -228,7 +230,7 @@ let SalesPage = () => {
                           class={'hover:bg-red-500 hover:text-white'}
                           rounded={'$lg'}
                           cursor={'pointer'}
-                          onSelect={() => deleteSale(sale.id)}
+                          onSelect={() => deleteSale(sale._id)}
                         >
                           Delete Sale
                         </MenuItem>

@@ -15,18 +15,18 @@ import {
   ModalHeader,
   ModalOverlay,
   notificationService,
-  VStack,
+  VStack
 } from '@hope-ui/solid';
+import axios from 'axios';
+import moment from 'moment';
+import { createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import apiUrl from '../../apiUrl';
 import useState from '../../hooks/state';
-import axios from 'axios';
-import { createSignal, onMount } from 'solid-js';
 import IconCheck from '../../icons/IconCheck';
-import moment from 'moment';
 
 let EditSaleModal = ({
-  data = { id: '', date: '', product: {}, numberSold: 0, profit: 0 },
+  data = { _id: '', date: '', product: {}, numberSold: 0, profit: 0 },
   onEdit = () => {},
 }) => {
   let [authState, updateAuthState] = useState('authenticationGuard');
@@ -34,7 +34,7 @@ let EditSaleModal = ({
   let { isOpen, onOpen, onClose } = createDisclosure();
   let [details, setDetails] = createStore(
     {
-      id: data.id,
+      _id: data._id,
       date: data.date,
       product: data.product,
       numberSold: data.numberSold,
@@ -88,6 +88,8 @@ let EditSaleModal = ({
             description: 'Unable to edit sale.',
           });
         } else {
+          onClose();
+
           onEdit(response.data.data);
 
           setDetails({
