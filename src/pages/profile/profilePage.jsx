@@ -1,4 +1,3 @@
-import useState from '../../hooks/state';
 import {
   Accordion,
   AccordionButton,
@@ -11,17 +10,18 @@ import {
   HStack,
   Skeleton,
   Text,
-  VStack,
+  VStack
 } from '@hope-ui/solid';
+import axios from 'axios';
 import { createSignal, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import EditPersonalDetails from './editPersonalDetails';
-import axios from 'axios';
 import apiUrl from '../../apiUrl';
-import EditBusinessDetails from './editBusinessDetails';
+import useState from '../../hooks/state';
 import EditBankDetails from './editBankDetails';
-import EditLocationDetails from './editLocationDetails';
+import EditBusinessDetails from './editBusinessDetails';
 import EditHandleDetails from './editHandleDetails';
+import EditLocationDetails from './editLocationDetails';
+import EditPersonalDetails from './editPersonalDetails';
 
 let ProfilePage = () => {
   let [userState, updateUserState] = useState('userState');
@@ -130,7 +130,8 @@ let ProfilePage = () => {
         businessName: userState.businessName,
         businessType: userState.businessType,
         businessTypeDescription: userState.businessTypeDescription || undefined,
-        businessRegistrationNumber: userState.businessRegistrationNumber || undefined,
+        businessRegistrationNumber:
+          userState.businessRegistrationNumber || undefined,
       });
 
       setHandleDetails({
@@ -170,11 +171,15 @@ let ProfilePage = () => {
     }
 
     axios
-      .put(apiUrl + '/users', body, {
-        headers: {
-          Authorization: 'Bearer ' + authState.authenticationToken,
-        },
-      })
+      .put(
+        apiUrl + '/users',
+        { _id: userState._id, ...body },
+        {
+          headers: {
+            Authorization: 'Bearer ' + authState.authenticationToken,
+          },
+        }
+      )
       .then((response) => {
         if (response.data.error) return console.log(response.data);
         else {
@@ -420,7 +425,8 @@ let ProfilePage = () => {
                             loaded={!pageSettings.loadingDetails}
                           >
                             <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
-                              {businessDetails.businessTypeDescription || 'Unspecified'}
+                              {businessDetails.businessTypeDescription ||
+                                'Unspecified'}
                             </Box>
                           </Skeleton>
                         </VStack>
