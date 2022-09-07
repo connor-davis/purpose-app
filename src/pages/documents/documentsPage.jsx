@@ -33,7 +33,7 @@ let DocumentsPage = () => {
 
   onMount(() => {
     setTimeout(() => {
-      loadUserDocuments(userState.id);
+      loadUserDocuments(userState._id);
     }, 300);
   });
 
