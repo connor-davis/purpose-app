@@ -255,7 +255,7 @@ let AdminUsersPage = () => {
                   <td class={'text-left px-3'}>
                     {user.streetAddress + ', ' + user.city}
                   </td>
-                  <td class={'text-left px-3'}>{user.employeesCount}</td>
+                  <td class={'text-left px-3'}>{user.businessNumberOfEmployees}</td>
                   <td class={'text-left px-3'}>
                     {(user.sales && user.sales.length) || 0}
                   </td>
