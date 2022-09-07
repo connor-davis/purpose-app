@@ -88,7 +88,7 @@ let AdminRootPage = ({ children }) => {
                       <IconUsers class="w-4 h-4" />
                     </div>
                   </Tooltip>
-                  <Tooltip
+                  {/* <Tooltip
                     label="Employees"
                     placement="right"
                     color="white"
@@ -101,7 +101,7 @@ let AdminRootPage = ({ children }) => {
                     >
                       <IconEmployees class="w-4 h-4" />
                     </div>
-                  </Tooltip>
+                  </Tooltip> */}
                   <Tooltip
                     label="Documents"
                     placement="right"
@@ -271,7 +271,7 @@ let AdminRootPage = ({ children }) => {
                             </HStack>
                           </div>
                         </Tooltip>
-                        <Tooltip
+                        {/* <Tooltip
                           label="Employees"
                           placement="right"
                           color="white"
@@ -292,7 +292,7 @@ let AdminRootPage = ({ children }) => {
                               </Box>
                             </HStack>
                           </div>
-                        </Tooltip>
+                        </Tooltip> */}
                         <Tooltip
                           label="Documents"
                           placement="right"
