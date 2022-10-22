@@ -31,6 +31,7 @@ import IconArrowLeft from '../../icons/IconArrowLeft';
 import IconArrowRight from '../../icons/IconArrowRight';
 import IconCheck from '../../icons/IconCheck';
 import IconSearch from '../../icons/IconSearch';
+import { FormHelperText } from '@hope-ui/solid';
 
 let SetupProfilePage = () => {
   let [authState, updateAuthState] = useState('authenticationGuard');
@@ -49,7 +50,7 @@ let SetupProfilePage = () => {
     name: 'searchResults',
   });
 
-  onMount(() => {});
+  onMount(() => { });
 
   setTimeout(() => {
     setStage(stage() + 1);
@@ -57,19 +58,19 @@ let SetupProfilePage = () => {
     if (userState.gender)
       setUserGender(
         userState.gender.split('')[0].toUpperCase() +
-          userState.gender.substring(1, userState.gender.length)
+        userState.gender.substring(1, userState.gender.length)
       );
 
     if (userState.ethnicity)
       setUserEthnicity(
         userState.ethnicity.split('')[0].toUpperCase() +
-          userState.ethnicity.substring(1, userState.ethnicity.length)
+        userState.ethnicity.substring(1, userState.ethnicity.length)
       );
 
     if (userState.type)
       setUserType(
         userState.type.split('')[0].toUpperCase() +
-          userState.type.substring(1, userState.type.length)
+        userState.type.substring(1, userState.type.length)
       );
 
     setDetails(userState);
@@ -103,7 +104,7 @@ let SetupProfilePage = () => {
           }, 4000);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   return (
@@ -269,10 +270,10 @@ let SetupProfilePage = () => {
                       value={
                         (details.gender &&
                           details.gender.split('')[0].toUpperCase() +
-                            details.gender.substring(
-                              1,
-                              details.gender.length
-                            )) ||
+                          details.gender.substring(
+                            1,
+                            details.gender.length
+                          )) ||
                         ''
                       }
                       onChange={(gender) => setDetails({ ...details, gender })}
@@ -320,10 +321,10 @@ let SetupProfilePage = () => {
                       value={
                         (details.ethnicity &&
                           details.ethnicity.split('')[0].toUpperCase() +
-                            details.ethnicity.substring(
-                              1,
-                              details.ethnicity.length
-                            )) ||
+                          details.ethnicity.substring(
+                            1,
+                            details.ethnicity.length
+                          )) ||
                         ''
                       }
                       onChange={(ethnicity) =>
@@ -525,57 +526,57 @@ let SetupProfilePage = () => {
 
                   {details.businessType ===
                     'earlyChildhoodDevelopmentCenter' && (
-                    <FormControl required>
-                      <FormLabel for="positionAtECD" color="black">
-                        Position at ECD
-                      </FormLabel>
-                      <Input
-                        variant="unstyled"
-                        bg="#e5e5e5"
-                        p="$3"
-                        placeholder="What position are you at the ECD?"
-                        size="sm"
-                        color="black"
-                        id="positionAtECD"
-                        type="text"
-                        value={details.positionAtECD || ''}
-                        onChange={(event) => {
-                          setDetails({
-                            ...details,
-                            positionAtECD: event.target.value,
-                          });
-                        }}
-                      />
-                      {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
-                    </FormControl>
-                  )}
+                      <FormControl required>
+                        <FormLabel for="positionAtECD" color="black">
+                          Position at ECD
+                        </FormLabel>
+                        <Input
+                          variant="unstyled"
+                          bg="#e5e5e5"
+                          p="$3"
+                          placeholder="What position are you at the ECD?"
+                          size="sm"
+                          color="black"
+                          id="positionAtECD"
+                          type="text"
+                          value={details.positionAtECD || ''}
+                          onChange={(event) => {
+                            setDetails({
+                              ...details,
+                              positionAtECD: event.target.value,
+                            });
+                          }}
+                        />
+                        {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                      </FormControl>
+                    )}
 
                   {details.businessType ===
                     'earlyChildhoodDevelopmentCenter' && (
-                    <FormControl required>
-                      <FormLabel for="typeDescription" color="black">
-                        How many children
-                      </FormLabel>
-                      <Input
-                        variant="unstyled"
-                        bg="#e5e5e5"
-                        p="$3"
-                        placeholder="How many children are at the ECD?"
-                        size="sm"
-                        color="black"
-                        id="numberOfChildren"
-                        type="text"
-                        value={details.numberOfChildren || ''}
-                        onChange={(event) => {
-                          setDetails({
-                            ...details,
-                            numberOfChildren: event.target.value,
-                          });
-                        }}
-                      />
-                      {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
-                    </FormControl>
-                  )}
+                      <FormControl required>
+                        <FormLabel for="typeDescription" color="black">
+                          How many children
+                        </FormLabel>
+                        <Input
+                          variant="unstyled"
+                          bg="#e5e5e5"
+                          p="$3"
+                          placeholder="How many children are at the ECD?"
+                          size="sm"
+                          color="black"
+                          id="numberOfChildren"
+                          type="text"
+                          value={details.numberOfChildren || ''}
+                          onChange={(event) => {
+                            setDetails({
+                              ...details,
+                              numberOfChildren: event.target.value,
+                            });
+                          }}
+                        />
+                        {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                      </FormControl>
+                    )}
 
                   {details.businessType === 'other' && (
                     <FormControl required>
@@ -614,11 +615,10 @@ let SetupProfilePage = () => {
                       class="flex items-center space-x-3 text-black cursor-pointer select-none"
                     >
                       <div
-                        class={`flex flex-col justify-center items-center w-5 h-5 rounded-md ${
-                          details.businessRegistered
-                            ? 'bg-lime-400 text-white'
-                            : ' bg-gray-300'
-                        }`}
+                        class={`flex flex-col justify-center items-center w-5 h-5 rounded-md ${details.businessRegistered
+                          ? 'bg-lime-400 text-white'
+                          : ' bg-gray-300'
+                          }`}
                       >
                         {details.businessRegistered && <IconCheck />}
                       </div>
@@ -1032,7 +1032,7 @@ let SetupProfilePage = () => {
                         });
                       }}
                     />
-                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                    <FormHelperText>This needs to be a "number".</FormHelperText>
                   </FormControl>
 
                   <FormControl required>
@@ -1061,13 +1061,13 @@ let SetupProfilePage = () => {
 
                   <FormControl required>
                     <FormLabel for="bankBranch" color="black">
-                      Bank Branch
+                      Bank Branch Code
                     </FormLabel>
                     <Input
                       variant="unstyled"
                       bg="#e5e5e5"
                       p="$3"
-                      placeholder="Bank Branch"
+                      placeholder="Bank Branch Code"
                       size="sm"
                       color="black"
                       id="bankBranch"
@@ -1080,7 +1080,7 @@ let SetupProfilePage = () => {
                         });
                       }}
                     />
-                    {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                    <FormHelperText>This needs to be the "number" code.</FormHelperText>
                   </FormControl>
                 </VStack>
 
@@ -1166,57 +1166,9 @@ let SetupProfilePage = () => {
                           let value = event.target.value;
 
                           setSearchValue(value);
-
-                          console.log(authState.authenticationToken);
-
-                          axios
-                            .get(apiUrl + '/findCoords/' + value, {
-                              headers: {
-                                Authorization:
-                                  'Bearer ' + authState.authenticationToken,
-                              },
-                            })
-                            .then((response) => {
-                              if (response.data.error)
-                                return notificationService.show({
-                                  title: 'Error',
-                                  description: 'Failed to find location.',
-                                  status: 'danger',
-                                  duration: 5000,
-                                });
-                              else if (response.data.data) {
-                                let results = response.data.data;
-
-                                console.log(results);
-
-                                setSearchResults(results);
-                              } else {
-                                return notificationService.show({
-                                  title: 'Hmm..',
-                                  description: response.data.message,
-                                  status: 'info',
-                                  duration: 5000,
-                                });
-                              }
-                            });
                         }}
                       />
                       {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
-                      <InputRightElement pointerEvents="none">
-                        <IconButton
-                          variant="ghost"
-                          colorScheme="white"
-                          rounded="$full"
-                          size="lg"
-                          class="self-end shadow-2xl shadow-neutral-900"
-                          color="black"
-                          bg="white"
-                          _hover={{ bg: 'white' }}
-                          aria-label="Search"
-                          icon={<IconSearch />}
-                          onClick={() => {}}
-                        />
-                      </InputRightElement>
                       <div class="flex flex-col py-2 space-y-2 text-black">
                         {searchResults.map((result) => (
                           <HStack w="100%" spacing="$2">
@@ -1444,16 +1396,47 @@ let SetupProfilePage = () => {
                   bg="white"
                   _hover={{ bg: 'white' }}
                   aria-label="Search"
-                  icon={<IconCheck />}
+                  icon={details.streetAddress ? <IconCheck /> : <IconSearch />}
                   onClick={() => {
-                    let form = document.getElementById('businessForm');
+                    if (details.streetAddress) {
+                      let form = document.getElementById('businessForm');
 
-                    if (form instanceof HTMLFormElement) {
-                      form.reportValidity();
+                      if (form instanceof HTMLFormElement) {
+                        form.reportValidity();
 
-                      if (form.checkValidity()) {
-                        completeProfile();
+                        if (form.checkValidity()) {
+                          completeProfile();
+                        }
                       }
+                    } else {
+                      axios
+                        .get(apiUrl + '/findCoords/' + searchValue(), {
+                          headers: {
+                            Authorization:
+                              'Bearer ' + authState.authenticationToken,
+                          },
+                        })
+                        .then((response) => {
+                          if (response.data.error)
+                            return notificationService.show({
+                              title: 'Error',
+                              description: 'Failed to find location.',
+                              status: 'danger',
+                              duration: 5000,
+                            });
+                          else if (response.data.data) {
+                            let results = response.data.data;
+
+                            setSearchResults(results);
+                          } else {
+                            return notificationService.show({
+                              title: 'Hmm..',
+                              description: response.data.message,
+                              status: 'info',
+                              duration: 5000,
+                            });
+                          }
+                        });
                     }
                   }}
                 />
