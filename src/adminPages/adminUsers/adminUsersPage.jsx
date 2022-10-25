@@ -226,118 +226,246 @@ let AdminUsersPage = () => {
         p={'$2'}
         overflowY={'auto'}
       >
-        <table class="table-auto w-full">
-          <thead class={'h-10'}>
-            <tr>
-              <th class={'text-left px-3'}>Image</th>
-              <th class={'text-left px-3'}>Name</th>
-              <th class={'text-left px-3'}>Email</th>
-              <th class={'text-left px-3'}>Address</th>
-              <th class={'text-left px-3'}>Employees</th>
-              <th class={'text-left px-3'}>Sales</th>
-            </tr>
-          </thead>
-          <tbody>
-            {!loading() &&
-              users.filter((user) => user !== undefined).length > 0 &&
-              users.map((user) => (
-                <tr>
-                  <td class={'text-left px-3'}>
-                    <Avatar
-                      size={'sm'}
-                      bg={'$lime4'}
-                      name={user.firstName + ' ' + user.lastName || ''}
-                      src={user.image ? user.image : 'broken-link'}
-                    />
-                  </td>
-                  <td class={'text-left px-3'}>{user.businessName}</td>
-                  <td class={'text-left px-3'}>{user.email}</td>
-                  <td class={'text-left px-3'}>
-                    {user.streetAddress + ', ' + user.city}
-                  </td>
-                  <td class={'text-left px-3'}>{user.businessNumberOfEmployees}</td>
-                  <td class={'text-left px-3'}>
-                    {(user.sales && user.sales.length) || 0}
-                  </td>
-                  <td class={'w-10 p-0 m-0'}>
-                    <Menu color={'black'} as>
-                      <MenuTrigger
-                        class={
-                          'flex flex-col justify-center items-center w-10 h-10 hover:bg-gray-100 active:bg-gray-50 bg-opacity-50 rounded-full'
-                        }
-                        cursor={'pointer'}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="!h-6 !w-6"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth={2}
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-                          />
-                        </svg>
-                      </MenuTrigger>
-                      <MenuContent
-                        minW="$60"
-                        bg="white"
-                        shadow="$md"
-                        borderRadius="$2xl"
-                        borderWidth="1px"
-                        borderColor="#e5e5e5"
-                        rounded={'$lg'}
-                        color={'black'}
-                      >
-                        <MenuItem
-                          colorScheme={'none'}
-                          class={'hover:bg-gray-100'}
-                          rounded={'$lg'}
-                          cursor={'pointer'}
-                          onSelect={() => navigate('/users/' + user._id)}
-                        >
-                          View Profile
-                        </MenuItem>
+        <Box class="h-1/2 overflow-y-auto">
+          <Box class="font-bold px-3">General Users</Box>
 
-                        <MenuItem
-                          colorScheme={'none'}
-                          class={'hover:bg-gray-100'}
-                          rounded={'$lg'}
+          <table class="table-auto w-full">
+            <thead class={'h-10'}>
+              <tr>
+                <th class={'text-left px-3'}>Image</th>
+                <th class={'text-left px-3'}>Name</th>
+                <th class={'text-left px-3'}>Email</th>
+                <th class={'text-left px-3'}>Address</th>
+                <th class={'text-left px-3'}>Employees</th>
+                <th class={'text-left px-3'}>Sales</th>
+              </tr>
+            </thead>
+            <tbody>
+              {!loading() &&
+                users.filter((user) => user !== undefined && user.businessType !== "earlyChildhoodDevelopmentCenter").length > 0 &&
+                users.map((user) => user.businessType !== "earlyChildhoodDevelopmentCenter" && (
+                  <tr>
+                    {/* {JSON.stringify(user)} */}
+                    <td class={'text-left px-3'}>
+                      <Avatar
+                        size={'sm'}
+                        bg={'$lime4'}
+                        name={user.firstName + ' ' + user.lastName || ''}
+                        src={user.image ? user.image : 'broken-link'}
+                      />
+                    </td>
+                    <td class={'text-left px-3'}>{user.businessName}</td>
+                    <td class={'text-left px-3'}>{user.email}</td>
+                    <td class={'text-left px-3'}>
+                      {user.location}
+                    </td>
+                    <td class={'text-left px-3'}>{user.businessNumberOfEmployees}</td>
+                    <td class={'text-left px-3'}>
+                      {(user.sales && user.sales.length) || 0}
+                    </td>
+                    <td class={'w-10 p-0 m-0'}>
+                      <Menu color={'black'} as>
+                        <MenuTrigger
+                          class={
+                            'flex flex-col justify-center items-center w-10 h-10 hover:bg-gray-100 active:bg-gray-50 bg-opacity-50 rounded-full'
+                          }
                           cursor={'pointer'}
-                          onSelect={() => navigate('/users/edit/' + user._id)}
                         >
-                          Edit Profile
-                        </MenuItem>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="!h-6 !w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+                            />
+                          </svg>
+                        </MenuTrigger>
+                        <MenuContent
+                          minW="$60"
+                          bg="white"
+                          shadow="$md"
+                          borderRadius="$2xl"
+                          borderWidth="1px"
+                          borderColor="#e5e5e5"
+                          rounded={'$lg'}
+                          color={'black'}
+                        >
+                          <MenuItem
+                            colorScheme={'none'}
+                            class={'hover:bg-gray-100'}
+                            rounded={'$lg'}
+                            cursor={'pointer'}
+                            onSelect={() => navigate('/users/' + user._id)}
+                          >
+                            View Profile
+                          </MenuItem>
 
-                        <MenuItem
-                          colorScheme={'none'}
-                          class={'hover:bg-gray-100'}
-                          rounded={'$lg'}
-                          cursor={'pointer'}
-                          onSelect={() => generateResetPassword(user._id)}
-                        >
-                          Reset Password
-                        </MenuItem>
+                          <MenuItem
+                            colorScheme={'none'}
+                            class={'hover:bg-gray-100'}
+                            rounded={'$lg'}
+                            cursor={'pointer'}
+                            onSelect={() => navigate('/users/edit/' + user._id)}
+                          >
+                            Edit Profile
+                          </MenuItem>
 
-                        <MenuItem
-                          colorScheme={'none'}
-                          class={'hover:bg-red-500 hover:text-white'}
-                          rounded={'$lg'}
+                          <MenuItem
+                            colorScheme={'none'}
+                            class={'hover:bg-gray-100'}
+                            rounded={'$lg'}
+                            cursor={'pointer'}
+                            onSelect={() => generateResetPassword(user._id)}
+                          >
+                            Reset Password
+                          </MenuItem>
+
+                          <MenuItem
+                            colorScheme={'none'}
+                            class={'hover:bg-red-500 hover:text-white'}
+                            rounded={'$lg'}
+                            cursor={'pointer'}
+                            onSelect={() => deleteUser(user._id)}
+                          >
+                            Delete User
+                          </MenuItem>
+                        </MenuContent>
+                      </Menu>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+
+          {!loading() && users.filter((user) => user !== undefined && user.businessType !== "earlyChildhoodDevelopmentCenter").length === 0 && <Box class="w-full h-auto text-center">No users.</Box>}
+        </Box>
+
+        {/* <div class="w-full border-b border-gray-200"></div> */}
+
+        <Box class="h-1/2 overflow-y-auto">
+          <Box class="font-bold px-3">ECD Users</Box>
+
+          <table class="table-auto w-full">
+            <thead class={'h-10'}>
+              <tr>
+                <th class={'text-left px-3'}>Image</th>
+                <th class={'text-left px-3'}>Name</th>
+                <th class={'text-left px-3'}>Email</th>
+                <th class={'text-left px-3'}>Address</th>
+                <th class={'text-left px-3'}>Employees</th>
+                <th class={'text-left px-3'}>Sales</th>
+              </tr>
+            </thead>
+            <tbody>
+              {!loading() &&
+                users.filter((user) => user !== undefined && user.businessType === "earlyChildhoodDevelopmentCenter").length > 0 &&
+                users.map((user) => user.businessType === "earlyChildhoodDevelopmentCenter" && (
+                  <tr>
+                    <td class={'text-left px-3'}>
+                      <Avatar
+                        size={'sm'}
+                        bg={'$lime4'}
+                        name={user.firstName + ' ' + user.lastName || ''}
+                        src={user.image ? user.image : 'broken-link'}
+                      />
+                    </td>
+                    <td class={'text-left px-3'}>{user.businessName}</td>
+                    <td class={'text-left px-3'}>{user.email}</td>
+                    <td class={'text-left px-3'}>
+                      {user.location}
+                    </td>
+                    <td class={'text-left px-3'}>{user.businessNumberOfEmployees}</td>
+                    <td class={'text-left px-3'}>
+                      {(user.sales && user.sales.length) || 0}
+                    </td>
+                    <td class={'w-10 p-0 m-0'}>
+                      <Menu color={'black'} as>
+                        <MenuTrigger
+                          class={
+                            'flex flex-col justify-center items-center w-10 h-10 hover:bg-gray-100 active:bg-gray-50 bg-opacity-50 rounded-full'
+                          }
                           cursor={'pointer'}
-                          onSelect={() => deleteUser(user._id)}
                         >
-                          Delete User
-                        </MenuItem>
-                      </MenuContent>
-                    </Menu>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="!h-6 !w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+                            />
+                          </svg>
+                        </MenuTrigger>
+                        <MenuContent
+                          minW="$60"
+                          bg="white"
+                          shadow="$md"
+                          borderRadius="$2xl"
+                          borderWidth="1px"
+                          borderColor="#e5e5e5"
+                          rounded={'$lg'}
+                          color={'black'}
+                        >
+                          <MenuItem
+                            colorScheme={'none'}
+                            class={'hover:bg-gray-100'}
+                            rounded={'$lg'}
+                            cursor={'pointer'}
+                            onSelect={() => navigate('/users/' + user._id)}
+                          >
+                            View Profile
+                          </MenuItem>
+
+                          <MenuItem
+                            colorScheme={'none'}
+                            class={'hover:bg-gray-100'}
+                            rounded={'$lg'}
+                            cursor={'pointer'}
+                            onSelect={() => navigate('/users/edit/' + user._id)}
+                          >
+                            Edit Profile
+                          </MenuItem>
+
+                          <MenuItem
+                            colorScheme={'none'}
+                            class={'hover:bg-gray-100'}
+                            rounded={'$lg'}
+                            cursor={'pointer'}
+                            onSelect={() => generateResetPassword(user._id)}
+                          >
+                            Reset Password
+                          </MenuItem>
+
+                          <MenuItem
+                            colorScheme={'none'}
+                            class={'hover:bg-red-500 hover:text-white'}
+                            rounded={'$lg'}
+                            cursor={'pointer'}
+                            onSelect={() => deleteUser(user._id)}
+                          >
+                            Delete User
+                          </MenuItem>
+                        </MenuContent>
+                      </Menu>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+
+          {!loading() && users.filter((user) => user !== undefined && user.businessType === "earlyChildhoodDevelopmentCenter").length === 0 && <Box class="w-full h-auto text-center">No ECD users.</Box>}
+        </Box>
 
         {loading() && (
           <VStack w={'100%'} alignItems="stretch" spacing="$2" p={'$3'}>

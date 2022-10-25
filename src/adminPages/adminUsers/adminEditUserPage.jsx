@@ -106,10 +106,8 @@ let AdminEditUserPage = () => {
   };
 
   let completeProfile = () => {
-    details.location = [details.streetAddress, details.suburb, details.ward, details.city, details.areaCode, details.province, details.country].filter((piece) => piece !== (undefined || null)).join(", ");
-
     axios
-      .put(apiUrl + '/users/', details, {
+      .put(apiUrl + '/users/', { ...details, location: [details.streetAddress, details.suburb, details.ward, details.city, details.areaCode, details.province, details.country].filter((piece) => piece !== undefined && piece !== null && piece !== "" && piece !== " ").join(", ") }, {
         headers: { Authorization: 'Bearer ' + authState.authenticationToken },
       })
       .then((response) => {
@@ -502,7 +500,7 @@ let AdminEditUserPage = () => {
                       <Select
                         id="type"
                         variant="unstyled"
-                        value={details.businessType || ''}
+                        value={(details.businessType.split("")[0].toUpperCase() + details.businessType.substr(1, details.businessType.length)).split(/(?=[A-Z])/).join(" ")}
                         onChange={(type) => {
                           let typeSplit = type.toString().split(' ');
                           let typeJoin = typeSplit.join('');

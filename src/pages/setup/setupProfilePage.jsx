@@ -78,7 +78,7 @@ let SetupProfilePage = () => {
   let completeProfile = () => {
     const packet = {
       ...details,
-      location: [details.streetAddress, details.suburb, details.ward, details.city, details.areaCode, details.province, details.country].filter((piece) => piece !== (undefined || null)).join(", "),
+      location: [details.streetAddress, details.suburb, details.ward, details.city, details.areaCode, details.province, details.country].filter((piece) => piece !== undefined && piece !== null && piece !== "" && piece !== " ").join(", "),
       email: userState.email,
       completedProfile: true,
     };

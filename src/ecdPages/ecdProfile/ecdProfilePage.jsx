@@ -93,7 +93,7 @@ let EcdProfilePage = () => {
     { name: 'location-details' }
   );
 
-  onMount(() => {});
+  onMount(() => { });
 
   setTimeout(() => {
     axios
@@ -171,7 +171,7 @@ let EcdProfilePage = () => {
       }
     }
 
-    body.location = [data.streetAddress, data.suburb, data.ward, data.city, data.areaCode, data.province, data.country].filter((piece) => piece !== (undefined || null)).join(", ");
+    body.location = [data.streetAddress, data.suburb, data.ward, data.city, data.areaCode, data.province, data.country].filter((piece) => piece !== undefined && piece !== null && piece !== "" && piece !== " ").join(", ");
 
     axios
       .put(apiUrl + '/users', body, {
@@ -247,8 +247,8 @@ let EcdProfilePage = () => {
                       bg={'$lime4'}
                       name={
                         personalDetails.firstName +
-                          ' ' +
-                          personalDetails.lastName || ''
+                        ' ' +
+                        personalDetails.lastName || ''
                       }
                       src={
                         personalDetails.image
@@ -405,12 +405,12 @@ let EcdProfilePage = () => {
                           <Box w="100%" p="$3" bg="#e5e5e5" rounded="$sm">
                             {businessDetails.type
                               ? businessDetails.type
-                                  .split('')[0]
-                                  .toUpperCase() +
-                                businessDetails.type.substring(
-                                  1,
-                                  businessDetails.type.length
-                                )
+                                .split('')[0]
+                                .toUpperCase() +
+                              businessDetails.type.substring(
+                                1,
+                                businessDetails.type.length
+                              )
                               : 'Unspecified'}
                           </Box>
                         </Skeleton>

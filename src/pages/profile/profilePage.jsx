@@ -170,7 +170,7 @@ let ProfilePage = () => {
       }
     }
 
-    body.location = [data.streetAddress, data.suburb, data.ward, data.city, data.areaCode, data.province, data.country].filter((piece) => piece !== (undefined || null)).join(", ");
+    body.location = [data.streetAddress, data.suburb, data.ward, data.city, data.areaCode, data.province, data.country].filter((piece) => piece !== undefined && piece !== null && piece !== "" && piece !== " ").join(", ");
 
     axios
       .put(

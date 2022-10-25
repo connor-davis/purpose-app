@@ -309,12 +309,7 @@ let AdminUserPage = () => {
             frameborder="0"
             style={{ border: 0, 'min-height': '300px' }}
             src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyAH8g_iKPrzzhPiO_wae4uXjU5sNwP-h9o&q=${!loading() &&
-              userData.streetAddress +
-              ' ' +
-              userData.suburb +
-              ' ' +
-              userData.city
-              }`}
+              userData.location}`}
             allowfullscreen
           ></iframe>
         </div>

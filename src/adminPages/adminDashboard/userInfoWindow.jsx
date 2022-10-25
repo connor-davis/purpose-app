@@ -1,4 +1,4 @@
-let UserInfoWindow = ({ user, viewProfile = () => {} }) => {
+let UserInfoWindow = ({ user, viewProfile = () => { } }) => {
   return (
     <div class="flex flex-col w-64 max-h-64 overflow-y-auto border-l border-t border-r border-b border-gray-200 rounded-lg">
       <div class="flex justify-center items-center py-2 font-bold">
@@ -15,7 +15,7 @@ let UserInfoWindow = ({ user, viewProfile = () => {} }) => {
         </div>
         <div class="flex justify-between items-center">
           <div>Industry:</div>
-          <div class="font-bold">{user.typeDescription || user.type}</div>
+          <div class="font-bold">{(user.businessType.split("")[0].toUpperCase() + user.businessType.substr(1, user.businessType.length)).split(/(?=[A-Z])/).join(" ")}</div>
         </div>
         <div class="flex justify-between items-center">
           <div>Number of Employees:</div>
@@ -27,7 +27,7 @@ let UserInfoWindow = ({ user, viewProfile = () => {} }) => {
         </div>
         <div class="flex justify-between items-center">
           <div>Address:</div>
-          <div class="font-bold">{user.streetAddress}</div>
+          <div class="font-bold">{user.location.split(", ")[0]}</div>
         </div>
         <div></div>
 
