@@ -1,4 +1,4 @@
-lockfileVersion: 5.4
+lockfileVersion: 5.3
 
 specifiers:
   '@easepick/bundle': ^1.1.7
@@ -30,7 +30,7 @@ dependencies:
   '@easepick/bundle': 1.2.0
   '@fortawesome/free-solid-svg-icons': 6.1.1
   '@googlemaps/js-api-loader': 1.14.3
-  '@hope-ui/solid': 0.6.2_slkpy7skjkboaqc6cgdqhbjk4i
+  '@hope-ui/solid': 0.6.2_92d4fc7e4a4a82e0405e118703852ae2
   '@stitches/core': 1.2.8
   axios: 0.25.0
   file-saver: 2.0.5
@@ -1336,7 +1336,7 @@ packages:
       fast-deep-equal: 3.1.3
     dev: false
 
-  /@hope-ui/solid/0.6.2_slkpy7skjkboaqc6cgdqhbjk4i:
+  /@hope-ui/solid/0.6.2_92d4fc7e4a4a82e0405e118703852ae2:
     resolution: {integrity: sha512-hqblx2JJU3UuWjspCwr7dTClr/l+j9eXa+2f4uljvTiogLcH1sgtD3BDLk62A+cAuEA0oOekUSL68TbjF/c4DA==}
     peerDependencies:
       '@stitches/core': ^1.2.8
@@ -1410,7 +1410,7 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.13.0
 
-  /@rollup/plugin-babel/5.3.1_ayiqorrx7dutx4scyxuyyyvhga:
+  /@rollup/plugin-babel/5.3.1_@babel+core@7.18.6+rollup@2.76.0:
     resolution: {integrity: sha512-WFfdLWU/xVWKeRQnKmIAQULUI7Il0gZnBIH/ZFO069wYIfPu+8zrfp/KMW0atmELoRDq8FbiP3VCss9MhCut7Q==}
     engines: {node: '>= 10.0.0'}
     peerDependencies:
@@ -1940,6 +1940,7 @@ packages:
     cpu: [x64]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-android-arm64/0.14.49:
@@ -1948,6 +1949,7 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-darwin-64/0.14.49:
@@ -1956,6 +1958,7 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-darwin-arm64/0.14.49:
@@ -1964,6 +1967,7 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-freebsd-64/0.14.49:
@@ -1972,6 +1976,7 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-freebsd-arm64/0.14.49:
@@ -1980,6 +1985,7 @@ packages:
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-32/0.14.49:
@@ -1988,6 +1994,7 @@ packages:
     cpu: [ia32]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-64/0.14.49:
@@ -1996,6 +2003,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-arm/0.14.49:
@@ -2004,6 +2012,7 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-arm64/0.14.49:
@@ -2012,6 +2021,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-mips64le/0.14.49:
@@ -2020,6 +2030,7 @@ packages:
     cpu: [mips64el]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-ppc64le/0.14.49:
@@ -2028,6 +2039,7 @@ packages:
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-riscv64/0.14.49:
@@ -2036,6 +2048,7 @@ packages:
     cpu: [riscv64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-s390x/0.14.49:
@@ -2044,6 +2057,7 @@ packages:
     cpu: [s390x]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-netbsd-64/0.14.49:
@@ -2052,6 +2066,7 @@ packages:
     cpu: [x64]
     os: [netbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-openbsd-64/0.14.49:
@@ -2060,6 +2075,7 @@ packages:
     cpu: [x64]
     os: [openbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-sunos-64/0.14.49:
@@ -2068,6 +2084,7 @@ packages:
     cpu: [x64]
     os: [sunos]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-windows-32/0.14.49:
@@ -2076,6 +2093,7 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-windows-64/0.14.49:
@@ -2084,6 +2102,7 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-windows-arm64/0.14.49:
@@ -2092,6 +2111,7 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild/0.14.49:
@@ -2120,6 +2140,7 @@ packages:
       esbuild-windows-32: 0.14.49
       esbuild-windows-64: 0.14.49
       esbuild-windows-arm64: 0.14.49
+    dev: true
 
   /escalade/3.1.1:
     resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
@@ -2627,6 +2648,7 @@ packages:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+    dev: true
 
   /node-releases/2.0.6:
     resolution: {integrity: sha512-PiVXnNuFm5+iYkLBNeq5211hvO38y63T0i2KKh2KnUs3RpzJ+JtODFjkD8yjLwnDkTYF1eKXheUwdssR+NRZdg==}
@@ -2759,6 +2781,7 @@ packages:
       nanoid: 3.3.4
       picocolors: 1.0.0
       source-map-js: 1.0.2
+    dev: true
 
   /pretty-bytes/5.6.0:
     resolution: {integrity: sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==}
@@ -2989,6 +3012,7 @@ packages:
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
+    dev: true
 
   /source-map-support/0.5.21:
     resolution: {integrity: sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==}
@@ -3284,6 +3308,7 @@ packages:
       rollup: 2.76.0
     optionalDependencies:
       fsevents: 2.3.2
+    dev: true
 
   /webidl-conversions/4.0.2:
     resolution: {integrity: sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==}
@@ -3328,7 +3353,7 @@ packages:
       '@babel/core': 7.18.6
       '@babel/preset-env': 7.18.6_@babel+core@7.18.6
       '@babel/runtime': 7.18.6
-      '@rollup/plugin-babel': 5.3.1_ayiqorrx7dutx4scyxuyyyvhga
+      '@rollup/plugin-babel': 5.3.1_@babel+core@7.18.6+rollup@2.76.0
       '@rollup/plugin-node-resolve': 11.2.1_rollup@2.76.0
       '@rollup/plugin-replace': 2.4.2_rollup@2.76.0
       '@surma/rollup-plugin-off-main-thread': 2.2.3
