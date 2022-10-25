@@ -171,6 +171,8 @@ let EcdProfilePage = () => {
       }
     }
 
+    body.location = [data.streetAddress, data.suburb, data.ward, data.city, data.areaCode, data.province, data.country].filter((piece) => piece !== (undefined || null)).join(", ");
+
     axios
       .put(apiUrl + '/users', body, {
         headers: {

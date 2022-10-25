@@ -5,9 +5,7 @@ import {
   FormLabel,
   HStack,
   IconButton,
-  Input,
-  InputRightElement,
-  notificationService,
+  Input, notificationService,
   Select,
   SelectContent,
   SelectIcon,
@@ -22,6 +20,7 @@ import {
 } from '@hope-ui/solid';
 import { createSignal, For, onMount } from 'solid-js';
 
+import { FormHelperText } from '@hope-ui/solid';
 import axios from 'axios';
 import { useNavigate } from 'solid-app-router';
 import { createStore } from 'solid-js/store';
@@ -31,7 +30,6 @@ import IconArrowLeft from '../../icons/IconArrowLeft';
 import IconArrowRight from '../../icons/IconArrowRight';
 import IconCheck from '../../icons/IconCheck';
 import IconSearch from '../../icons/IconSearch';
-import { FormHelperText } from '@hope-ui/solid';
 
 let SetupProfilePage = () => {
   let [authState, updateAuthState] = useState('authenticationGuard');
@@ -49,6 +47,7 @@ let SetupProfilePage = () => {
   let [searchResults, setSearchResults] = createStore([], {
     name: 'searchResults',
   });
+  let [searchComplete, setSearchComplete] = createSignal(false);
 
   onMount(() => { });
 
@@ -77,14 +76,17 @@ let SetupProfilePage = () => {
   }, 3000);
 
   let completeProfile = () => {
+    const packet = {
+      ...details,
+      location: [details.streetAddress, details.suburb, details.ward, details.city, details.areaCode, details.province, details.country].filter((piece) => piece !== (undefined || null)).join(", "),
+      email: userState.email,
+      completedProfile: true,
+    };
+
     axios
       .put(
         apiUrl + '/users',
-        {
-          ...details,
-          email: userState.email,
-          completedProfile: true,
-        },
+        packet,
         {
           headers: {
             authorization: 'Bearer ' + authState.authenticationToken,
@@ -460,7 +462,6 @@ let SetupProfilePage = () => {
                     <Select
                       id="type"
                       variant="unstyled"
-                      value={details.businessType || ''}
                       onChange={(type) => {
                         let typeSplit = type.toString().split(' ');
                         let typeJoin = typeSplit.join('');
@@ -626,7 +627,7 @@ let SetupProfilePage = () => {
                     </div>
                   </FormControl>
 
-                  {details.businessRegistrationNumber && (
+                  {details.businessRegistered && (
                     <FormControl>
                       <FormLabel for="registrationNumber" color="black">
                         Registration Number
@@ -1136,7 +1137,7 @@ let SetupProfilePage = () => {
                   }}
                 />
 
-                {!details.streetAddress && (
+                {!searchComplete() && (
                   <VStack
                     bg="white"
                     shadow="$2xl"
@@ -1148,7 +1149,7 @@ let SetupProfilePage = () => {
                     spacing="$3"
                     w={{ '@initial': '300px', '@sm': '300px', '@md': '400px' }}
                   >
-                    <FormControl required>
+                    <FormControl>
                       <FormLabel for="streetAddress" color="black">
                         Street Address
                       </FormLabel>
@@ -1169,7 +1170,7 @@ let SetupProfilePage = () => {
                         }}
                       />
                       {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
-                      <div class="flex flex-col py-2 space-y-2 text-black">
+                      <div class="flex flex-col max-h-96 overflow-y-auto py-2 space-y-2 text-black">
                         {searchResults.map((result) => (
                           <HStack w="100%" spacing="$2">
                             <Box w="100%" p="$3" rounded="$sm" fontSize="$sm">
@@ -1193,6 +1194,8 @@ let SetupProfilePage = () => {
                                   lat: result.latitude,
                                   lng: result.longitude,
                                 });
+
+                                setSearchComplete(true);
                               }}
                             >
                               <IconCheck />
@@ -1204,7 +1207,7 @@ let SetupProfilePage = () => {
                   </VStack>
                 )}
 
-                {details.streetAddress && (
+                {searchComplete() && (
                   <VStack
                     bg="white"
                     shadow="$2xl"
@@ -1216,7 +1219,7 @@ let SetupProfilePage = () => {
                     spacing="$3"
                     w={{ '@initial': '300px', '@sm': '300px', '@md': '400px' }}
                   >
-                    <FormControl required>
+                    <FormControl>
                       <FormLabel for="streetAddress" color="black">
                         Street Address
                       </FormLabel>
@@ -1240,7 +1243,7 @@ let SetupProfilePage = () => {
                       {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
                     </FormControl>
 
-                    <FormControl required>
+                    <FormControl>
                       <FormLabel for="suburb" color="black">
                         Suburb
                       </FormLabel>
@@ -1396,9 +1399,9 @@ let SetupProfilePage = () => {
                   bg="white"
                   _hover={{ bg: 'white' }}
                   aria-label="Search"
-                  icon={details.streetAddress ? <IconCheck /> : <IconSearch />}
+                  icon={searchComplete() ? <IconCheck /> : <IconSearch />}
                   onClick={() => {
-                    if (details.streetAddress) {
+                    if (searchComplete()) {
                       let form = document.getElementById('businessForm');
 
                       if (form instanceof HTMLFormElement) {

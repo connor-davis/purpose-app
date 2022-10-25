@@ -1,23 +1,23 @@
 import {
-    Box,
-    Center,
-    FormControl,
-    FormLabel,
-    HStack,
-    IconButton,
-    Input,
-    notificationService,
-    Select,
-    SelectContent,
-    SelectIcon,
-    SelectListbox,
-    SelectOption,
-    SelectOptionIndicator,
-    SelectOptionText,
-    SelectPlaceholder,
-    SelectTrigger,
-    SelectValue,
-    VStack
+  Box,
+  Center,
+  FormControl,
+  FormLabel,
+  HStack,
+  IconButton,
+  Input,
+  notificationService,
+  Select,
+  SelectContent,
+  SelectIcon,
+  SelectListbox,
+  SelectOption,
+  SelectOptionIndicator,
+  SelectOptionText,
+  SelectPlaceholder,
+  SelectTrigger,
+  SelectValue,
+  VStack
 } from '@hope-ui/solid';
 import axios from 'axios';
 import { useNavigate, useParams } from 'solid-app-router';
@@ -84,19 +84,19 @@ let AdminEditUserPage = () => {
             if (userInfo.gender)
               setUserGender(
                 userInfo.gender.split('')[0].toUpperCase() +
-                  userInfo.gender.substring(1, userInfo.gender.length)
+                userInfo.gender.substring(1, userInfo.gender.length)
               );
 
             if (userInfo.ethnicity)
               setUserEthnicity(
                 userInfo.ethnicity.split('')[0].toUpperCase() +
-                  userInfo.ethnicity.substring(1, userInfo.ethnicity.length)
+                userInfo.ethnicity.substring(1, userInfo.ethnicity.length)
               );
 
             if (userInfo.type)
               setUserType(
                 userInfo.type.split('')[0].toUpperCase() +
-                  userInfo.type.substring(1, userInfo.type.length)
+                userInfo.type.substring(1, userInfo.type.length)
               );
 
             setDetails(userInfo);
@@ -106,6 +106,8 @@ let AdminEditUserPage = () => {
   };
 
   let completeProfile = () => {
+    details.location = [details.streetAddress, details.suburb, details.ward, details.city, details.areaCode, details.province, details.country].filter((piece) => piece !== (undefined || null)).join(", ");
+
     axios
       .put(apiUrl + '/users/', details, {
         headers: { Authorization: 'Bearer ' + authState.authenticationToken },
@@ -304,10 +306,10 @@ let AdminEditUserPage = () => {
                         value={
                           (details.gender &&
                             details.gender.split('')[0].toUpperCase() +
-                              details.gender.substring(
-                                1,
-                                details.gender.length
-                              )) ||
+                            details.gender.substring(
+                              1,
+                              details.gender.length
+                            )) ||
                           ''
                         }
                         onChange={(gender) =>
@@ -357,10 +359,10 @@ let AdminEditUserPage = () => {
                         value={
                           (details.ethnicity &&
                             details.ethnicity.split('')[0].toUpperCase() +
-                              details.ethnicity.substring(
-                                1,
-                                details.ethnicity.length
-                              )) ||
+                            details.ethnicity.substring(
+                              1,
+                              details.ethnicity.length
+                            )) ||
                           ''
                         }
                         onChange={(ethnicity) =>
@@ -566,57 +568,57 @@ let AdminEditUserPage = () => {
 
                     {details.businessType ===
                       'earlyChildhoodDevelopmentCenter' && (
-                      <FormControl required>
-                        <FormLabel for="positionAtECD" color="black">
-                          Position at ECD
-                        </FormLabel>
-                        <Input
-                          variant="unstyled"
-                          bg="#e5e5e5"
-                          p="$3"
-                          placeholder="What position are you at the ECD?"
-                          size="sm"
-                          color="black"
-                          id="positionAtECD"
-                          type="text"
-                          value={details.positionAtECD || ''}
-                          onChange={(event) => {
-                            setDetails({
-                              ...details,
-                              positionAtECD: event.target.value,
-                            });
-                          }}
-                        />
-                        {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
-                      </FormControl>
-                    )}
+                        <FormControl required>
+                          <FormLabel for="positionAtECD" color="black">
+                            Position at ECD
+                          </FormLabel>
+                          <Input
+                            variant="unstyled"
+                            bg="#e5e5e5"
+                            p="$3"
+                            placeholder="What position are you at the ECD?"
+                            size="sm"
+                            color="black"
+                            id="positionAtECD"
+                            type="text"
+                            value={details.positionAtECD || ''}
+                            onChange={(event) => {
+                              setDetails({
+                                ...details,
+                                positionAtECD: event.target.value,
+                              });
+                            }}
+                          />
+                          {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                        </FormControl>
+                      )}
 
                     {details.businessType ===
                       'earlyChildhoodDevelopmentCenter' && (
-                      <FormControl required>
-                        <FormLabel for="typeDescription" color="black">
-                          How many children
-                        </FormLabel>
-                        <Input
-                          variant="unstyled"
-                          bg="#e5e5e5"
-                          p="$3"
-                          placeholder="How many children are at the ECD?"
-                          size="sm"
-                          color="black"
-                          id="numberOfChildren"
-                          type="text"
-                          value={details.numberOfChildren || ''}
-                          onChange={(event) => {
-                            setDetails({
-                              ...details,
-                              numberOfChildren: event.target.value,
-                            });
-                          }}
-                        />
-                        {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
-                      </FormControl>
-                    )}
+                        <FormControl required>
+                          <FormLabel for="typeDescription" color="black">
+                            How many children
+                          </FormLabel>
+                          <Input
+                            variant="unstyled"
+                            bg="#e5e5e5"
+                            p="$3"
+                            placeholder="How many children are at the ECD?"
+                            size="sm"
+                            color="black"
+                            id="numberOfChildren"
+                            type="text"
+                            value={details.numberOfChildren || ''}
+                            onChange={(event) => {
+                              setDetails({
+                                ...details,
+                                numberOfChildren: event.target.value,
+                              });
+                            }}
+                          />
+                          {/* <FormHelperText>Atleast 8 characters.</FormHelperText> */}
+                        </FormControl>
+                      )}
 
                     {details.businessType === 'other' && (
                       <FormControl required>
@@ -661,11 +663,10 @@ let AdminEditUserPage = () => {
                         class="flex items-center space-x-3 text-black cursor-pointer select-none"
                       >
                         <div
-                          class={`flex flex-col justify-center items-center w-5 h-5 rounded-md ${
-                            details.businessRegistered
-                              ? 'bg-lime-400 text-white'
-                              : ' bg-gray-300'
-                          }`}
+                          class={`flex flex-col justify-center items-center w-5 h-5 rounded-md ${details.businessRegistered
+                            ? 'bg-lime-400 text-white'
+                            : ' bg-gray-300'
+                            }`}
                         >
                           {details.businessRegistered && <IconCheck />}
                         </div>
@@ -1267,7 +1268,7 @@ let AdminEditUserPage = () => {
                             _hover={{ bg: 'white' }}
                             aria-label="Search"
                             icon={<IconSearch />}
-                            onClick={() => {}}
+                            onClick={() => { }}
                           />
                         </InputRightElement>
                         <div class="flex flex-col py-2 space-y-2 text-black">
